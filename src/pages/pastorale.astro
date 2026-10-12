@@ -1,0 +1,57 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Actus from '../components/Actus.astro';
+import { getCollection } from 'astro:content';
+import vierge from '../assets/actualites/paques-vierge.jpg';
+const actus = (await getCollection('actualites')).filter((a) => a.data.rubrique === 'Pastorale').sort((a, b) => +b.data.date - +a.data.date);
+---
+<Base titre="La pastorale" courant="ecole/" fil={[{ nom: "L'école", href: 'ecole/' }, { nom: 'Pastorale' }]}
+  description="La pastorale de l'école Sacré-Cœur La Salle à Nantes : célébrations à l'église Saint-Clair, temps forts, solidarité, dans le respect des convictions de chacun.">
+  <section class="tete-page conteneur">
+    <p class="surtitre">Croire, s'engager, s'épanouir</p>
+    <h1>La pastorale à l'école Sacré-Cœur La Salle</h1>
+    <p class="chapo">Une pastorale pour s'approprier les valeurs de l'humanisme chrétien, proposée à tous les enfants, dans le respect des convictions de chaque famille.</p>
+  </section>
+
+  <section class="section section-creme">
+    <div class="conteneur duo duo-centre">
+      <div class="prose">
+        <h2 style="margin-top:0">Les temps forts de l'année</h2>
+        <ul>
+          <li><strong>Célébration de rentrée</strong>, pour accueillir chacun.</li>
+          <li><strong>Avent et Noël</strong> : célébration de toute l'école à l'église Saint-Clair, chorale de Noël.</li>
+          <li><strong>Jeudi saint</strong> : le partage du pain au forum, pour les maternelles et les CP.</li>
+          <li><strong>Pâques</strong> : célébration à l'église Saint-Clair ; les classes fleurissent la Vierge de la cour élémentaire.</li>
+          <li><strong>Éveil à la foi</strong> en maternelle, au fil de l'année.</li>
+        </ul>
+        <p>L'école vit ces temps avec la paroisse Sainte-Anne Saint-Clair, dont le prêtre vient régulièrement à la rencontre des élèves.</p>
+      </div>
+      <div class="photo-ronde"><Image src={vierge} alt="La statue de la Vierge de la cour élémentaire, entourée des bouquets apportés par les classes." widths={[390, 780]} sizes="(min-width: 56rem) 40vw, 100vw" /></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur duo">
+      <div class="prose">
+        <h2 style="margin-top:0">Une école lasallienne</h2>
+        <p>Saint Jean-Baptiste de La Salle (1651-1719), prêtre de Reims, a fondé l'Institut des Frères des Écoles Chrétiennes. Attentif à la détresse des enfants des artisans et des pauvres, il a formé des maîtres d'école, les a réunis en communauté et a introduit des méthodes éducatives novatrices. Canonisé en 1900, il est fêté le 7 avril.</p>
+        <p>Fidèle à cet héritage, l'école accueille chaque élève tel qu'il est, avec une attention particulière aux plus fragiles.</p>
+      </div>
+      <div class="prose">
+        <h2 style="margin-top:0">La solidarité</h2>
+        <p>Au fil de l'année, et notamment pendant l'Avent, l'école organise des collectes au profit d'associations, comme les Bébés du Cœur ou le Secours populaire : une manière concrète, pour les enfants, de penser aux autres.</p>
+        <p>Le conseil d'établissement, qui réunit deux fois par an enseignants, personnels, élèves délégués, OGEC, APEL, déléguée de tutelle et paroisse, accompagne ces projets.</p>
+      </div>
+    </div>
+  </section>
+
+  {actus.length > 0 && (
+    <section class="section section-creme" aria-labelledby="titre-actus">
+      <div class="conteneur">
+        <h2 id="titre-actus" style="margin-bottom:2rem">La pastorale en images et en mots</h2>
+        <Actus actus={actus} />
+      </div>
+    </section>
+  )}
+</Base>

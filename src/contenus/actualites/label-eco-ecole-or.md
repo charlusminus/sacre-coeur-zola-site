@@ -2,7 +2,7 @@
 titre: "Médaille d'or : l'école décroche le label Éco-École niveau Or"
 date: 2026-07-02
 resume: "Après le niveau Argent en 2024, toute l'école, de la petite section au CM2, a obtenu le niveau Or avec son projet sur l'eau."
-rubrique: "Vie de l'école"
+rubrique: "Éco-École"
 photo: ../../assets/photos/jardinieres.jpg
 alt: "Deux jardinières peintes par les élèves de CM, posées devant une baie vitrée de l'école."
 ---

@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro';
+import Actus from '../components/Actus.astro';
+import { getCollection } from 'astro:content';
+import { lien } from '../lib/site';
+
+const toutes = (await getCollection('actualites')).sort((a, b) => +b.data.date - +a.data.date);
+const cycles = [
+  { id: 'maternelle', titre: 'La maternelle', sous: 'Petite, moyenne et grande section', niveaux: ['PS', 'MS', 'GS'],
+    texte: "Trois classes pour apprendre à vivre ensemble, à parler, à manipuler et à créer, avec les ASEM aux côtés des enseignantes. La rentrée des petites sections se fait en douceur, en deux demi-groupes." },
+  { id: 'cp-ce1-ce2', titre: 'Du CP au CE2', sous: 'Lire, écrire, compter', niveaux: ['CP', 'CE1', 'CE2'],
+    texte: "Les années des apprentissages fondamentaux : la lecture, l'écriture, les nombres, avec beaucoup de sorties et d'ateliers pour donner du sens à ce que l'on apprend." },
+  { id: 'cm1-cm2', titre: 'CM1 et CM2', sous: 'Vers le collège', niveaux: ['CM1', 'CM2'],
+    texte: "Les plus grands deviennent acteurs de l'école : élèves médiateurs, projets Éco-École, parrainage des petits, et une classe découverte en fin d'année." },
+];
+// Chaque article va dans le cycle de son premier niveau : pas de doublon d'un cycle à l'autre.
+const cycleDe = (a: (typeof toutes)[number]) => cycles.find((c) => c.niveaux.includes(a.data.niveaux[0]))?.id;
+const parCycle = cycles.map((c) => ({ ...c, actus: toutes.filter((a) => cycleDe(a) === c.id).slice(0, 6) }));
+---
+<Base titre="La vie des classes" courant="vie-des-classes/" fil={[{ nom: 'Vie des classes' }]}
+  description="Sorties, potager, bibliothèque, gym, projets : la vie des classes de l'école Sacré-Cœur La Salle à Nantes, de la petite section au CM2, racontée par les classes.">
+  <section class="tete-page conteneur">
+    <p class="surtitre">De la petite section au CM2</p>
+    <h1>La vie des classes à l'école Sacré-Cœur La Salle</h1>
+    <p class="chapo">Huit classes, des projets qui se croisent, des grands qui parrainent les petits : ce que vivent les élèves, raconté par les classes.</p>
+    <ul class="niveaux-nav" aria-label="Aller à un cycle">
+      {cycles.map((c) => <li><a href={`#${c.id}`}>{c.titre}</a></li>)}
+      <li><a href="#toute-lannee">Toute l'année</a></li>
+    </ul>
+  </section>
+
+  <section class="section section-creme">
+    <div class="conteneur">
+      {parCycle.map((c) => (
+        <div class="niveau" id={c.id}>
+          <h2>{c.titre}</h2>
+          <p class="discret">{c.sous}</p>
+          <p style="max-width:40em;margin-bottom:1.75rem">{c.texte}</p>
+          <Actus actus={c.actus} />
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" id="toute-lannee" aria-labelledby="titre-annee">
+    <div class="conteneur">
+      <h2 id="titre-annee" style="margin-bottom:1.5rem">Toute l'année</h2>
+      <ul class="fiches fiches-3">
+        <li><h3>Le potager</h3><p>Chaque mois, une animation avec Yann, l'animateur du potager : semis, plantations, récoltes et dégustations.</p></li>
+        <li><h3>La bibliothèque</h3><p>Une bibliothèque à cabanes au cœur de l'école, où les classes viennent écouter des histoires, lire des albums et choisir un livre.</p></li>
+        <li><h3>Le sport</h3><p>Gymnastique à la salle Saint-Clair du quartier, enduro au stade de la Durantière, et des rencontres sportives au Loquidy pour les CM.</p></li>
+        <li><h3>Les sorties culturelles</h3><p>Médiathèque Lisa Bresner, cinéma Le Concorde pour les maternelles (financé par l'APEL), Parcours Nature de la ville de Nantes.</p></li>
+        <li><h3>Les grands et les petits</h3><p>Parrainages entre classes, assemblées mensuelles de toute l'école, élèves médiateurs formés en CE2 et CM1.</p></li>
+        <li><h3>La classe découverte</h3><p>En fin d'année, les CM1-CM2 partent quelques jours en classe découverte, en juin 2026 à Campbon.</p></li>
+      </ul>
+      <p style="margin-top:1.5rem"><a href={lien('agenda/#actualites')}>Toutes les actualités</a> · <a href={lien('eco-ecole/')}>Le projet Éco-École</a> · <a href={lien('pastorale/')}>La pastorale</a></p>
+    </div>
+  </section>
+</Base>

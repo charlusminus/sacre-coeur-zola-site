@@ -10,6 +10,9 @@ const actus = await getCollection('actualites');
     <ul>
       <li><a href={lien()}>Accueil</a></li>
       {navigation.map((n) => <li><a href={lien(n.href)}>{n.titre}</a></li>)}
+      <li><a href={lien('pastorale/')}>Pastorale</a></li>
+      <li><a href={lien('eco-ecole/')}>Éco-École</a></li>
+      <li><a href={lien('apel/')}>APEL</a></li>
       <li><a href={lien('questions-frequentes/')}>Questions fréquentes</a></li>
       <li><a href={lien('mentions-legales/')}>Mentions légales et confidentialité</a></li>
     </ul>

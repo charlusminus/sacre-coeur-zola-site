@@ -10,7 +10,9 @@ const actualites = defineCollection({
     titre: z.string().max(90),
     date: z.coerce.date(),
     resume: z.string().max(220),
-    rubrique: z.enum(["Vie de l'école", 'Pastorale', 'APEL', 'Sorties', 'Inscriptions']),
+    rubrique: z.enum(["Vie de l'école", 'Vie des classes', 'Pastorale', 'Éco-École', 'APEL', 'Sorties', 'Inscriptions']),
+    // Niveaux concernés (et non le nom de la classe, qui change d'une année à l'autre).
+    niveaux: z.array(z.enum(['PS', 'MS', 'GS', 'CP', 'CE1', 'CE2', 'CM1', 'CM2'])).default([]),
     photo: image().optional(),
     alt: z.string().optional(),
   }),

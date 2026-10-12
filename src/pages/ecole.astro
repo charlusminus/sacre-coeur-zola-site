@@ -41,8 +41,22 @@ import tableau from '../assets/photos/tableau.jpg';
     <div class="conteneur duo duo-centre">
       <div>
         <h2 id="titre-classes">Huit classes, une équipe de dix-sept adultes</h2>
-        <p style="margin-top:1rem">Petite section, moyenne section, grande section, CP, CP-CE1, CE1-CE2, CM1 et CM2, avec un enseignant spécialisé. Enseignants, ASEM et personnel administratif travaillent ensemble, et avec les parents via une application.</p>
-        <p class="discret" style="margin-top:.75rem">Répartition 2025-2026. Trombinoscope de l'équipe 2026-2027 à ajouter. [À CONFIRMER]</p>
+        <p style="margin-top:1rem">Enseignants, ASEM, surveillants et secrétariat travaillent ensemble, et avec les parents via une application.</p>
+        <table class="tableau" style="margin-top:1.25rem">
+          <caption class="discret" style="text-align:left;caption-side:bottom;padding-top:.75rem">Équipe 2025-2026, à mettre à jour pour 2026-2027. [À CONFIRMER]</caption>
+          <tbody>
+            <tr><th scope="row">Petite section</th><td>Mme Charlène Duret</td></tr>
+            <tr><th scope="row">Moyenne section</th><td>Mme Hélène Lampérière et Mme Marie-Alix Duvivier</td></tr>
+            <tr><th scope="row">Grande section</th><td>Mme Fleur Delobelle</td></tr>
+            <tr><th scope="row">CP</th><td>Mme Noémie Dubois de Mont-Marin</td></tr>
+            <tr><th scope="row">CP-CE1</th><td>M. Laurent Garcin</td></tr>
+            <tr><th scope="row">CE1-CE2</th><td>Mme Laura Bly</td></tr>
+            <tr><th scope="row">CM1</th><td>M. Joël Peault</td></tr>
+            <tr><th scope="row">CM2</th><td>Mme Elsa Cros</td></tr>
+            <tr><th scope="row">Enseignant spécialisé</th><td>M. Renan Thomare</td></tr>
+            <tr><th scope="row">Secrétariat</th><td>Mme Anne Calais</td></tr>
+          </tbody>
+        </table>
       </div>
       <div class="photo-ronde"><Image src={tableau} alt="Un élève, de dos, montre une réponse au tableau numérique de sa classe." widths={[281]} sizes="(min-width: 56rem) 40vw, 100vw" /></div>
     </div>
@@ -58,25 +72,27 @@ import tableau from '../assets/photos/tableau.jpg';
         <li><span class="heure">1864</span><span>Les sœurs de La Salle de Vihiers ouvrent une école de filles rue Giton.</span></li>
         <li><span class="heure">2016</span><span>Entrée dans le réseau La Salle ; décision de reconstruire l'école.</span></li>
         <li><span class="heure">2021</span><span>Permis de construire et début des travaux.</span></li>
-        <li><span class="heure">2022</span><span>Emménagement dans l'école neuve.</span></li>
+        <li><span class="heure">2022</span><span>Le 18 octobre, dernier jour rue Giton, après 158 ans ; le 7 novembre, les élèves entrent dans l'école neuve et chacun dépose une pierre décorée le long de la cour.</span></li>
         <li><span class="heure">2023</span><span>Inauguration, le 21 janvier.</span></li>
         <li><span class="heure">2026</span><span>Label Éco-École niveau Or.</span></li>
       </ul>
     </div>
   </section>
 
-  <section class="section section-creme" aria-labelledby="titre-pastorale">
-    <div class="conteneur duo">
-      <div class="prose">
-        <h2 id="titre-pastorale" style="margin-top:0">Une école lasallienne</h2>
-        <p>L'école appartient au réseau La Salle France, fondé sur l'œuvre de saint Jean-Baptiste de La Salle, patron des éducateurs, et animé par les Frères des Écoles Chrétiennes. Plus de 200 établissements en France partagent ce projet : une école qui accueille chacun, avec une attention particulière aux plus fragiles.</p>
-        <p>La pastorale rythme l'année : célébrations de rentrée, de l'Avent, de Noël et de Pâques à l'église Saint-Clair (paroisse Sainte-Anne Saint-Clair), partage du pain le Jeudi saint, collectes de solidarité. Elle est proposée à tous les enfants, dans le respect des convictions de chaque famille.</p>
-      </div>
-      <div class="prose" id="apel">
-        <h2 style="margin-top:0">APEL et OGEC</h2>
-        <p><strong>L'APEL</strong>, association des parents d'élèves, fait vivre l'école avec l'équipe : café de rentrée, marché de Noël, vide-grenier de la place Zola, kermesse, sorties financées. Des parents relais dans chaque classe. Tous les parents peuvent y participer, à la mesure de leur temps.</p>
-        <p><strong>L'OGEC</strong> gère l'école : bâtiments, budget, restauration, personnel non enseignant. C'est lui qui a porté la construction de l'école neuve. Ses membres sont bénévoles.</p>
-        <p><a href="mailto:contact-apel@sacrecoeurzola.fr">contact-apel@sacrecoeurzola.fr</a></p>
+  <section class="section section-creme" aria-labelledby="titre-vivre">
+    <div class="conteneur">
+      <h2 id="titre-vivre" style="margin-bottom:1.5rem">Vivre l'école</h2>
+      <ul class="portes">
+        <li><a href={lien('vie-des-classes/')}><h3>La vie des classes</h3><p>Sorties, potager, bibliothèque, gym : ce que vivent les élèves, de la petite section au CM2.</p></a></li>
+        <li><a href={lien('eco-ecole/')}><h3>Éco-École</h3><p>Déchets, biodiversité, eau : trois années de projets, un label niveau Or en 2026.</p></a></li>
+        <li><a href={lien('pastorale/')}><h3>La pastorale</h3><p>Une école lasallienne : temps forts, célébrations à Saint-Clair, solidarité.</p></a></li>
+        <li><a href={lien('apel/')}><h3>L'APEL</h3><p>Les parents qui font vivre l'école : fêtes, vide-grenier, sorties financées.</p></a></li>
+      </ul>
+      <div class="prose" style="margin-top:2.5rem;max-width:42rem">
+        <h3>L'OGEC</h3>
+        <p>L'OGEC gère l'école : bâtiments, budget, restauration, personnel non enseignant. C'est lui qui a porté la construction de l'école neuve. Ses membres sont bénévoles.</p>
+        <h3>Le réseau La Salle</h3>
+        <p>L'école appartient au réseau La Salle France, fondé sur l'œuvre de saint Jean-Baptiste de La Salle et animé par les Frères des Écoles Chrétiennes, ainsi qu'à l'Enseignement catholique de Loire-Atlantique. Elle travaille en partenariat avec les établissements lasalliens de Nantes, comme Saint-Joseph du Loquidy.</p>
       </div>
     </div>
   </section>

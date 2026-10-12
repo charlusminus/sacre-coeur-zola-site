@@ -2,7 +2,8 @@
 titre: "Une rentrée en douceur pour les petites sections"
 date: 2026-08-28
 resume: "Pré-rentrée en famille, puis rentrée en deux demi-groupes : la première rentrée de nos plus jeunes se prépare avec soin."
-rubrique: "Vie de l'école"
+rubrique: "Vie des classes"
+niveaux: ["PS"]
 photo: ../../assets/photos/batiment.jpg
 alt: "L'entrée de l'école, bâtiment blanc et bardage bois, rue de la Salle Verte."
 ---

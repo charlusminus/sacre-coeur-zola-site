@@ -8,7 +8,7 @@ export const GET: APIRoute = async ({ site }) => {
   const derniere = actus.reduce((m, a) => (a.data.date > m ? a.data.date : m), new Date(0));
   const pages: [string, Date?][] = [
     ['', derniere], ...navigation.map((n): [string, Date?] => [n.href, n.href === 'agenda/' ? derniere : undefined]),
-    ['questions-frequentes/'], ['mentions-legales/'], ['plan-du-site/'],
+    ['pastorale/'], ['eco-ecole/'], ['apel/'], ['questions-frequentes/'], ['mentions-legales/'], ['plan-du-site/'],
     ...actus.map((a): [string, Date] => [`actualites/${a.id}/`, a.data.date]),
   ];
   const urls = pages.map(([c, d]) => `<url><loc>${new URL(base + c, site).href}</loc>${d ? `<lastmod>${jour(d)}</lastmod>` : ''}</url>`).join('');

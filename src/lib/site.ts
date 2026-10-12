@@ -4,8 +4,9 @@ export const lien = (chemin = '') => base + chemin.replace(/^\//, '');
 
 export const navigation = [
   { titre: 'L’école', href: 'ecole/' },
-  { titre: 'Inscriptions', href: 'inscriptions/' },
+  { titre: 'Vie des classes', href: 'vie-des-classes/' },
   { titre: 'Vie scolaire', href: 'vie-scolaire/' },
+  { titre: 'Inscriptions', href: 'inscriptions/' },
   { titre: 'Agenda', href: 'agenda/' },
   { titre: 'Contact', href: 'contact/' },
 ];

@@ -288,3 +288,25 @@ a[href^='tel:'] { white-space: nowrap; }
 .confirmation p + p { margin-top: 0.5rem; }
 .confirmation:focus-visible { outline: var(--focus); outline-offset: 3px; }
 main:focus { outline: none; }
+
+/* Actualités sans photo : carte de texte */
+.actu-texte > a { display: block; height: 100%; padding: 1.25rem 1.4rem; border-radius: 1rem; background: var(--creme); }
+.section-creme .actu-texte > a { background: var(--fond); }
+
+/* Niveaux (vie des classes) */
+.niveaux-nav { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0; margin-top: 1.5rem; }
+.niveaux-nav a { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0.4rem 1rem; border-radius: var(--rayon-bouton); border: 1.5px solid var(--bleu); font-weight: 600; text-decoration: none; }
+@media (hover: hover) { .niveaux-nav a:hover { background: var(--bleu); color: #fff; } }
+.niveau { scroll-margin-top: 6rem; }
+.niveau + .niveau { margin-top: 3.5rem; }
+.niveau h2 { margin-bottom: 0.4rem; }
+.niveau .discret { margin-bottom: 1.5rem; }
+
+/* Cartes de rubriques (page L'école) */
+.portes { display: grid; gap: 1rem; list-style: none; padding: 0; }
+.portes a { display: block; height: 100%; padding: 1.4rem; border-radius: 1rem; background: var(--fond); border: 1px solid #e7e3dc; color: var(--encre); text-decoration: none; border-top: 4px solid var(--c, var(--bleu)); }
+.portes li:nth-child(1) { --c: #da2b78; } .portes li:nth-child(2) { --c: #80be43; } .portes li:nth-child(3) { --c: #21649b; } .portes li:nth-child(4) { --c: #f0b541; }
+.portes h3 { margin-bottom: 0.35rem; }
+@media (hover: hover) { .portes a:hover h3 { color: var(--rose); } }
+@media (min-width: 48rem) { .portes { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 72rem) { .portes { grid-template-columns: repeat(4, 1fr); } }

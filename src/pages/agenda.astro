@@ -1,9 +1,9 @@
 ---
-import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Agenda from '../components/Agenda.astro';
+import Actus from '../components/Actus.astro';
 import { evenementsAVenir, actualites } from '../lib/contenu';
-import { lien, dateLongue } from '../lib/site';
+
 import { idEcole } from '../lib/schema';
 const evenements = await evenementsAVenir();
 const actus = await actualites();
@@ -29,15 +29,7 @@ const schema = evenements.map((e) => ({
   <section class="section" id="actualites" aria-labelledby="titre-actus">
     <div class="conteneur">
       <h2 id="titre-actus" style="margin-bottom:2rem">Actualités</h2>
-      <ul class="actus">
-        {actus.map((a) => (
-          <li><a href={lien(`actualites/${a.id}/`)}>
-            {a.data.photo && <Image src={a.data.photo} alt={a.data.alt ?? ''} widths={[390, 780]} sizes="(min-width: 48rem) 33vw, 100vw" />}
-            <span class="etiquette">{a.data.rubrique} · {dateLongue(a.data.date)}</span>
-            <h3>{a.data.titre}</h3><p>{a.data.resume}</p>
-          </a></li>
-        ))}
-      </ul>
+      <Actus actus={actus} />
     </div>
   </section>
 </Base>

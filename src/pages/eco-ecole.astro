@@ -1,0 +1,45 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Actus from '../components/Actus.astro';
+import { getCollection } from 'astro:content';
+import potager from '../assets/actualites/potager-cp.jpg';
+const actus = (await getCollection('actualites')).filter((a) => a.data.rubrique === 'Éco-École').sort((a, b) => +b.data.date - +a.data.date).slice(0, 9);
+---
+<Base titre="Éco-École : le label niveau Or" courant="ecole/" fil={[{ nom: "L'école", href: 'ecole/' }, { nom: 'Éco-École' }]}
+  description="Déchets, biodiversité, eau : depuis 2023, toutes les classes de l'école Sacré-Cœur La Salle à Nantes portent le projet Éco-École, labellisé niveau Or en juin 2026.">
+  <section class="tete-page conteneur">
+    <p class="surtitre">Label Éco-École niveau Or, juin 2026</p>
+    <h1>Une école qui prend soin de la planète, à hauteur d'enfant</h1>
+    <p class="chapo">Éco-École est un programme international d'éducation au développement durable. Chaque année, un thème, des actions menées par les élèves, et un label remis en jeu.</p>
+  </section>
+
+  <section class="section section-creme" aria-labelledby="titre-annees">
+    <div class="conteneur duo duo-centre">
+      <div>
+        <h2 id="titre-annees">Trois années, trois thèmes</h2>
+        <ul class="journee" style="margin-top:1.5rem">
+          <li><span class="heure">2023-2024</span><span><strong>Les déchets</strong> : enquêtes dans les classes et à la cantine, poubelles de tri, déchets alimentaires valorisés chaque semaine par les Alchimistes, goûters zéro déchet. Label niveau Argent en juin 2024.</span></li>
+          <li><span class="heure">2024-2025</span><span><strong>La biodiversité</strong> : recensement des espèces de l'école, jardinières, potager, hôtel à insectes, fresque des quatre saisons sur la cour élémentaire.</span></li>
+          <li><span class="heure">2025-2026</span><span><strong>L'eau</strong> : toutes les classes, de la petite section au CM2, sensibilisées à la récupération de l'eau de pluie. Label niveau Or le 10 juin 2026.</span></li>
+        </ul>
+      </div>
+      <div class="photo-ronde"><Image src={potager} alt="Les lettres « CP » dessinées avec des pousses dans la terre du potager." widths={[390, 780]} sizes="(min-width: 56rem) 40vw, 100vw" /></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur etroit prose">
+      <h2 style="margin-top:0">Ce sont les élèves qui font le projet</h2>
+      <p>Les élèves enquêtent, proposent des actions au comité Éco-École, les fabriquent et les mettent en place. Puis ils passent dans les autres classes pour expliquer et convaincre. Ils mesurent aussi les résultats : en 2024, les déchets de l'école (hors cantine) sont passés de 24 kg par semaine en février à 17,8 kg à la mi-avril.</p>
+      <p>Chaque année, une journée Éco-École réunit toutes les classes autour d'ateliers multi-âges, de la maternelle aux CM.</p>
+    </div>
+  </section>
+
+  <section class="section section-creme" aria-labelledby="titre-actus">
+    <div class="conteneur">
+      <h2 id="titre-actus" style="margin-bottom:2rem">Les projets des classes</h2>
+      <Actus actus={actus} />
+    </div>
+  </section>
+</Base>

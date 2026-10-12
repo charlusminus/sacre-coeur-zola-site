@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+import Agenda from '../components/Agenda.astro';
+import { evenementsAVenir } from '../lib/contenu';
+import { lien } from '../lib/site';
+const rdv = (await evenementsAVenir()).filter((e) => /APEL|vide-grenier|tombola|Noël/i.test(e.data.titre + e.data.resume)).slice(0, 4);
+---
+<Base titre="L'APEL, association des parents d'élèves" courant="ecole/" fil={[{ nom: "L'école", href: 'ecole/' }, { nom: 'APEL' }]}
+  description="L'APEL de l'école Sacré-Cœur La Salle à Nantes : café de rentrée, marché de Noël, vide-grenier de la place Zola, kermesse, sorties financées pour les élèves.">
+  <section class="tete-page conteneur">
+    <p class="surtitre">Association des parents d'élèves</p>
+    <h1>L'APEL de l'école Sacré-Cœur La Salle</h1>
+    <p class="chapo">L'APEL fait vivre l'école avec l'équipe : elle accueille les nouvelles familles, organise les fêtes et finance des sorties pour tous les élèves. Chaque parent peut y participer, à la mesure de son temps.</p>
+  </section>
+
+  <section class="section section-creme">
+    <div class="conteneur">
+      <h2 style="margin-bottom:1.5rem">Ce que fait l'APEL</h2>
+      <ul class="fiches fiches-3">
+        <li><h3>Accueillir</h3><p>Café de rentrée après l'entrée des enfants en classe, accueil des nouvelles familles, un parent relais dans chaque classe pour faire le lien entre l'enseignant, les parents et l'association.</p></li>
+        <li><h3>Faire la fête</h3><p>Marché de Noël, loto de Pâques, kermesse de fin d'année avec les spectacles des classes, et le grand vide-grenier de printemps sur la place Zola.</p></li>
+        <li><h3>Financer les projets</h3><p>Cinéma des maternelles, sorties de fin d'année, participation à la classe découverte des CM : les bénéfices des fêtes vont aux enfants.</p></li>
+        <li><h3>Mettre la main à la pâte</h3><p>Ateliers animés par des parents, matinées travaux, aide au déménagement dans la nouvelle école en 2022.</p></li>
+        <li><h3>Représenter les familles</h3><p>L'APEL siège au conseil d'établissement, qui réunit deux fois par an toute la communauté éducative.</p></li>
+        <li><h3>Adhérer</h3><p>27 € par famille et par an, sur la facture d'octobre (sauf demande contraire).</p></li>
+      </ul>
+    </div>
+  </section>
+
+  {rdv.length > 0 && (
+    <section class="section">
+      <div class="conteneur etroit">
+        <h2 style="margin-bottom:1.5rem">Les prochains rendez-vous</h2>
+        <Agenda evenements={rdv} />
+      </div>
+    </section>
+  )}
+
+  <section class="section section-creme">
+    <div class="conteneur etroit prose">
+      <h2 style="margin-top:0">Nous contacter</h2>
+      <p>Une idée, une envie de donner un coup de main ? Écrivez à l'APEL : <a href="mailto:contact-apel@sacrecoeurzola.fr">contact-apel@sacrecoeurzola.fr</a>. L'APEL a aussi sa <a href="https://www.facebook.com/APEL-Sacr%C3%A9Coeur-Nantes-542319505922626/">page Facebook</a>.</p>
+      <p><a href={lien('agenda/')}>Tout l'agenda de l'école</a></p>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,20 @@
+---
+// Liste d'actualités : carte avec photo si l'article en a une, carte de texte sinon.
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { lien, dateLongue } from '../lib/site';
+interface Props { actus: CollectionEntry<'actualites'>[]; titreNiveau?: 'h2' | 'h3' }
+const { actus } = Astro.props;
+---
+<ul class="actus">
+  {actus.map((a) => (
+    <li class:list={{ 'actu-texte': !a.data.photo }}>
+      <a href={lien(`actualites/${a.id}/`)}>
+        {a.data.photo && <Image src={a.data.photo} alt={a.data.alt ?? ''} widths={[390, 780]} sizes="(min-width: 48rem) 33vw, 100vw" />}
+        <span class="etiquette">{a.data.rubrique} · {dateLongue(a.data.date)}</span>
+        <h3>{a.data.titre}</h3>
+        <p>{a.data.resume}</p>
+      </a>
+    </li>
+  ))}
+</ul>
