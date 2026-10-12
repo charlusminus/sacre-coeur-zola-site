@@ -19,7 +19,8 @@ const serveur = createServer((req, res) => {
   if (!existsSync(f)) { res.writeHead(404); return res.end(); }
   res.writeHead(200, { 'content-type': types[extname(f)] ?? 'application/octet-stream' });
   res.end(readFileSync(f));
-}).listen(0, '127.0.0.1');
+});
+await new Promise((ok) => serveur.listen(0, '127.0.0.1', ok));
 const port = serveur.address().port;
 mkdirSync(sortie, { recursive: true });
 
@@ -35,6 +36,9 @@ for (const [nom, vue] of Object.entries(formats)) {
   for (const chemin of pages) {
     await page.goto(`http://127.0.0.1:${port}${base}${chemin}`, { waitUntil: 'networkidle' });
     await page.evaluate(() => document.fonts.ready);
+    // Fait défiler la page pour déclencher les images en chargement différé.
+    await page.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 600) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 60)); } window.scrollTo(0, 0); });
+    await page.waitForLoadState('networkidle');
     const debord = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     const slug = (chemin.replace(/\/$/, '') || 'accueil').replaceAll('/', '_');
     await page.screenshot({ path: join(sortie, `${slug}-${nom}.png`), fullPage: true });

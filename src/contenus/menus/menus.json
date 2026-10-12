@@ -1,0 +1,10 @@
+[
+  {
+    "id": "2026-10-12",
+    "semaine": "2026-10-12",
+    "lundi": { "entree": "Carottes râpées à l'orange", "plat": "Poulet rôti", "accompagnement": "Haricots verts persillés", "dessert": "Yaourt fermier" },
+    "mardi": { "entree": "Velouté de potiron", "plat": "Lasagnes végétariennes", "accompagnement": "Salade verte", "dessert": "Pomme de saison" },
+    "jeudi": { "entree": "Betteraves vinaigrette", "plat": "Filet de colin, sauce citron", "accompagnement": "Riz pilaf", "dessert": "Fromage blanc au miel" },
+    "vendredi": { "entree": "Taboulé", "plat": "Sauté de porc ou omelette", "accompagnement": "Purée de patates douces", "dessert": "Compote maison" }
+  }
+]

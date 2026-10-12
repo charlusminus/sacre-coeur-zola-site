@@ -1,0 +1,35 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo-ecole-compact.png';
+import { lien, navigation } from '../lib/site';
+const { courant = '' } = Astro.props;
+---
+<header class="entete" data-entete>
+  <div class="conteneur entete-barre">
+    <a class="entete-logo" href={lien()} aria-label="École Sacré-Coeur La Salle Nantes, accueil">
+      <Image src={logo} alt="École Sacré-Coeur La Salle Nantes" height={120} widths={[240, 360]} sizes="(min-width: 64rem) 186px, 149px" loading="eager" fetchpriority="high" />
+    </a>
+    <nav class="navigation" id="navigation" aria-label="Navigation principale">
+      <ul>
+        {navigation.map((n) => <li><a href={lien(n.href)} aria-current={courant === n.href ? 'page' : undefined}>{n.titre}</a></li>)}
+      </ul>
+    </nav>
+    {courant !== 'inscriptions/' && <a class="btn btn-principal entete-action" href={lien('inscriptions/#demande')}><span class="court">Inscription</span><span class="long">Inscrire mon enfant</span></a>}
+    <button class="menu-bouton" type="button" aria-expanded="false" aria-controls="navigation" data-menu>
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+      <span>Menu</span>
+    </button>
+  </div>
+</header>
+<script>
+  const entete = document.querySelector<HTMLElement>('[data-entete]');
+  const bouton = document.querySelector<HTMLButtonElement>('[data-menu]');
+  const basculer = (ouvert: boolean) => {
+    if (!entete || !bouton) return;
+    entete.toggleAttribute('data-ouvert', ouvert);
+    bouton.setAttribute('aria-expanded', String(ouvert));
+    bouton.querySelector('span')!.textContent = ouvert ? 'Fermer' : 'Menu';
+  };
+  bouton?.addEventListener('click', () => basculer(!entete?.hasAttribute('data-ouvert')));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') basculer(false); });
+</script>

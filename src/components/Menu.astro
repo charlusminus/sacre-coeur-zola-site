@@ -1,0 +1,23 @@
+---
+import { menuDeLaSemaine, jours } from '../lib/contenu';
+const menu = await menuDeLaSemaine();
+const du = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', timeZone: 'Europe/Paris' });
+---
+{menu && (
+  <>
+    <p class="discret">Semaine du {du.format(menu.data.semaine)}. Menu d'exemple pour la démonstration.</p>
+    <ul class="menu-jours" style="margin-top:1rem">
+      {jours.map((j) => menu.data[j] && (
+        <li>
+          <h3>{j}</h3>
+          <ul>
+            <li>{menu.data[j]!.entree}</li>
+            <li class="plat">{menu.data[j]!.plat}</li>
+            {menu.data[j]!.accompagnement && <li>{menu.data[j]!.accompagnement}</li>}
+            <li>{menu.data[j]!.dessert}</li>
+          </ul>
+        </li>
+      ))}
+    </ul>
+  </>
+)}

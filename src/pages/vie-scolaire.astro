@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import Menu from '../components/Menu.astro';
+import { lien } from '../lib/site';
+---
+<Base titre="Vie scolaire : horaires, cantine, garderie" courant="vie-scolaire/" description="Horaires, cantine et menus, garderie et étude, ateliers périscolaires de l'école Sacré-Coeur La Salle de Nantes.">
+  <section class="tete-page conteneur">
+    <p class="surtitre">Vie scolaire</p>
+    <h1>Le quotidien à l'école</h1>
+    <p class="chapo">Horaires, cantine, garderie et ateliers : tout ce qu'il faut savoir pour organiser la semaine de votre enfant.</p>
+  </section>
+
+  <section class="section section-creme" id="horaires" aria-labelledby="titre-horaires">
+    <div class="conteneur duo">
+      <div>
+        <h2 id="titre-horaires">Horaires</h2>
+        <p style="margin-top:1rem">Quatre jours par semaine : lundi, mardi, jeudi et vendredi. Pas de classe le mercredi.</p>
+      </div>
+      <table class="tableau">
+        <tbody>
+          <tr><th scope="row">Accueil du matin</th><td>7 h 45 à 8 h 20</td></tr>
+          <tr><th scope="row">Classe le matin</th><td>8 h 30 à 11 h 45</td></tr>
+          <tr><th scope="row">Pause méridienne</th><td>11 h 45 à 13 h 30 ; pour les externes, le portail ouvre à 13 h 20</td></tr>
+          <tr><th scope="row">Classe l'après-midi</th><td>13 h 30 à 16 h 30</td></tr>
+          <tr><th scope="row">Accueil du soir</th><td>16 h 40 à 18 h 30</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" id="cantine" aria-labelledby="titre-cantine">
+    <div class="conteneur">
+      <div class="entete-section">
+        <div>
+          <h2 id="titre-cantine">La cantine</h2>
+          <p style="margin-top:1rem;max-width:36em">Les repas sont préparés et livrés chauds le jour même. Les élèves d'élémentaire déjeunent en self-service. Pas besoin de préinscription : votre enfant peut déjeuner à l'école quand vous le souhaitez.</p>
+        </div>
+      </div>
+      <h3 style="margin-bottom:.5rem">Le menu de la semaine</h3>
+      <Menu />
+      <p class="discret" style="margin-top:1rem">Allergies et régimes particuliers : parlez-en à l'enseignant et au secrétariat ; un PAI peut être mis en place avec le médecin. [À CONFIRMER : prestataire et origine des produits]</p>
+    </div>
+  </section>
+
+  <section class="section section-creme" id="periscolaire" aria-labelledby="titre-peri">
+    <div class="conteneur">
+      <h2 id="titre-peri" style="margin-bottom:1.5rem">Avant et après la classe</h2>
+      <ul class="fiches fiches-3">
+        <li><h3>Garderie du matin</h3><p>De 7 h 45 à 8 h 20, pour toutes les classes.</p></li>
+        <li><h3>Garderie et étude du soir</h3><p>De 16 h 40 à 18 h 30. Du CP au CM2, les élèves inscrits en garderie ont un temps d'étude obligatoire de 16 h 40 à 17 h 30.</p></li>
+        <li><h3>Ateliers périscolaires</h3><p>Dès la moyenne section, à l'heure du déjeuner ou après la classe : selon les années, anglais, échecs, musique ou théâtre. Inscriptions en fin d'année pour l'année suivante.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="titre-pratique">
+    <div class="conteneur etroit">
+      <h2 id="titre-pratique" style="margin-bottom:1.5rem">En pratique</h2>
+      <div class="accordeon">
+        <details><summary>Fournitures de la rentrée</summary><div><p>La liste de chaque classe est publiée en juin. [À CONFIRMER : lien vers les listes 2026-2027]</p></div></details>
+        <details><summary>Calendrier des vacances</summary><div><p>Nantes est en zone B. Les dates de l'année sont dans l'<a href={lien('agenda/')}>agenda</a>.</p></div></details>
+        <details><summary>Absences et retards</summary><div><p>Prévenez le secrétariat le matin même, par téléphone ou par l'application de l'école.</p></div></details>
+        <details><summary>L'application des familles</summary><div><p>L'équipe échange avec les parents via une application : cahier de liaison, photos de classe, informations.</p></div></details>
+      </div>
+    </div>
+  </section>
+</Base>

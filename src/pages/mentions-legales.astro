@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import p from '../contenus/parametres.json';
+---
+<Base titre="Mentions légales et confidentialité" description="Mentions légales, données personnelles et droit à l'image du site de l'école Sacré-Coeur La Salle de Nantes.">
+  <section class="tete-page conteneur etroit prose">
+    <h1>Mentions légales et confidentialité</h1>
+    <h2>Éditeur</h2>
+    <p>{p.nom}, {p.adresse.rue}, {p.adresse.codePostal} {p.adresse.ville}. Organisme gestionnaire : OGEC [À CONFIRMER : dénomination et numéro]. Directrice de la publication : {p.direction}.</p>
+    <h2>Hébergement</h2>
+    <p>Version de démonstration hébergée par GitHub Pages (GitHub Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, États-Unis).</p>
+    <h2>Données personnelles</h2>
+    <p>Les informations envoyées par le formulaire d'inscription servent uniquement à recontacter la famille. Elles sont conservées un an au plus, puis supprimées. Pour y accéder, les rectifier ou les faire effacer : {p.emailSecretariat}. Vous pouvez aussi saisir la CNIL.</p>
+    <p>Le site ne dépose aucun cookie publicitaire. La mesure d'audience, si elle est activée, est anonyme et exemptée de consentement.</p>
+    <h2>Droit à l'image</h2>
+    <p>Les photos d'élèves ne sont publiées qu'avec l'autorisation écrite de leurs parents. Pour demander le retrait d'une photo : {p.emailSecretariat}.</p>
+  </section>
+</Base>

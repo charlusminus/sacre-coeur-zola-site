@@ -1,0 +1,155 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Agenda from '../components/Agenda.astro';
+import Menu from '../components/Menu.astro';
+import p from '../contenus/parametres.json';
+import { lien, dateLongue } from '../lib/site';
+import { evenementsAVenir, actualites } from '../lib/contenu';
+import { schemaEcole } from '../lib/schema';
+import assemblee from '../assets/photos/assemblee.jpg';
+import batiment from '../assets/photos/batiment.jpg';
+
+const prochains = await evenementsAVenir(3);
+const dernieres = await actualites(3);
+---
+<Base titre="École Sacré-Coeur La Salle, école privée maternelle et élémentaire à Nantes Zola"
+  description="École catholique sous contrat de la petite section au CM2, quartier Zola à Nantes. 210 élèves, 8 classes, accueil de 7 h 45 à 18 h 30. Inscriptions ouvertes."
+  schema={schemaEcole(Astro.site, import.meta.env.BASE_URL)}>
+
+  <section class="une" aria-labelledby="titre-une">
+    <div class="une-photo">
+      <Image src={assemblee} alt="Toute l'école réunie dans la grande salle pour un temps de chant." widths={[390, 578]} sizes="(min-width: 56rem) 50vw, 100vw" loading="eager" fetchpriority="high" />
+    </div>
+    <div class="une-texte">
+      <p class="surtitre">École maternelle et élémentaire, quartier Zola à Nantes</p>
+      <h1 id="titre-une">Une école à taille humaine, où tout le monde se connaît</h1>
+      <p class="chapo">De la petite section au CM2, 210 élèves grandissent ici dans la tradition éducative de saint Jean-Baptiste de La Salle : apprendre avec exigence, avec attention à chacun.</p>
+      <div class="actions">
+        <a class="btn btn-principal" href={lien('inscriptions/#demande')}>Inscrire mon enfant</a>
+        <a class="btn btn-secondaire" href={lien('inscriptions/#visiter')}>Visiter l'école</a>
+      </div>
+    </div>
+  </section>
+
+  <ul class="chiffres" aria-label="L'école en chiffres">
+    {p.chiffres.map((c) => <li><strong>{c.valeur}</strong><span>{c.libelle}</span></li>)}
+  </ul>
+
+  <section class="section" aria-labelledby="titre-projet">
+    <div class="conteneur">
+      <div class="entete-section">
+        <div>
+          <p class="surtitre">Notre projet éducatif 2025-2030</p>
+          <h2 id="titre-projet">Semer les savoirs, cultiver les talents</h2>
+        </div>
+        <a class="lien-fleche" href={lien('ecole/')}>Découvrir l'école</a>
+      </div>
+      <ul class="axes">
+        <li><h3>Espérer, donner confiance</h3><p>Des pratiques pédagogiques innovantes, les talents de chaque enfant mis en avant, une bibliothèque vivante.</p></li>
+        <li><h3>Croire, s'engager, s'épanouir</h3><p>Une pastorale ouverte à tous, un label éco-école renouvelé chaque année, des parrainages entre classes.</p></li>
+        <li><h3>Accompagner, nourrir, grandir</h3><p>Des élèves médiateurs, l'écoute des émotions, des sorties culturelles et une classe découverte en CM.</p></li>
+        <li><h3>Transmettre, partager, fraterniser</h3><p>Le travail en groupe, des temps forts en communauté, des actions au profit d'associations.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section-creme" aria-labelledby="titre-inscription">
+    <div class="conteneur">
+      <div class="entete-section">
+        <div>
+          <p class="surtitre">Rentrée {p.rentree}, inscriptions ouvertes</p>
+          <h2 id="titre-inscription">Inscrire votre enfant, en quatre étapes</h2>
+        </div>
+        <p>Pour une rentrée en septembre ou en cours d'année, de la petite section au CM2. Nous vous répondons sous deux jours ouvrés.</p>
+      </div>
+      <ol class="etapes">
+        <li><h3>Votre demande</h3><p>Six questions, deux minutes, en ligne ou par téléphone.</p></li>
+        <li><h3>Un rendez-vous</h3><p>Avec la cheffe d'établissement, pour faire connaissance.</p></li>
+        <li><h3>La visite</h3><p>Classes, cour, cantine : venez en famille.</p></li>
+        <li><h3>Le dossier</h3><p>Nous confirmons l'inscription et préparons la rentrée.</p></li>
+      </ol>
+      <div class="actions">
+        <a class="btn btn-principal" href={lien('inscriptions/#demande')}>Faire ma demande</a>
+        <a class="btn btn-secondaire" href={lien('inscriptions/')}>Tarifs et questions fréquentes</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="titre-journee">
+    <div class="conteneur duo duo-centre">
+      <div>
+        <p class="surtitre">Une journée au Sacré-Coeur</p>
+        <h2 id="titre-journee">De 7 h 45 à 18 h 30, quatre jours par semaine</h2>
+        <ul class="journee" style="margin-top:1.5rem">
+          <li><span class="heure">7 h 45</span><span>Accueil du matin en garderie</span></li>
+          <li><span class="heure">8 h 30</span><span>Classe jusqu'à 11 h 45</span></li>
+          <li><span class="heure">11 h 45</span><span>Déjeuner : repas livrés chauds le jour même, self pour les élémentaires</span></li>
+          <li><span class="heure">13 h 30</span><span>Classe jusqu'à 16 h 30</span></li>
+          <li><span class="heure">16 h 40</span><span>Garderie, avec étude obligatoire jusqu'à 17 h 30 du CP au CM2</span></li>
+          <li><span class="heure">18 h 30</span><span>Fin de l'accueil du soir</span></li>
+        </ul>
+        <p class="discret" style="margin-top:1rem">Lundi, mardi, jeudi et vendredi. Pas de classe le mercredi.</p>
+      </div>
+      <div class="photo-ronde">
+        <Image src={batiment} alt="L'entrée de l'école, bâtiment blanc et bardage bois, rue de la Salle Verte." widths={[390, 471]} sizes="(min-width: 56rem) 40vw, 100vw" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-creme" aria-labelledby="titre-agenda">
+    <div class="conteneur duo">
+      <div>
+        <div class="entete-section"><h2 id="titre-agenda">À venir</h2><a class="lien-fleche" href={lien('agenda/')}>Tout l'agenda</a></div>
+        <Agenda evenements={prochains} />
+      </div>
+      <div>
+        <div class="entete-section"><h2 id="titre-menu">À la cantine</h2><a class="lien-fleche" href={lien('vie-scolaire/#cantine')}>Les menus</a></div>
+        <Menu />
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="titre-actus">
+    <div class="conteneur">
+      <div class="entete-section"><h2 id="titre-actus">La vie de l'école</h2><a class="lien-fleche" href={lien('agenda/#actualites')}>Toutes les actualités</a></div>
+      <ul class="actus">
+        {dernieres.map((a) => (
+          <li>
+            <a href={lien(`actualites/${a.id}/`)}>
+              {a.data.photo && <Image src={a.data.photo} alt={a.data.alt ?? ''} widths={[390, 560]} sizes="(min-width: 48rem) 33vw, 100vw" />}
+              <span class="etiquette">{a.data.rubrique} · {dateLongue(a.data.date)}</span>
+              <h3>{a.data.titre}</h3>
+              <p>{a.data.resume}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section-creme" aria-labelledby="titre-mot">
+    <div class="conteneur etroit">
+      <h2 id="titre-mot" class="surtitre">Le mot de la cheffe d'établissement</h2>
+      <blockquote>
+        <p class="mot">« Ici, tout le monde se connaît et se reconnaît. Notre mission est claire : accueillir chaque élève tel qu'il est, avec bienveillance, en portant une attention toute particulière aux plus fragiles. »</p>
+        <footer class="mot-signature">Hélène Lampérière, cheffe d'établissement</footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur">
+      <div class="appel">
+        <div>
+          <h2>Venez nous rencontrer</h2>
+          <p style="margin-top:.75rem">Le secrétariat vous répond au <a href={'tel:+33' + p.telephone.replace(/\s/g, '').slice(1)}>{p.telephone}</a>, le lundi, le mardi et le vendredi matin.</p>
+        </div>
+        <div class="actions">
+          <a class="btn btn-principal" href={lien('inscriptions/#demande')}>Inscrire mon enfant</a>
+          <a class="btn btn-secondaire" href={lien('contact/')}>Nous trouver</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

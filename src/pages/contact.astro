@@ -1,0 +1,34 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import p from '../contenus/parametres.json';
+import batiment from '../assets/photos/batiment.jpg';
+const tel = (n: string) => 'tel:+33' + n.replace(/\s/g, '').slice(1);
+const carte = `https://www.openstreetmap.org/?mlat=${p.geo.latitude}&mlon=${p.geo.longitude}#map=17/${p.geo.latitude}/${p.geo.longitude}`;
+const itineraire = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${p.adresse.rue}, ${p.adresse.codePostal} ${p.adresse.ville}`)}`;
+---
+<Base titre="Contact et accès" courant="contact/" description="Adresse, téléphone, horaires du secrétariat et accès de l'école Sacré-Coeur La Salle, 24 rue de la Salle Verte, Nantes Zola.">
+  <section class="tete-page conteneur">
+    <p class="surtitre">Contact</p>
+    <h1>Venir nous voir</h1>
+  </section>
+  <section class="section section-creme">
+    <div class="conteneur duo">
+      <div class="prose">
+        <h2 style="margin-top:0">École Sacré-Coeur La Salle</h2>
+        <p>{p.adresse.rue}<br />{p.adresse.codePostal} {p.adresse.ville}, quartier {p.adresse.quartier}</p>
+        <p><a href={itineraire}>Itinéraire</a> · <a href={carte}>Voir sur la carte</a></p>
+        <h3>Secrétariat, {p.secretariat}</h3>
+        <p><a href={tel(p.telephone)}>{p.telephone}</a> ou <a href={tel(p.telephoneMobile)}>{p.telephoneMobile}</a><br /><a href={`mailto:${p.emailSecretariat}`}>{p.emailSecretariat}</a></p>
+        <ul>{p.horairesSecretariat.map((h) => <li>{h.jours} : {h.heures}</li>)}</ul>
+        <h3>Direction, {p.direction}</h3>
+        <p><a href={`mailto:${p.emailDirection}`}>{p.emailDirection}</a></p>
+        <h3>APEL</h3>
+        <p>[À CONFIRMER : adresse e-mail de l'APEL]</p>
+        <h3>Accès</h3>
+        <p>[À CONFIRMER : arrêts de tram et de bus les plus proches, stationnement, dépose minute]</p>
+      </div>
+      <div class="photo-ronde"><Image src={batiment} alt="L'entrée de l'école, rue de la Salle Verte." widths={[390, 471]} sizes="(min-width: 56rem) 40vw, 100vw" /></div>
+    </div>
+  </section>
+</Base>

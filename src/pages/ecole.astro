@@ -1,0 +1,66 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { lien } from '../lib/site';
+import tableau from '../assets/photos/tableau.jpg';
+---
+<Base titre="L'école" courant="ecole/" description="Le projet éducatif de l'école Sacré-Coeur La Salle de Nantes : une école lasallienne à taille humaine, 8 classes de la petite section au CM2, une équipe de 17 adultes.">
+  <section class="tete-page conteneur">
+    <p class="surtitre">L'école</p>
+    <h1>Grandir, apprendre et s'épanouir, chacun à son rythme</h1>
+    <p class="chapo">Une école lasallienne de 210 élèves au cœur du quartier Zola, où la proximité crée un vrai climat de confiance entre enfants, familles et équipe.</p>
+  </section>
+
+  <section class="section section-creme" aria-labelledby="titre-mot">
+    <div class="conteneur etroit prose">
+      <h2 id="titre-mot" style="margin-top:0">Le mot de la cheffe d'établissement</h2>
+      <p>Chers parents,</p>
+      <p>C'est avec joie et fierté que je vous présente notre école, située au cœur du quartier Zola à Nantes. Avec 210 élèves répartis dans 8 classes, notre établissement se distingue par sa taille humaine, propice à une ambiance chaleureuse et bienveillante. Ici, « tout le monde se connaît et se reconnaît », et cette proximité crée un véritable climat de confiance et de collaboration.</p>
+      <p>Notre communauté éducative, composée de 17 membres (enseignants, ASEM et personnel administratif), est pleinement investie dans l'accompagnement des enfants qui nous sont confiés. Chacun joue un rôle essentiel pour les aider à grandir, à apprendre et à s'épanouir.</p>
+      <p>Fidèles à l'héritage de saint Jean-Baptiste de La Salle (1651-1719), notre fondateur, nous nous inscrivons dans une démarche éducative inspirée par la foi, la fraternité et le service. Notre mission est claire : accueillir chaque élève tel qu'il est, avec bienveillance, en portant une attention toute particulière aux plus fragiles.</p>
+      <p>Notre ambition est de proposer à chaque enfant une instruction de qualité, alliée à une éducation ancrée dans le respect de l'autre, l'ouverture et le vivre ensemble. Nous souhaitons offrir un cadre sécurisant et épanouissant, où chacun peut trouver sa place et se construire, à son rythme, dans un esprit de confiance et d'espérance.</p>
+      <p class="mot-signature">Hélène Lampérière, cheffe d'établissement</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="titre-projet">
+    <div class="conteneur">
+      <p class="surtitre">Projet éducatif 2025-2030</p>
+      <h2 id="titre-projet" style="margin-bottom:2rem">Semer les savoirs, cultiver les talents</h2>
+      <ul class="axes">
+        <li><h3>Espérer, donner confiance</h3><ul><li>Pratiques pédagogiques et éducatives innovantes</li><li>Mise en avant des talents des enfants</li><li>Assemblées mensuelles des enfants et des adultes</li><li>Lire et faire lire : une bibliothèque vivante</li></ul></li>
+        <li><h3>Croire, s'engager, s'épanouir</h3><ul><li>Une pastorale pour s'approprier les valeurs de l'humanisme chrétien</li><li>Un label éco-école vivant et renouvelé chaque année</li><li>Des projets Santé et Sécurité</li><li>Des parrainages inter-classes</li></ul></li>
+        <li><h3>Accompagner, nourrir, grandir</h3><ul><li>Travail des adultes en lien avec les parents via une application</li><li>Élèves médiateurs entre pairs</li><li>Prise en compte des émotions et écoute attentive</li><li>Sorties culturelles et classe découverte en CM</li></ul></li>
+        <li><h3>Transmettre, partager, fraterniser</h3><ul><li>Travaux de groupe en classe pour apprendre</li><li>Partenariats avec les établissements du réseau</li><li>Temps forts de partage fraternel en communauté éducative</li><li>Actions au profit d'associations</li></ul></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section-creme" aria-labelledby="titre-classes">
+    <div class="conteneur duo duo-centre">
+      <div>
+        <h2 id="titre-classes">Huit classes, une équipe de dix-sept adultes</h2>
+        <p style="margin-top:1rem">De la petite section au CM2, dont des classes à deux niveaux en élémentaire. Enseignants, ASEM et personnel administratif travaillent ensemble, et avec les parents.</p>
+        <p class="discret" style="margin-top:.75rem">Répartition 2026-2027 et trombinoscope de l'équipe à ajouter. [À CONFIRMER]</p>
+      </div>
+      <div class="photo-ronde"><Image src={tableau} alt="Un élève montre une réponse sur le tableau numérique de la classe." widths={[281]} sizes="(min-width: 56rem) 40vw, 100vw" /></div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="titre-pastorale">
+    <div class="conteneur duo">
+      <div class="prose">
+        <h2 id="titre-pastorale" style="margin-top:0">Une école lasallienne</h2>
+        <p>L'école appartient au réseau La Salle France, fondé sur l'œuvre de saint Jean-Baptiste de La Salle, patron des éducateurs, et animé par les Frères des Écoles Chrétiennes. Plus de 200 établissements en France partagent ce projet : une école qui accueille chacun, avec une attention particulière aux plus fragiles.</p>
+        <p>La pastorale rythme l'année : célébrations de rentrée, de Noël et de Pâques, temps de partage avec la paroisse, actions de solidarité. Elle est proposée à tous les enfants, dans le respect des convictions de chaque famille.</p>
+      </div>
+      <div class="prose" id="apel">
+        <h2 style="margin-top:0">APEL et OGEC</h2>
+        <p><strong>L'APEL</strong>, association des parents d'élèves, fait vivre l'école avec l'équipe : accueil des nouvelles familles, fêtes, tombola, vide-grenier de printemps, soutien aux sorties et aux projets. Tous les parents peuvent y participer, à la mesure de leur temps.</p>
+        <p><strong>L'OGEC</strong> gère l'école : bâtiments, budget, personnel non enseignant. Ses membres sont bénévoles.</p>
+        <p><a href={lien('contact/')}>Contacter l'APEL</a></p>
+      </div>
+    </div>
+  </section>
+
+</Base>

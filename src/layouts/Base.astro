@@ -28,10 +28,11 @@ const ogImage = new URL(image ?? lien('partage.jpg'), Astro.site).href;
     <meta property="og:url" content={canonique} />
     <meta property="og:image" content={ogImage} />
     <meta name="theme-color" content="#ffffff" />
-    <link rel="icon" href={lien('favicon.svg')} type="image/svg+xml" />
-    <link rel="preload" href={lien('fonts/figtree.woff2')} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={lien('fonts/fraunces.woff2')} as="font" type="font/woff2" crossorigin />
-    <style is:inline set:html={`@font-face{font-family:'Figtree';font-style:normal;font-weight:300 900;font-display:optional;src:url(${lien('fonts/figtree.woff2')}) format('woff2')}@font-face{font-family:'Fraunces';font-style:normal;font-weight:100 900;font-display:optional;src:url(${lien('fonts/fraunces.woff2')}) format('woff2')}`}></style>
+    <link rel="icon" href={lien('favicon.png')} type="image/png" />
+    <link rel="apple-touch-icon" href={lien('apple-touch-icon.png')} />
+    <link rel="preload" href={lien('fonts/nunito.woff2')} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={lien('fonts/fira-400.woff2')} as="font" type="font/woff2" crossorigin />
+    <style is:inline set:html={`@font-face{font-family:'Nunito';font-weight:200 1000;font-display:optional;src:url(${lien('fonts/nunito.woff2')}) format('woff2')}@font-face{font-family:'Fira Sans';font-weight:400;font-display:optional;src:url(${lien('fonts/fira-400.woff2')}) format('woff2')}@font-face{font-family:'Fira Sans';font-weight:600;font-display:optional;src:url(${lien('fonts/fira-600.woff2')}) format('woff2')}`}></style>
     {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
   </head>
   <body>
