@@ -11,7 +11,7 @@ const complet = new Intl.DateTimeFormat('fr-FR', { weekday: 'long', day: 'numeri
     <li>
       <div class="date-bloc" aria-hidden="true"><strong>{jour.format(e.data.debut)}</strong><span>{mois.format(e.data.debut).replace('.', '')}</span></div>
       <div>
-        <span class:list={['etiquette', { 'etiquette-forte': e.data.public === 'Futures familles' }]}>{e.data.public}</span>
+        {e.data.public !== "Familles de l'école" && <span class:list={['etiquette', { 'etiquette-forte': e.data.public === 'Futures familles' }]}>{e.data.public}</span>}
         <h3>{e.data.titre}</h3>
         <p class="discret">{[
           complet.format(e.data.debut) + (e.data.fin ? ` au ${complet.format(e.data.fin)}` : ''),

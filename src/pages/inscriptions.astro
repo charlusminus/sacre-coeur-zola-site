@@ -12,12 +12,13 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
 ---
 <Base titre="Inscrire votre enfant" courant="inscriptions/"
   description="Inscriptions à l'école Sacré-Cœur La Salle de Nantes, de la petite section au CM2 : étapes, portes ouvertes, tarifs, demande en ligne en deux minutes.">
-  <section class="conteneur duo tete-inscription" aria-labelledby="titre-page">
-    <div>
+  <section class="conteneur tete-inscription" aria-labelledby="titre-page">
+    <div class="zone-tete">
       <p class="surtitre">Rentrée {p.rentree} et en cours d'année</p>
       <h1 id="titre-page">Inscrire votre enfant</h1>
       <p class="chapo">De la petite section au CM2, quelle que soit son histoire. Chaque inscription commence par une rencontre.</p>
-      <a class="btn btn-principal seulement-mobile" href="#demande" style="margin-top:1.5rem">Faire ma demande</a>
+    </div>
+    <div class="zone-etapes">
       <ol class="etapes etapes-verticales">
         <li><h3>Votre demande</h3><p>Le formulaire, ou un appel au <a href={tel}>{p.telephone}</a>. Nous vous répondons sous deux jours ouvrés.</p></li>
         <li><h3>Rendez-vous et visite</h3><p>Avec Mme Lampérière, cheffe d'établissement, à l'école ou en visio si vous arrivez d'une autre ville : vous faites connaissance et visitez classes, cour et cantine.</p></li>
@@ -29,8 +30,8 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
         <ul>{p.horairesSecretariat.map((h) => <li>{h.jours} : {h.heures}</li>)}</ul>
       </div>
     </div>
-    <div class="carte-formulaire" id="demande">
-      <h2 class="titre-petit">Faire une demande</h2>
+    <div class="carte-formulaire zone-formulaire" id="demande">
+      <h2 class="titre-petit">Demander un rendez-vous</h2>
       <p class="discret" style="margin-bottom:1.25rem">Tous les champs sont obligatoires, sauf le message.</p>
       <form class="formulaire" data-demande novalidate>
         <div class="champs-duo">
@@ -61,7 +62,7 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
         <p class="aide" id="aide-classe" data-aide-classe>La classe se remplit d'après la date de naissance ; vous pouvez la modifier.</p>
         <div class="champ"><label for="message">Un mot pour nous (facultatif)</label><textarea id="message" name="message" rows="3"></textarea></div>
         <p class="reassurance">Le secrétariat vous rappelle sous deux jours ouvrés pour fixer le rendez-vous avec Mme Lampérière.</p>
-        <button class="btn btn-principal" type="submit">Envoyer ma demande</button>
+        <button class="btn btn-principal" type="submit">Demander un rendez-vous</button>
         <p class="note-rgpd">Vos réponses servent uniquement à vous recontacter pour l'inscription. Elles sont conservées un an au plus par l'école, puis supprimées. Pour y accéder ou les faire effacer : {p.emailSecretariat}.</p>
         <p class="confirmation" data-confirmation hidden role="status">Merci. Dans cette démonstration, rien n'est encore envoyé : sur le site en ligne, votre demande arrivera au secrétariat, qui vous rappellera.</p>
       </form>
@@ -82,6 +83,7 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
     <div class="conteneur duo">
       <div>
         <h2 id="titre-tarifs">Tarifs 2026-2027</h2>
+        <p class="discret" style="margin-top:.5rem">Grille de l'année en cours, révisée au printemps pour la rentrée suivante.</p>
         <p style="margin-top:1rem">L'école est sous contrat d'association avec l'État : les enseignants sont rémunérés par l'Éducation nationale. La contribution des familles finance l'immobilier, l'entretien et le caractère propre de l'école.</p>
       </div>
       <div>
@@ -96,6 +98,7 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
             <tr><th scope="row">Étude et garderie du soir</th><td>3 € par heure, la 2<sup>e</sup> heure comptée à partir de 17 h 30</td></tr>
           </tbody>
         </table>
+        <p style="margin-top:1rem"><strong>Exemple :</strong> un enfant qui déjeune à la cantine quatre jours par semaine, soit environ 16 repas par mois, revient à 53 € + 95 € de repas, environ 148 € par mois, hors garderie.</p>
         <p class="discret" style="margin-top:1rem">La contribution de solidarité permet à l'école de rester ouverte à tous les élèves, sans distinction de conditions et de ressources.</p>
       </div>
     </div>

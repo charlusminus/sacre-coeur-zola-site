@@ -92,21 +92,6 @@ p, li { text-wrap: pretty; }
   .une-photo img { border-radius: var(--rayon); aspect-ratio: 5 / 4; }
 }
 
-/* Chiffres clés : aplats de la charte, texte encre */
-.chiffres { display: grid; grid-template-columns: 1fr 1fr; list-style: none; padding: 0; }
-.chiffres li { padding: 1.25rem var(--gouttiere) 1.4rem; }
-.chiffres li:nth-child(1) { background: var(--jaune); }
-.chiffres li:nth-child(2) { background: var(--jaune-clair); }
-.chiffres li:nth-child(3) { background: var(--vert); }
-.chiffres li:nth-child(4) { background: var(--vert-clair); }
-.chiffres strong { display: block; font: 900 2.5rem/1 var(--titre); letter-spacing: -0.02em; }
-.chiffres span { display: block; margin-top: 0.35rem; font-size: var(--t-petit); line-height: 1.35; font-weight: 600; }
-@media (min-width: 56rem) {
-  .chiffres { grid-template-columns: repeat(4, 1fr); }
-  .chiffres li { padding: 2rem 2.5rem 2.25rem; }
-  .chiffres strong { font-size: 3.25rem; }
-}
-
 /* Projet éducatif : quatre axes, numérotés aux couleurs de l'étoile */
 .axes { display: grid; gap: 2rem; list-style: none; padding: 0; counter-reset: axe; }
 .axes li { counter-increment: axe; padding-top: 1rem; border-top: 3px solid var(--c); }
@@ -174,13 +159,6 @@ p, li { text-wrap: pretty; }
 .mot { font: 600 clamp(1.25rem, 1.05rem + 0.8vw, 1.5rem)/1.45 var(--titre); }
 .mot-signature { margin-top: 1.25rem; font-weight: 600; }
 
-/* Bloc d'appel final */
-.appel { background: var(--nuit); color: #fff; border-radius: var(--rayon); padding: clamp(2rem, 1rem + 4vw, 4rem); display: grid; gap: 1.5rem; }
-.appel a:not(.btn) { color: #fff; }
-.appel .btn-secondaire { border-color: #fff; color: #fff; }
-@media (hover: hover) { .appel .btn-secondaire:hover { background: #fff; color: var(--nuit); } }
-@media (min-width: 56rem) { .appel { grid-template-columns: 1.4fr 1fr; align-items: center; } .appel .actions { justify-content: end; margin: 0; } }
-
 /* Pages intérieures */
 .tete-page { padding-block: clamp(2rem, 1rem + 4vw, 4rem) clamp(1.5rem, 1rem + 2vw, 2.5rem); }
 .tete-page h1 { margin-bottom: 1rem; }
@@ -235,32 +213,15 @@ p, li { text-wrap: pretty; }
 .pied-logo img { height: 4.5rem; width: auto; }
 .pied-bas { border-top: 1px solid rgb(255 255 255 / 0.2); padding-block: 1.25rem 2rem; font-size: 0.875rem; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
 @media (min-width: 56rem) { .pied-grille { grid-template-columns: 1.3fr 1fr 1fr 1fr; } }
-main + .pied { margin-top: 0; }
 
 /* Tour 2 de la boucle design */
 a[href^='tel:'] { white-space: nowrap; }
-.rendez-vous { margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid #e7e3dc; }
-.rendez-vous strong { color: var(--rose); }
 @media (max-width: 30rem) {
   .une-photo img { aspect-ratio: 2 / 1; }
   .une h1 { font-size: 2rem; }
   .une .chapo { font-size: 1.0625rem; }
-  .actions-une { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 1.25rem; }
+  .actions-une { display: grid; grid-template-columns: 1fr; gap: 0.5rem; margin-top: 1.25rem; }
   .actions-une .btn { padding-inline: 0.5rem; font-size: 0.9375rem; }
-}
-
-/* Faits clés : une ligne sobre, séparée par des filets */
-.faits { display: grid; list-style: none; padding: 0; border-block: 1px solid #ded8cc; }
-.faits li { padding-block: 1.1rem; }
-.faits li + li { border-top: 1px solid #ded8cc; }
-.faits strong { display: block; font: 900 1.75rem/1.1 var(--titre); }
-.faits span { display: block; margin-top: 0.25rem; font-size: var(--t-petit); color: var(--encre-douce); }
-@media (min-width: 56rem) {
-  .faits { grid-template-columns: repeat(3, 1fr); }
-  .faits li { padding: 1.75rem 2rem; }
-  .faits li:first-child { padding-left: 0; }
-  .faits li + li { border-top: 0; border-left: 1px solid #ded8cc; }
-  .faits strong { font-size: 2.125rem; }
 }
 
 /* Ce que vivent les enfants : photo et fait */
@@ -296,7 +257,24 @@ a[href^='tel:'] { white-space: nowrap; }
 .secretariat ul { list-style: none; padding: 0; margin-top: 0.4rem; font-size: var(--t-petit); }
 .titre-petit { font-size: 1.375rem; margin-bottom: 0.5rem; }
 .reassurance { font-weight: 600; }
-@media (min-width: 56rem) { .seulement-mobile { display: none; } .tete-inscription .carte-formulaire { position: sticky; top: 7rem; } }
+@media (min-width: 56rem) { .tete-inscription .carte-formulaire { position: sticky; top: 7rem; } }
 .carte-formulaire { scroll-margin-top: 6rem; }
 
 .une h1 { font-size: clamp(2rem, 1.3rem + 2.4vw, 3.25rem); }
+
+/* Tour 3 */
+.acces-familles { display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; padding-block: 1rem; border-block: 1px solid #ded8cc; font-size: var(--t-petit); }
+.acces-familles span { color: var(--encre-douce); }
+.acces-familles a { font-weight: 600; }
+.tete-inscription { display: grid; gap: 2rem; grid-template-areas: 'tete' 'formulaire' 'etapes'; }
+.zone-tete { grid-area: tete; }
+.zone-formulaire { grid-area: formulaire; }
+.zone-etapes { grid-area: etapes; }
+.zone-etapes .etapes-verticales { margin-top: 0; }
+@media (min-width: 56rem) {
+  .tete-inscription { grid-template-columns: 1fr 1fr; grid-template-areas: 'tete formulaire' 'etapes formulaire'; column-gap: 4rem; row-gap: 1.5rem; align-items: start; }
+  .zone-formulaire { grid-row: span 2; }
+}
+.journee li { grid-template-columns: 5.5rem 1fr; }
+@media (max-width: 30rem) { .tableau th { width: 6.5rem; } }
+.vecu img[alt^="Des mains"] { object-position: 50% 15%; }

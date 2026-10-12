@@ -16,6 +16,7 @@ const aVenir = await evenementsAVenir();
 const visite = aVenir.find((e) => e.data.public === 'Futures familles');
 const prochains = aVenir.filter((e) => e !== visite).slice(0, 4);
 const dernieres = await actualites(3);
+const jourMois = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', timeZone: 'Europe/Paris' });
 const jourLong = new Intl.DateTimeFormat('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'Europe/Paris' });
 const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
 ---
@@ -31,16 +32,20 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
       <h1 id="titre-une">210 élèves, de la petite section au CM2, dans une école neuve du quartier Zola</h1>
       <p class="chapo">Une école catholique lasallienne sous contrat, à Nantes : apprendre avec exigence, grandir avec attention à chacun.</p>
       <div class="actions actions-une">
-        <a class="btn btn-principal" href={lien('inscriptions/#demande')}>Inscrire mon enfant</a>
-        <a class="btn btn-secondaire" href={lien('inscriptions/#visiter')}>Visiter l'école</a>
+        <a class="btn btn-principal" href={lien('inscriptions/#demande')}>Demander un rendez-vous</a>
+        {visite && <a class="btn btn-secondaire" href={lien('inscriptions/#visiter')}>Portes ouvertes le {jourMois.format(visite.data.debut)}</a>}
       </div>
-      {visite && <p class="rendez-vous"><strong>Portes ouvertes</strong> le {jourLong.format(visite.data.debut)}{visite.data.horaires ? `, ${visite.data.horaires}` : ''}</p>}
+      <p class="discret" style="margin-top:.75rem">Réponse sous deux jours ouvrés. Inscriptions ouvertes pour la rentrée {p.rentree} et en cours d'année.</p>
     </div>
   </section>
 
-  <ul class="faits conteneur" aria-label="L'école en bref">
-    {p.chiffres.map((c) => <li><strong>{c.valeur}</strong><span>{c.libelle}</span></li>)}
-  </ul>
+  <nav class="acces-familles conteneur" aria-label="Accès rapides pour les familles de l'école">
+    <span>Familles de l'école :</span>
+    <a href={lien('vie-scolaire/#cantine')}>Menu de la semaine</a>
+    <a href={lien('agenda/')}>Agenda</a>
+    <a href={lien('vie-scolaire/#horaires')}>Horaires</a>
+    <a href={lien('vie-scolaire/#pratique')}>Absences et vacances</a>
+  </nav>
 
   <section class="section" aria-labelledby="titre-projet">
     <div class="conteneur">
@@ -78,13 +83,12 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
         <p>Pour une rentrée en septembre ou en cours d'année, de la petite section au CM2.</p>
       </div>
       <ol class="etapes">
-        <li><h3>Votre demande</h3><p>Six questions en ligne, ou un appel au <a href={tel}>{p.telephone}</a>. Réponse sous deux jours ouvrés.</p></li>
+        <li><h3>Votre demande</h3><p>Quelques questions en ligne, ou un appel au <a href={tel}>{p.telephone}</a>. Réponse sous deux jours ouvrés.</p></li>
         <li><h3>Rendez-vous et visite</h3><p>Avec Mme Lampérière, cheffe d'établissement : vous faites connaissance et visitez l'école.</p></li>
         <li><h3>Le dossier</h3><p>Vous recevez le dossier ; l'inscription est confirmée à son retour.</p></li>
       </ol>
       <div class="actions">
-        <a class="btn btn-principal" href={lien('inscriptions/#demande')}>Faire ma demande</a>
-        {visite && <a class="btn btn-secondaire" href={lien('inscriptions/#visiter')}>Portes ouvertes le {jourLong.format(visite.data.debut)}</a>}
+        <a class="btn btn-principal" href={lien('inscriptions/#demande')}>Demander un rendez-vous</a>
       </div>
     </div>
   </section>
