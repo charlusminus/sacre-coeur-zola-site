@@ -278,3 +278,4 @@ a[href^='tel:'] { white-space: nowrap; }
 .journee li { grid-template-columns: 5.5rem 1fr; }
 @media (max-width: 30rem) { .tableau th { width: 6.5rem; } }
 .vecu img[alt^="Des mains"] { object-position: 50% 15%; }
+.visuellement-cache { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
