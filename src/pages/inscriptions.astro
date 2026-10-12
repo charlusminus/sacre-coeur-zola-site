@@ -12,58 +12,59 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
 ---
 <Base titre="Inscrire votre enfant" courant="inscriptions/"
   description="Inscriptions à l'école Sacré-Cœur La Salle de Nantes, de la petite section au CM2 : étapes, portes ouvertes, tarifs, demande en ligne en deux minutes.">
-  <section class="tete-page conteneur">
-    <p class="surtitre">Rentrée {p.rentree} et en cours d'année</p>
-    <h1>Inscrire votre enfant</h1>
-    <p class="chapo">Nous accueillons les enfants de la petite section au CM2, quelle que soit leur histoire. Chaque inscription commence par une rencontre : c'est là que nous faisons connaissance, et que vous découvrez l'école.</p>
-  </section>
-
-  <section class="section section-creme" aria-labelledby="titre-etapes">
-    <div class="conteneur">
-      <h2 id="titre-etapes" style="margin-bottom:2rem">Comment ça se passe</h2>
-      <ol class="etapes">
-        <li><h3>Votre demande</h3><p>Le formulaire ci-dessous, ou un appel au secrétariat. Nous vous répondons sous deux jours ouvrés.</p></li>
-        <li><h3>Un rendez-vous</h3><p>Avec Mme Lampérière, cheffe d'établissement, à l'école ou en visio si vous arrivez d'une autre ville.</p></li>
-        <li><h3>La visite</h3><p>Pendant le rendez-vous ou aux portes ouvertes : classes, cour, cantine.</p></li>
-        <li><h3>Le dossier</h3><p>Vous recevez le dossier d'inscription ; l'inscription est confirmée à son retour.</p></li>
+  <section class="conteneur duo tete-inscription" aria-labelledby="titre-page">
+    <div>
+      <p class="surtitre">Rentrée {p.rentree} et en cours d'année</p>
+      <h1 id="titre-page">Inscrire votre enfant</h1>
+      <p class="chapo">De la petite section au CM2, quelle que soit son histoire. Chaque inscription commence par une rencontre.</p>
+      <a class="btn btn-principal seulement-mobile" href="#demande" style="margin-top:1.5rem">Faire ma demande</a>
+      <ol class="etapes etapes-verticales">
+        <li><h3>Votre demande</h3><p>Le formulaire, ou un appel au <a href={tel}>{p.telephone}</a>. Nous vous répondons sous deux jours ouvrés.</p></li>
+        <li><h3>Rendez-vous et visite</h3><p>Avec Mme Lampérière, cheffe d'établissement, à l'école ou en visio si vous arrivez d'une autre ville : vous faites connaissance et visitez classes, cour et cantine.</p></li>
+        <li><h3>Le dossier</h3><p>Vous recevez le dossier d'inscription ; l'inscription est confirmée à son retour, avec un acompte de 50 € déduit de la première facture.</p></li>
       </ol>
-    </div>
-  </section>
-
-  <section class="section" id="demande" aria-labelledby="titre-demande">
-    <div class="conteneur duo">
-      <div>
-        <h2 id="titre-demande">Faire une demande</h2>
-        <p style="margin-top:1rem">Deux minutes suffisent. Vous préférez parler à quelqu'un ? Le secrétariat vous répond au <a href={tel}>{p.telephone}</a>.</p>
-        <ul class="journee" style="margin-top:1.5rem">
-          {p.horairesSecretariat.map((h) => <li><span class="heure">{h.jours}</span><span>{h.heures}</span></li>)}
-        </ul>
+      <div class="secretariat">
+        <h2 class="titre-petit">Le secrétariat</h2>
+        <p>{p.secretariat}, <a href={tel}>{p.telephone}</a></p>
+        <ul>{p.horairesSecretariat.map((h) => <li>{h.jours} : {h.heures}</li>)}</ul>
       </div>
-      <div class="carte-formulaire">
-        <form class="formulaire" data-demande novalidate>
-          <div class="champs-duo">
-            <div class="champ"><label for="parent">Votre nom</label><input id="parent" name="parent" autocomplete="name" required /></div>
-            <div class="champ"><label for="telephone">Téléphone</label><input id="telephone" name="telephone" type="tel" autocomplete="tel" required /></div>
-          </div>
-          <div class="champ"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="email" required /></div>
-          <div class="champs-duo">
-            <div class="champ"><label for="enfant">Prénom de l'enfant</label><input id="enfant" name="enfant" required /></div>
-            <div class="champ"><label for="naissance">Date de naissance</label><input id="naissance" name="naissance" type="date" required /></div>
+    </div>
+    <div class="carte-formulaire" id="demande">
+      <h2 class="titre-petit">Faire une demande</h2>
+      <p class="discret" style="margin-bottom:1.25rem">Tous les champs sont obligatoires, sauf le message.</p>
+      <form class="formulaire" data-demande novalidate>
+        <div class="champs-duo">
+          <div class="champ"><label for="parent">Votre nom</label><input id="parent" name="parent" autocomplete="name" required /></div>
+          <div class="champ"><label for="telephone">Téléphone</label><input id="telephone" name="telephone" type="tel" autocomplete="tel" required /></div>
+        </div>
+        <div class="champ"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="email" required /></div>
+        <div class="champs-duo">
+          <div class="champ"><label for="enfant">Prénom de l'enfant</label><input id="enfant" name="enfant" required /></div>
+          <div class="champ"><label for="naissance">Date de naissance</label><input id="naissance" name="naissance" inputmode="numeric" placeholder="jj/mm/aaaa" pattern="\d{2}/\d{2}/\d{4}" maxlength="10" required aria-describedby="aide-classe" /></div>
+        </div>
+        <div class="champs-duo">
+          <div class="champ">
+            <label for="rentree">Rentrée souhaitée</label>
+            <select id="rentree" name="rentree" required>
+              <option>Septembre {debut}</option>
+              <option>En cours d'année {debut - 1}-{debut}</option>
+            </select>
           </div>
           <div class="champ">
-            <label for="classe">Classe souhaitée</label>
+            <label for="classe">Classe</label>
             <select id="classe" name="classe" required>
               <option value="">Choisir</option>
               {classes.map((c) => <option>{c}</option>)}
             </select>
-            <span class="aide" data-aide-classe>Remplie d'après la date de naissance, modifiable.</span>
           </div>
-          <div class="champ"><label for="message">Un mot pour nous (facultatif)</label><textarea id="message" name="message" rows="3"></textarea></div>
-          <button class="btn btn-principal" type="submit">Envoyer ma demande</button>
-          <p class="note-rgpd">Vos réponses servent uniquement à vous recontacter pour l'inscription. Elles sont conservées un an au plus par l'école, puis supprimées. Vous pouvez y accéder ou les faire effacer en écrivant au secrétariat.</p>
-          <p class="confirmation" data-confirmation hidden role="status">Merci. Dans cette démonstration, rien n'est encore envoyé : sur le site en ligne, votre demande arrivera au secrétariat, qui vous rappellera.</p>
-        </form>
-      </div>
+        </div>
+        <p class="aide" id="aide-classe" data-aide-classe>La classe se remplit d'après la date de naissance ; vous pouvez la modifier.</p>
+        <div class="champ"><label for="message">Un mot pour nous (facultatif)</label><textarea id="message" name="message" rows="3"></textarea></div>
+        <p class="reassurance">Le secrétariat vous rappelle sous deux jours ouvrés pour fixer le rendez-vous avec Mme Lampérière.</p>
+        <button class="btn btn-principal" type="submit">Envoyer ma demande</button>
+        <p class="note-rgpd">Vos réponses servent uniquement à vous recontacter pour l'inscription. Elles sont conservées un an au plus par l'école, puis supprimées. Pour y accéder ou les faire effacer : {p.emailSecretariat}.</p>
+        <p class="confirmation" data-confirmation hidden role="status">Merci. Dans cette démonstration, rien n'est encore envoyé : sur le site en ligne, votre demande arrivera au secrétariat, qui vous rappellera.</p>
+      </form>
     </div>
   </section>
 
@@ -118,16 +119,25 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
   const classes = ['CM2', 'CM1', 'CE2', 'CE1', 'CP', 'Grande section', 'Moyenne section', 'Petite section'];
   const form = document.querySelector('[data-demande]');
   const naissance = form.querySelector('#naissance');
+  const rentree = form.querySelector('#rentree');
   const classe = form.querySelector('#classe');
   const aide = form.querySelector('[data-aide-classe]');
-  naissance.addEventListener('change', () => {
-    const annee = new Date(naissance.value).getFullYear();
-    const rang = annee - (debut - 10); // un enfant né en (rentrée - 10) entre en CM2, en (rentrée - 3) en petite section
+  const proposer = () => {
+    const m = naissance.value.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    if (!m) return;
+    const annee = rentree.selectedIndex === 0 ? debut : debut - 1;
+    const rang = Number(m[3]) - (annee - 10); // né en (rentrée - 10) : CM2 ; en (rentrée - 3) : petite section
     if (rang >= 0 && rang < classes.length) {
       classe.value = classes[rang];
-      aide.textContent = `Pour la rentrée ${debut}, votre enfant entre en ${classes[rang]}. Vous pouvez modifier ce choix.`;
+      aide.textContent = `Pour cette rentrée, votre enfant entre en ${classes[rang]}. Vous pouvez modifier ce choix.`;
     }
+  };
+  naissance.addEventListener('input', () => {
+    const chiffres = naissance.value.replace(/\D/g, '').slice(0, 8);
+    naissance.value = [chiffres.slice(0, 2), chiffres.slice(2, 4), chiffres.slice(4)].filter(Boolean).join('/');
+    proposer();
   });
+  rentree.addEventListener('change', proposer);
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     if (!form.reportValidity()) return;
