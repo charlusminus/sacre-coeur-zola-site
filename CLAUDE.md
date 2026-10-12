@@ -19,4 +19,5 @@ décisions, routine d'itération) est dans le dépôt privé `charlusminus/sacre
 - Avant chaque push : `npm run build && npm run recette` (0 échec exigé), et les captures pour tout changement visuel.
 - Pièges vécus : un attribut `[hidden]` est écrasé par un `display` de classe (règle globale `[hidden]` dans le CSS) ;
   un `pattern` d'attribut perd ses `\d` dans Astro (écrire `[0-9]`) ; `scroll-padding-top` et `scroll-margin-top`
-  s'additionnent sous l'en-tête collant.
+  s'additionnent sous l'en-tête collant ; `typographie.mjs` enveloppe « Sacré-Cœur » dans un `<span>`, donc un texte posé
+  directement dans un flex ou une grille (`summary`) se coupe en colonnes : l'envelopper dans un `<span>` (la recette le refuse).
