@@ -21,7 +21,7 @@ const article = {
     <p class="surtitre"><a href={lien('agenda/#actualites')}>Actualités</a> · {a.data.rubrique}</p>
     <h1>{a.data.titre}</h1>
     <p class="discret"><time datetime={a.data.date.toISOString()}>{dateLongue(a.data.date)}</time></p>
-    {a.data.photo && <div class="photo-ronde" style="margin-block:2rem"><Image src={a.data.photo} alt={a.data.alt ?? ''} widths={[390, 640]} sizes="(min-width: 40rem) 640px, 100vw" loading="eager" /></div>}
+    {a.data.photo && <div class="photo-ronde" style="margin-block:2rem"><Image src={a.data.photo} alt={a.data.alt ?? ''} widths={[390, 780, 1280]} sizes="(min-width: 40rem) 640px, 100vw" loading="eager" /></div>}
     <div class="prose"><p class="chapo">{a.data.resume}</p><Content /></div>
   </article>
 </Base>

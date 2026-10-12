@@ -9,11 +9,15 @@
     "build": "astro build && node scripts/typographie.mjs && node scripts/check-redaction.mjs && node scripts/check-liens.mjs",
     "preview": "astro preview",
     "captures": "node scripts/captures.mjs",
-    "astro": "astro"
+    "astro": "astro",
+    "recette": "node scripts/recette.mjs"
   },
   "dependencies": {
     "@fontsource-variable/nunito": "^5.3.0",
     "@fontsource/fira-sans": "^5.3.0",
     "astro": "5.18.2"
+  },
+  "devDependencies": {
+    "axe-core": "^4.14.0"
   }
 }

@@ -16,6 +16,7 @@ export function website(site: URL | undefined) {
     alternateName: ['École Sacré-Cœur Zola', 'Sacré-Cœur La Salle Nantes', 'École Sacré Coeur La Salle Nantes', 'sacrecoeurzola'],
     inLanguage: 'fr-FR',
     publisher: { '@id': idEcole(site) },
+    creator: { '@type': 'Organization', name: 'Paktiz', url: 'https://paktiz.fr/' },
   };
 }
 

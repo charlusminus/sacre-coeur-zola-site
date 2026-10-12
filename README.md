@@ -24,6 +24,8 @@ npm ci
 npm run dev        # aperçu local
 npm run build      # build complet + contrôles (typographie, rédaction, liens)
 npm run captures   # captures bureau et téléphone de chaque page (Playwright)
+npm run recette    # recette complète : 4 formats, parcours (menu, inscription, FAQ, clavier, 404, agenda),
+                   # accessibilité axe, données structurées, liens externes ; --en-ligne pour le site publié
 ```
 Le build refuse un tiret cadratin, un lien interne mort, et en production (`PUBLIC_EN_LIGNE=oui`)
 tout marqueur `[À CONFIRMER]`.

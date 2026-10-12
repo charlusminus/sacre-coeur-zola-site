@@ -8,7 +8,7 @@ const tel = (n: string) => 'tel:+33' + n.replace(/\s/g, '').slice(1);
 <footer class="pied">
   <div class="conteneur pied-grille">
     <div>
-      <a class="pied-logo" href={lien()}><Image src={logo} alt="École Sacré-Cœur La Salle Nantes, Frères des Écoles Chrétiennes" height={144} widths={[180, 360]} sizes="180px" /></a>
+      <a class="pied-logo" href={lien()}><Image src={logo} alt="École Sacré-Cœur La Salle Nantes, Frères des Écoles Chrétiennes" height={144} widths={[180, 360, 540]} sizes="180px" /></a>
       <p style="margin-top:1rem">Un établissement du réseau <a href="https://lasallefrance.fr/">La Salle France</a>, sous contrat d'association avec l'État, membre de l'<a href="https://www.ec44.fr/">Enseignement catholique de Loire-Atlantique</a>.</p>
     </div>
     <div>
@@ -41,5 +41,6 @@ const tel = (n: string) => 'tel:+33' + n.replace(/\s/g, '').slice(1);
     <span>© {new Date().getFullYear()} {p.nom}, {p.ville}</span>
     <a href={lien('mentions-legales/')}>Mentions légales et confidentialité</a>
     <a href={lien('plan-du-site/')}>Plan du site</a>
+    <span>Site conçu et réalisé par <a href="https://paktiz.fr/?utm_source=sacrecoeurzola&utm_medium=referral&utm_campaign=credit-site">Paktiz</a> pour l'APEL de l'école</span>
   </div>
 </footer>

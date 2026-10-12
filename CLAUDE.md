@@ -16,4 +16,7 @@ décisions, routine d'itération) est dans le dépôt privé `charlusminus/sacre
   aucune couleur en dur ailleurs. Une seule action principale, le rose.
 - Les contenus (`src/contenus/`) préfigurent les documents du futur CMS (Sanity) : garder les
   schémas de `src/content.config.ts` stricts, une saisie invalide ne doit jamais casser la mise en ligne.
-- Vérifier chaque changement visuel par `npm run build && npm run captures` (bureau et téléphone).
+- Avant chaque push : `npm run build && npm run recette` (0 échec exigé), et les captures pour tout changement visuel.
+- Pièges vécus : un attribut `[hidden]` est écrasé par un `display` de classe (règle globale `[hidden]` dans le CSS) ;
+  un `pattern` d'attribut perd ses `\\d` dans Astro (écrire `[0-9]`) ; `scroll-padding-top` et `scroll-margin-top`
+  s'additionnent sous l'en-tête collant.

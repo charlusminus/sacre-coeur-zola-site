@@ -35,6 +35,10 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
     <div class="carte-formulaire zone-formulaire" id="demande">
       <h2 class="titre-petit">Demande d'inscription</h2>
       <p class="discret" style="margin-bottom:1.25rem">Tous les champs sont obligatoires, sauf le message.</p>
+      <div class="confirmation" data-confirmation hidden tabindex="-1" role="status">
+        <p><strong>Merci, votre demande est prête.</strong></p>
+        <p>Dans cette démonstration, rien n'est encore envoyé : sur le site en ligne, votre demande arrivera au secrétariat, qui vous rappellera sous deux jours ouvrés pour fixer le rendez-vous.</p>
+      </div>
       <form class="formulaire" data-demande novalidate>
         <div class="champs-duo">
           <div class="champ"><label for="parent">Votre nom</label><input id="parent" name="parent" autocomplete="name" required /></div>
@@ -43,7 +47,7 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
         <div class="champ"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="email" required /></div>
         <div class="champs-duo">
           <div class="champ"><label for="enfant">Prénom de l'enfant</label><input id="enfant" name="enfant" required /></div>
-          <div class="champ"><label for="naissance">Date de naissance</label><input id="naissance" name="naissance" inputmode="numeric" placeholder="jj/mm/aaaa" pattern="\d{2}/\d{2}/\d{4}" maxlength="10" required aria-describedby="aide-classe" /></div>
+          <div class="champ"><label for="naissance">Date de naissance</label><input id="naissance" name="naissance" inputmode="numeric" placeholder="jj/mm/aaaa" pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}" title="Date au format jj/mm/aaaa, par exemple 15/03/2024" maxlength="10" required aria-describedby="aide-classe" /></div>
         </div>
         <div class="champs-duo">
           <div class="champ">
@@ -66,7 +70,6 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
         <p class="reassurance">Le secrétariat vous rappelle sous deux jours ouvrés pour fixer le rendez-vous avec Mme Lampérière.</p>
         <button class="btn btn-principal" type="submit">Envoyer ma demande</button>
         <p class="note-rgpd">Vos réponses servent uniquement à vous recontacter pour l'inscription. Elles sont conservées un an au plus par l'école, puis supprimées. Pour y accéder ou les faire effacer : {p.emailSecretariat}.</p>
-        <p class="confirmation" data-confirmation hidden role="status">Merci. Dans cette démonstration, rien n'est encore envoyé : sur le site en ligne, votre demande arrivera au secrétariat, qui vous rappellera.</p>
       </form>
     </div>
   </section>
@@ -128,7 +131,7 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
     const rang = Number(m[3]) - (annee - 10); // né en (rentrée - 10) : CM2 ; en (rentrée - 3) : petite section
     if (rang >= 0 && rang < classes.length) {
       classe.value = classes[rang];
-      aide.textContent = `Pour cette rentrée, votre enfant entre en ${classes[rang]}. Vous pouvez modifier ce choix.`;
+      aide.textContent = `Pour cette rentrée, votre enfant entre en ${classes[rang].replace(' section', '\u00a0section').toLowerCase().replace('cp', 'CP').replace(/^ce/, 'CE').replace(/^cm/, 'CM')}. Vous pouvez modifier ce choix.`;
     }
   };
   naissance.addEventListener('input', () => {
@@ -137,10 +140,38 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
     proposer();
   });
   rentree.addEventListener('change', proposer);
+  // Erreurs en français sous chaque champ (pas de bulle du navigateur), corrigées à la saisie.
+  const messages = {
+    parent: 'Indiquez votre nom.',
+    telephone: 'Indiquez un numéro pour que le secrétariat puisse vous rappeler.',
+    email: 'Indiquez une adresse e-mail valide, par exemple nom@exemple.fr.',
+    enfant: "Indiquez le prénom de l'enfant.",
+    naissance: 'Indiquez la date au format jj/mm/aaaa, par exemple 15/03/2024.',
+    classe: 'Choisissez la classe souhaitée.',
+  };
+  const signaler = (champ) => {
+    const valide = champ.checkValidity();
+    const id = `erreur-${champ.id}`;
+    let msg = document.getElementById(id);
+    champ.toggleAttribute('aria-invalid', !valide);
+    if (valide) { msg?.remove(); return true; }
+    if (!msg) {
+      msg = document.createElement('p');
+      msg.className = 'erreur'; msg.id = id;
+      champ.after(msg);
+      champ.setAttribute('aria-describedby', [champ.getAttribute('aria-describedby'), id].filter(Boolean).join(' '));
+    }
+    msg.textContent = messages[champ.name] ?? 'Ce champ est à compléter.';
+    return false;
+  };
+  form.querySelectorAll('input, select').forEach((c) => c.addEventListener('input', () => c.hasAttribute('aria-invalid') && signaler(c)));
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    if (!form.reportValidity()) return;
-    form.querySelector('[data-confirmation]').hidden = false;
-    form.querySelector('button[type=submit]').disabled = true;
+    const invalides = [...form.querySelectorAll('input, select')].filter((c) => !signaler(c));
+    if (invalides.length) { invalides[0].focus(); return; }
+    const confirmation = document.querySelector('[data-confirmation]');
+    form.hidden = true;
+    confirmation.hidden = false;
+    confirmation.focus();
   });
 </script>

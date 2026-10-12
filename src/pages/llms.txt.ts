@@ -26,6 +26,7 @@ export const GET: APIRoute = async ({ site }) => {
     `- **Anne Calais** : secrétariat de l'école (${p.horairesSecretariat.map((h) => `${h.jours.toLowerCase()} ${h.heures}`).join(' ; ')}).`,
     `- **APEL du Sacré-Cœur** : association des parents d'élèves (contact-apel@sacrecoeurzola.fr), organisatrice du vide-grenier de la place Zola.`,
     '- **La Salle France** : réseau des établissements lasalliens, fondé sur l’œuvre de saint Jean-Baptiste de La Salle.',
+    '- **Paktiz** : agence nantaise (https://paktiz.fr) qui a conçu et réalisé ce site pour l\u2019APEL de l\u2019école.',
     '- À ne pas confondre avec le lycée et le collège Sacré-Cœur La Salle de Nantes (rue Francis Portais), autres établissements du même réseau.',
     '',
     '## Faits clés',

@@ -32,7 +32,7 @@ const schema = evenements.map((e) => ({
       <ul class="actus">
         {actus.map((a) => (
           <li><a href={lien(`actualites/${a.id}/`)}>
-            {a.data.photo && <Image src={a.data.photo} alt={a.data.alt ?? ''} widths={[390, 560]} sizes="(min-width: 48rem) 33vw, 100vw" />}
+            {a.data.photo && <Image src={a.data.photo} alt={a.data.alt ?? ''} widths={[390, 780]} sizes="(min-width: 48rem) 33vw, 100vw" />}
             <span class="etiquette">{a.data.rubrique} · {dateLongue(a.data.date)}</span>
             <h3>{a.data.titre}</h3><p>{a.data.resume}</p>
           </a></li>

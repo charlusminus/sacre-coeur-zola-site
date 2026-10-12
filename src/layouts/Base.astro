@@ -45,9 +45,9 @@ const ogImage = new URL(image ?? lien('partage.jpg'), Astro.site).href;
   </head>
   <body>
     <a class="evitement" href="#contenu">Aller au contenu</a>
-    {!enLigne && <p class="bandeau-demo">Maquette de démonstration, proposée par l'APEL. Contenus à valider par l'école.</p>}
+    {!enLigne && <aside class="bandeau-demo" aria-label="Avertissement">Maquette de démonstration, proposée par l'APEL. Contenus à valider par l'école.</aside>}
     <Entete courant={courant} />
-    <main id="contenu">
+    <main id="contenu" tabindex="-1">
       {fil && (
         <nav class="fil conteneur" aria-label="Fil d'Ariane">
           <ol>
@@ -59,5 +59,10 @@ const ogImage = new URL(image ?? lien('partage.jpg'), Astro.site).href;
       <slot />
     </main>
     <Pied />
+    <script>
+      // Le lien d'évitement place vraiment le focus clavier dans le contenu (le saut d'ancre seul ne
+      // le déplace pas dans Chromium).
+      document.querySelector('.evitement')?.addEventListener('click', () => document.getElementById('contenu')?.focus());
+    </script>
   </body>
 </html>
