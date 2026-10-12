@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Agenda from '../components/Agenda.astro';
+import Faq from '../components/Faq.astro';
 import p from '../contenus/parametres.json';
 import { evenementsAVenir } from '../lib/contenu';
 import { lien } from '../lib/site';
@@ -10,12 +11,12 @@ const [debut] = p.rentree.split('-').map(Number);
 const classes = ['Petite section', 'Moyenne section', 'Grande section', 'CP', 'CE1', 'CE2', 'CM1', 'CM2'];
 const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
 ---
-<Base titre="Inscrire votre enfant" courant="inscriptions/"
-  description="Inscriptions à l'école Sacré-Cœur La Salle de Nantes, de la petite section au CM2 : étapes, portes ouvertes, tarifs, demande en ligne en deux minutes.">
+<Base titre="Inscriptions et tarifs" courant="inscriptions/" fil={[{ nom: 'Inscriptions' }]}
+  description="Inscrire votre enfant à l'école Sacré-Cœur La Salle de Nantes, de la petite section au CM2 : trois étapes, tarifs 2026-2027, portes ouvertes, demande en ligne.">
   <section class="conteneur tete-inscription" aria-labelledby="titre-page">
     <div class="zone-tete">
       <p class="surtitre">Rentrée {p.rentree} et en cours d'année</p>
-      <h1 id="titre-page">Inscrire votre enfant</h1>
+      <h1 id="titre-page">Inscrire votre enfant à l'école Sacré-Cœur La Salle</h1>
       <p class="chapo">De la petite section au CM2, quelle que soit son histoire. Chaque inscription commence par une rencontre.</p>
     </div>
     <div class="zone-etapes">
@@ -108,14 +109,8 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
   <section class="section section-creme" aria-labelledby="titre-questions">
     <div class="conteneur etroit">
       <h2 id="titre-questions" style="margin-bottom:1.5rem">Questions fréquentes</h2>
-      <div class="accordeon">
-        <details><summary>Faut-il être catholique pour inscrire son enfant ?</summary><div><p>Non. L'école accueille toutes les familles qui adhèrent à son projet éducatif. La pastorale est proposée à tous, dans le respect des convictions de chacun.</p></div></details>
-        <details><summary>Peut-on inscrire un enfant en cours d'année ?</summary><div><p>Oui, selon les places disponibles dans la classe. Faites votre demande : nous vous dirons rapidement ce qui est possible.</p></div></details>
-        <details><summary>Y a-t-il un tarif pour les frères et sœurs ?</summary><div><p>Oui : la contribution passe à 50 € par mois pour le deuxième enfant et à 46 € à partir du troisième.</p></div></details>
-        <details><summary>Mon enfant a un PAI ou un besoin particulier, est-ce possible ?</summary><div><p>Nous en parlons ensemble lors du rendez-vous, pour préparer son accueil avec l'équipe et, si besoin, avec les professionnels qui le suivent.</p></div></details>
-        <details><summary>La cantine est-elle obligatoire ?</summary><div><p>Non. Les repas, à 5,95 €, sont servis sans préinscription. Les externes rentrent déjeuner chez eux ; le portail rouvre à 13 h 20.</p></div></details>
-        <details><summary>Y a-t-il classe le mercredi ?</summary><div><p>Non. L'école fonctionne sur quatre jours : lundi, mardi, jeudi et vendredi.</p></div></details>
-      </div>
+      <Faq theme="inscription" />
+      <p style="margin-top:1.25rem"><a href={lien('questions-frequentes/')}>Toutes les questions fréquentes</a></p>
     </div>
   </section>
 </Base>

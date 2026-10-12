@@ -1,5 +1,6 @@
 // Typographie française sur les pages construites : espace insécable avant « : ; ? ! » et dans
-// les heures et les montants (« 7 h 45 », « 53 € »), pour éviter les coupures de ligne.
+// les heures et les montants (« 7 h 45 », « 53 € »), pour éviter les coupures de ligne ; « Sacré-Cœur »
+// insécable.
 // N'agit que sur le texte entre les balises, jamais dans les scripts, styles ou attributs.
 import { readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -18,9 +19,10 @@ const corriger = (t) => t
 let total = 0;
 for (const f of pages) {
   const html = readFileSync(f, 'utf8');
-  const sortie = html.replace(/(<(script|style)\b[\s\S]*?<\/\2>)|>([^<]+)</g, (m, bloc, _t, texte) => {
+  const sortie = html.replace(/(<(script|style|title|textarea|option)\b[\s\S]*?<\/\2>)|>([^<]+)</g, (m, bloc, _t, texte) => {
     if (bloc) return bloc;
-    const c = corriger(texte);
+    // « Sacré-Cœur » ne se coupe jamais au trait d'union (titres sur téléphone).
+    const c = corriger(texte).replace(/Sacré-Cœur/g, '<span class="insecable">Sacré-Cœur</span>');
     if (c !== texte) total++;
     return '>' + c + '<';
   });

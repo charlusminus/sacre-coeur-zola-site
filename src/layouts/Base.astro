@@ -4,12 +4,15 @@ import '../styles/site.css';
 import Entete from '../components/Entete.astro';
 import Pied from '../components/Pied.astro';
 import { lien } from '../lib/site';
+import { website, ecole, filAriane } from '../lib/schema';
 
-interface Props { titre: string; description: string; courant?: string; image?: string; schema?: object }
-const { titre, description, courant = '', image, schema } = Astro.props;
+type Fil = { nom: string; href?: string }[];
+interface Props { titre: string; description: string; courant?: string; image?: string; schema?: object[]; fil?: Fil }
+const { titre, description, courant = '', image, schema = [], fil } = Astro.props;
+const graphe = { '@context': 'https://schema.org', '@graph': [website(Astro.site), ecole(Astro.site), ...(fil ? [filAriane(Astro.site, fil)] : []), ...schema] };
 const enLigne = import.meta.env.PUBLIC_EN_LIGNE === 'oui';
 const canonique = new URL(Astro.url.pathname, Astro.site).href;
-const titreComplet = titre.includes('Sacré-Cœur') ? titre : `${titre} · École Sacré-Cœur La Salle, Nantes`;
+const titreComplet = titre.includes('Sacré-Cœur') ? titre : `${titre} · Sacré-Cœur La Salle Nantes`;
 const ogImage = new URL(image ?? lien('partage.jpg'), Astro.site).href;
 ---
 <!doctype html>
@@ -26,7 +29,11 @@ const ogImage = new URL(image ?? lien('partage.jpg'), Astro.site).href;
     <meta property="og:title" content={titreComplet} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonique} />
+    <meta property="og:site_name" content="École Sacré-Cœur La Salle, Nantes" />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#ffffff" />
     <link rel="icon" href={lien('favicon.png')} type="image/png" />
     <link rel="apple-touch-icon" href={lien('apple-touch-icon.png')} />
@@ -34,13 +41,21 @@ const ogImage = new URL(image ?? lien('partage.jpg'), Astro.site).href;
     <link rel="preload" href={lien('fonts/fira-400.woff2')} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={lien('fonts/fira-600.woff2')} as="font" type="font/woff2" crossorigin />
     <style is:inline set:html={`@font-face{font-family:'Nunito';font-weight:200 1000;font-display:optional;src:url(${lien('fonts/nunito.woff2')}) format('woff2')}@font-face{font-family:'Fira Sans';font-weight:400;font-display:optional;src:url(${lien('fonts/fira-400.woff2')}) format('woff2')}@font-face{font-family:'Fira Sans';font-weight:600;font-display:optional;src:url(${lien('fonts/fira-600.woff2')}) format('woff2')}`}></style>
-    {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+    <script type="application/ld+json" set:html={JSON.stringify(graphe)} />
   </head>
   <body>
     <a class="evitement" href="#contenu">Aller au contenu</a>
     {!enLigne && <p class="bandeau-demo">Maquette de démonstration, proposée par l'APEL. Contenus à valider par l'école.</p>}
     <Entete courant={courant} />
     <main id="contenu">
+      {fil && (
+        <nav class="fil conteneur" aria-label="Fil d'Ariane">
+          <ol>
+            <li><a href={lien()}>Accueil</a></li>
+            {fil.map((i) => <li>{i.href !== undefined ? <a href={lien(i.href)}>{i.nom}</a> : <span aria-current="page">{i.nom}</span>}</li>)}
+          </ol>
+        </nav>
+      )}
       <slot />
     </main>
     <Pied />

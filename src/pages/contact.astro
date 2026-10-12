@@ -7,10 +7,11 @@ const tel = (n: string) => 'tel:+33' + n.replace(/\s/g, '').slice(1);
 const carte = `https://www.openstreetmap.org/?mlat=${p.geo.latitude}&mlon=${p.geo.longitude}#map=17/${p.geo.latitude}/${p.geo.longitude}`;
 const itineraire = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${p.adresse.rue}, ${p.adresse.codePostal} ${p.adresse.ville}`)}`;
 ---
-<Base titre="Contact et accès" courant="contact/" description="Adresse, téléphone, horaires du secrétariat et accès de l'école Sacré-Cœur La Salle, 24 rue de la Salle Verte, Nantes Zola.">
+<Base titre="Contact et accès" courant="contact/" fil={[{ nom: 'Contact' }]}
+  description="Contacter l'école Sacré-Cœur La Salle, 24 rue de la Salle Verte, 44100 Nantes (quartier Zola) : téléphone, e-mail, horaires du secrétariat, accès et plan.">
   <section class="tete-page conteneur">
     <p class="surtitre">Contact</p>
-    <h1>Venir nous voir</h1>
+    <h1>Venir à l'école Sacré-Cœur La Salle, quartier Zola</h1>
   </section>
   <section class="section section-creme">
     <div class="conteneur duo">

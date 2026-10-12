@@ -1,0 +1,11 @@
+---
+// Questions fréquentes, tirées de src/contenus/faq.json (source unique pour la page, le llms.txt et
+// les données structurées FAQPage).
+import { faqs } from '../lib/schema';
+interface Props { theme?: string }
+const { theme } = Astro.props;
+const liste = theme ? faqs.filter((f) => f.theme === theme) : faqs;
+---
+<div class="accordeon">
+  {liste.map((f) => <details id={`faq-${f.id}`}><summary>{f.q}</summary><div><p>{f.r}</p></div></details>)}
+</div>

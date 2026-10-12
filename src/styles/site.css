@@ -271,3 +271,11 @@ a[href^='tel:'] { white-space: nowrap; }
 @media (max-width: 30rem) { .tableau th { width: 6.5rem; } }
 .vecu img[alt^="Des mains"] { object-position: 88% 50%; }
 .visuellement-cache { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Fil d'Ariane */
+.fil { padding-top: 1.25rem; font-size: 0.875rem; color: var(--encre-douce); }
+.fil ol { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 0.25rem 0.5rem; }
+.fil li + li::before { content: "/"; margin-right: 0.5rem; color: var(--encre-douce); }
+.fil a { color: var(--encre-douce); }
+.fil + .tete-page, .fil + section { padding-top: 1rem; }
+.insecable { white-space: nowrap; }

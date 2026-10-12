@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import Faq from '../components/Faq.astro';
+import { pageFaq } from '../lib/schema';
+import { lien } from '../lib/site';
+const themes = [
+  { cle: 'inscription', titre: 'Inscriptions et tarifs' },
+  { cle: 'ecole', titre: "L'école" },
+  { cle: 'vie', titre: 'Horaires, cantine et garderie' },
+];
+---
+<Base titre="Questions fréquentes des familles" fil={[{ nom: 'Questions fréquentes' }]} schema={[pageFaq()]}
+  description="Inscription, tarifs, horaires, cantine, garderie : les réponses aux questions des familles sur l'école Sacré-Cœur La Salle, école catholique du quartier Zola à Nantes.">
+  <section class="tete-page conteneur etroit">
+    <h1>Questions fréquentes sur l'école Sacré-Cœur La Salle</h1>
+    <p class="chapo">Les réponses aux questions que les familles nous posent le plus souvent. Une autre question ? Le secrétariat vous répond au <a href="tel:+33240462713">02 40 46 27 13</a>.</p>
+  </section>
+  {themes.map((t) => (
+    <section class="section section-creme" style="padding-block:2.5rem" aria-label={t.titre}>
+      <div class="conteneur etroit">
+        <h2 style="margin-bottom:1.25rem;font-size:1.625rem">{t.titre}</h2>
+        <Faq theme={t.cle} />
+      </div>
+    </section>
+  ))}
+  <section class="section conteneur etroit">
+    <div class="actions"><a class="btn btn-principal" href={lien('inscriptions/#demande')}>Inscrire mon enfant</a><a class="btn btn-secondaire" href={lien('contact/')}>Nous contacter</a></div>
+  </section>
+</Base>

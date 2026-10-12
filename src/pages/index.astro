@@ -6,7 +6,6 @@ import MenuDuJour from '../components/MenuDuJour.astro';
 import p from '../contenus/parametres.json';
 import { lien, dateLongue } from '../lib/site';
 import { evenementsAVenir, actualites } from '../lib/contenu';
-import { schemaEcole } from '../lib/schema';
 import assemblee from '../assets/photos/assemblee.jpg';
 import cour from '../assets/photos/ecole-cour.jpg';
 import potager from '../assets/photos/potager.jpg';
@@ -19,9 +18,8 @@ const dernieres = await actualites(3);
 const jourLong = new Intl.DateTimeFormat('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'Europe/Paris' });
 const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
 ---
-<Base titre="École Sacré-Cœur La Salle, école privée maternelle et élémentaire à Nantes Zola"
-  description="École catholique sous contrat de la petite section au CM2, quartier Zola à Nantes. 210 élèves, école neuve, accueil de 7 h 45 à 18 h 30. Inscriptions ouvertes."
-  schema={schemaEcole(Astro.site, import.meta.env.BASE_URL)}>
+<Base titre="École privée Sacré-Cœur La Salle à Nantes Zola, de la PS au CM2"
+  description="École Sacré-Cœur La Salle, école catholique sous contrat à Nantes Zola : 210 élèves de la petite section au CM2, accueil 7 h 45 à 18 h 30. Inscriptions ouvertes.">
 
   <section class="une" aria-labelledby="titre-une">
     <div class="une-photo">

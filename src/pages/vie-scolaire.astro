@@ -3,10 +3,11 @@ import Base from '../layouts/Base.astro';
 import Menu from '../components/Menu.astro';
 import { lien } from '../lib/site';
 ---
-<Base titre="Vie scolaire : horaires, cantine, garderie" courant="vie-scolaire/" description="Horaires, cantine et menus, garderie et étude, ateliers périscolaires de l'école Sacré-Cœur La Salle de Nantes.">
+<Base titre="Horaires, cantine et garderie" courant="vie-scolaire/" fil={[{ nom: 'Vie scolaire' }]}
+  description="Horaires, menus de la cantine, garderie et étude, ateliers et vacances 2026-2027 à l'école Sacré-Cœur La Salle, école primaire catholique du quartier Zola à Nantes.">
   <section class="tete-page conteneur">
     <p class="surtitre">Vie scolaire</p>
-    <h1>Le quotidien à l'école</h1>
+    <h1>Le quotidien à l'école Sacré-Cœur La Salle</h1>
     <p class="chapo">Horaires, cantine, garderie et ateliers : tout ce qu'il faut savoir pour organiser la semaine de votre enfant.</p>
   </section>
 

@@ -3,13 +3,20 @@ import { Image } from 'astro:assets';
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { lien, dateLongue } from '../../lib/site';
+import { idEcole, absolu } from '../../lib/schema';
 export async function getStaticPaths() {
   return (await getCollection('actualites')).map((a) => ({ params: { id: a.id }, props: { a } }));
 }
 const { a } = Astro.props;
 const { Content } = await render(a);
+const article = {
+  '@type': 'NewsArticle', headline: a.data.titre, description: a.data.resume, datePublished: a.data.date.toISOString(),
+  inLanguage: 'fr-FR', author: { '@id': idEcole(Astro.site) }, publisher: { '@id': idEcole(Astro.site) },
+  mainEntityOfPage: absolu(Astro.site, `actualites/${a.id}/`),
+  ...(a.data.photo && { image: new URL(a.data.photo.src, Astro.site).href }),
+};
 ---
-<Base titre={a.data.titre} description={a.data.resume} courant="agenda/">
+<Base titre={a.data.titre} description={a.data.resume.length < 120 ? `${a.data.resume} École Sacré-Cœur La Salle, Nantes.` : a.data.resume} courant="agenda/" fil={[{ nom: 'Agenda et actualités', href: 'agenda/' }, { nom: a.data.titre }]} schema={[article]}>
   <article class="conteneur etroit tete-page">
     <p class="surtitre"><a href={lien('agenda/#actualites')}>Actualités</a> · {a.data.rubrique}</p>
     <h1>{a.data.titre}</h1>
