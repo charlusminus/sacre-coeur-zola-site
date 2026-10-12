@@ -88,8 +88,11 @@ for (const [nom, options] of Object.entries(formats)) {
       r.ldErreurs = [...document.querySelectorAll('script[type="application/ld+json"]')].flatMap((s) => { try { JSON.parse(s.textContent); return []; } catch (e) { return [e.message]; } });
       r.externes = [...document.querySelectorAll('a[href^="http"]')].map((a) => a.href).filter((h) => !h.startsWith(location.origin));
       r.texteDebordant = [...document.querySelectorAll('h1,h2,h3,p,li,a,span,td,th')].filter((e) => e.scrollWidth > e.clientWidth + 2 && getComputedStyle(e).overflowX === 'visible' && e.clientWidth > 0 && e.getBoundingClientRect().right > window.innerWidth + 1).map((e) => e.textContent.trim().slice(0, 40));
+      // Un texte coupé en morceaux par la typographie (span insécable) ne doit jamais être un enfant direct d'un flex ou d'une grille.
+      r.texteEclate = [...document.querySelectorAll('.insecable')].filter((e) => /flex|grid/.test(getComputedStyle(e.parentElement).display)).map((e) => e.parentElement.textContent.trim().slice(0, 50));
       return r;
     });
+    if (m.texteEclate.length) problemes.push(`texte éclaté en colonnes (flex ou grille) : ${m.texteEclate.join(' ; ')}`);
     m.externes.forEach((h) => liensExternes.add(h));
     if (m.debord > 0) problemes.push(`débord horizontal de ${m.debord}px`);
     if (m.h1 !== 1) problemes.push(`${m.h1} titres h1`);

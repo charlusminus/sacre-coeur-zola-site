@@ -7,5 +7,5 @@ const { theme } = Astro.props;
 const liste = theme ? faqs.filter((f) => f.theme === theme) : faqs;
 ---
 <div class="accordeon">
-  {liste.map((f) => <details id={`faq-${f.id}`}><summary>{f.q}</summary><div><p>{f.r}</p></div></details>)}
+  {liste.map((f) => <details id={`faq-${f.id}`}><summary><span>{f.q}</span></summary><div><p>{f.r}</p></div></details>)}
 </div>
