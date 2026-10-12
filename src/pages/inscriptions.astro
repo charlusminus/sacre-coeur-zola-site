@@ -32,7 +32,7 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
       </div>
     </div>
     <div class="carte-formulaire zone-formulaire" id="demande">
-      <h2 class="titre-petit">Demander un rendez-vous</h2>
+      <h2 class="titre-petit">Demande d'inscription</h2>
       <p class="discret" style="margin-bottom:1.25rem">Tous les champs sont obligatoires, sauf le message.</p>
       <form class="formulaire" data-demande novalidate>
         <div class="champs-duo">
@@ -63,7 +63,7 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
         <p class="aide" id="aide-classe" data-aide-classe>La classe se remplit d'après la date de naissance ; vous pouvez la modifier.</p>
         <div class="champ"><label for="message">Un mot pour nous (facultatif)</label><textarea id="message" name="message" rows="3"></textarea></div>
         <p class="reassurance">Le secrétariat vous rappelle sous deux jours ouvrés pour fixer le rendez-vous avec Mme Lampérière.</p>
-        <button class="btn btn-principal" type="submit">Demander un rendez-vous</button>
+        <button class="btn btn-principal" type="submit">Envoyer ma demande</button>
         <p class="note-rgpd">Vos réponses servent uniquement à vous recontacter pour l'inscription. Elles sont conservées un an au plus par l'école, puis supprimées. Pour y accéder ou les faire effacer : {p.emailSecretariat}.</p>
         <p class="confirmation" data-confirmation hidden role="status">Merci. Dans cette démonstration, rien n'est encore envoyé : sur le site en ligne, votre demande arrivera au secrétariat, qui vous rappellera.</p>
       </form>

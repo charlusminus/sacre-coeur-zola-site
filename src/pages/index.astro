@@ -7,8 +7,8 @@ import p from '../contenus/parametres.json';
 import { lien, dateLongue } from '../lib/site';
 import { evenementsAVenir, actualites } from '../lib/contenu';
 import { schemaEcole } from '../lib/schema';
-import bibliotheque from '../assets/photos/bibliotheque.jpg';
-import forum from '../assets/photos/forum.jpg';
+import assemblee from '../assets/photos/assemblee.jpg';
+import cour from '../assets/photos/ecole-cour.jpg';
 import potager from '../assets/photos/potager.jpg';
 import jardinieres from '../assets/photos/jardinieres.jpg';
 
@@ -16,7 +16,6 @@ const aVenir = await evenementsAVenir();
 const visite = aVenir.find((e) => e.data.public === 'Futures familles');
 const prochains = aVenir.filter((e) => e !== visite).slice(0, 4);
 const dernieres = await actualites(3);
-const jourMois = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', timeZone: 'Europe/Paris' });
 const jourLong = new Intl.DateTimeFormat('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'Europe/Paris' });
 const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
 ---
@@ -26,16 +25,17 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
 
   <section class="une" aria-labelledby="titre-une">
     <div class="une-photo">
-      <Image src={bibliotheque} alt="Des élèves de CP et CE1 lisent, assis par terre dans la bibliothèque aux cabanes en bois." widths={[390, 780, 1200]} sizes="(min-width: 56rem) 50vw, 100vw" loading="eager" fetchpriority="high" />
+      <Image src={assemblee} alt="Toute l'école réunie dans la grande salle, de dos, écoute trois adultes qui chantent à la guitare." widths={[390, 578]} sizes="(min-width: 56rem) 50vw, 100vw" loading="eager" fetchpriority="high" />
     </div>
     <div class="une-texte">
-      <h1 id="titre-une">210 élèves, de la petite section au CM2, dans une école neuve du quartier Zola</h1>
-      <p class="chapo">Une école catholique lasallienne sous contrat, à Nantes : apprendre avec exigence, grandir avec attention à chacun.</p>
+      <p class="surtitre">École maternelle et élémentaire, quartier Zola à Nantes</p>
+      <h1 id="titre-une">Une école à taille humaine, où tout le monde se connaît</h1>
+      <p class="chapo">De la petite section au CM2, 210 élèves grandissent ici dans la tradition éducative de saint Jean-Baptiste de La Salle : apprendre avec exigence, avec attention à chacun.</p>
       <div class="actions actions-une">
-        <a class="btn btn-principal" href={lien('inscriptions/#demande')}>Demander un rendez-vous</a>
-        {visite && <a class="btn btn-secondaire" href={lien('inscriptions/#visiter')}>Portes ouvertes le {jourMois.format(visite.data.debut)}</a>}
+        <a class="btn btn-principal" href={lien('inscriptions/#demande')}>Inscrire mon enfant</a>
+        <a class="btn btn-secondaire" href={lien('inscriptions/#visiter')}>Visiter l'école</a>
       </div>
-      <p class="discret" style="margin-top:.75rem">Réponse sous deux jours ouvrés. Inscriptions ouvertes pour la rentrée {p.rentree} et en cours d'année.</p>
+      {visite && <p class="discret" style="margin-top:1rem">Portes ouvertes le {jourLong.format(visite.data.debut)}{visite.data.horaires ? `, ${visite.data.horaires}` : ''}. Réponse à votre demande sous deux jours ouvrés.</p>}
     </div>
   </section>
 
@@ -55,12 +55,12 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
       </div>
       <ul class="vecu">
         <li class="vecu-grand">
-          <Image src={forum} alt="Tous les élèves réunis, assis au forum de l'école." widths={[390, 800, 1100]} sizes="(min-width: 56rem) 60vw, 100vw" />
-          <h3>Toute l'école réunie chaque mois</h3>
-          <p>À l'assemblée mensuelle, chaque classe présente un projet, la directrice parle à tous les élèves, et l'on fête les anniversaires du mois.</p>
+          <Image src={cour} alt="La cour de l'école neuve, son olivier et sa façade en bois." widths={[390, 800, 1200]} sizes="(min-width: 56rem) 60vw, 100vw" />
+          <h3>Une école neuve, inaugurée en 2023</h3>
+          <p>Des classes lumineuses, une bibliothèque à cabanes, un forum où toute l'école se réunit chaque mois, un potager et une cour plantée d'un olivier.</p>
         </li>
         <li>
-          <Image src={potager} alt="Des mains d'enfants plantent des graines dans un bac de terre." widths={[390, 600]} sizes="(min-width: 56rem) 30vw, 100vw" />
+          <Image src={potager} alt="Des mains d'enfants et d'un adulte plantent des graines dans un bac de terre." widths={[390, 600]} sizes="(min-width: 56rem) 30vw, 100vw" />
           <h3>Label Éco-École niveau Or</h3>
           <p>Potager, jardinières, eau de pluie : toutes les classes portent le projet.</p>
         </li>
@@ -88,7 +88,7 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
         <li><h3>Le dossier</h3><p>Vous recevez le dossier ; l'inscription est confirmée à son retour.</p></li>
       </ol>
       <div class="actions">
-        <a class="btn btn-principal" href={lien('inscriptions/#demande')}>Demander un rendez-vous</a>
+        <a class="btn btn-principal" href={lien('inscriptions/#demande')}>Inscrire mon enfant</a>
       </div>
     </div>
   </section>

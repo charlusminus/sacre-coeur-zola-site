@@ -3,8 +3,8 @@ titre: "Une rentrée en douceur pour les petites sections"
 date: 2026-08-28
 resume: "Pré-rentrée en famille, puis rentrée en deux demi-groupes : la première rentrée de nos plus jeunes se prépare avec soin."
 rubrique: "Vie de l'école"
-photo: ../../assets/photos/bibliotheque-cabanes.jpg
-alt: "Une classe assise par terre dans la bibliothèque aux cabanes en bois."
+photo: ../../assets/photos/batiment.jpg
+alt: "L'entrée de l'école, bâtiment blanc et bardage bois, rue de la Salle Verte."
 ---
 
 « Votre enfant va vivre sa première rentrée. Pour que ce moment important se passe sereinement pour tous les élèves, nous avons aménagé une rentrée en douceur. »

@@ -29,5 +29,6 @@ Le build refuse un tiret cadratin, un lien interne mort, et en production (`PUBL
 tout marqueur `[À CONFIRMER]`.
 
 ## Mise en ligne
-Ce dépôt est public et déployé sur GitHub Pages : fusionner une PR sur `main` = mettre en ligne.
-Voir `RELEASE.md`.
+Ce dépôt est public et déployé sur GitHub Pages : un push sur `main` met la démo en ligne. Pendant la
+phase de build, on pousse directement sur `main` après un build vert et des captures vérifiées ; la
+discipline branche + PR de `RELEASE.md` s'appliquera au passage en production.

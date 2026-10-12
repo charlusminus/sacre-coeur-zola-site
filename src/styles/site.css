@@ -83,7 +83,7 @@ p, li { text-wrap: pretty; }
 
 /* Ouverture de page d'accueil : photo d'abord sur téléphone, côte à côte sur grand écran */
 .une { display: grid; }
-.une-photo img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: 50% 70%; }
+.une-photo img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
 .une-texte { padding: 1.75rem var(--gouttiere) 2.5rem; }
 .une h1 { margin-bottom: 1rem; }
 @media (min-width: 56rem) {
@@ -216,13 +216,6 @@ p, li { text-wrap: pretty; }
 
 /* Tour 2 de la boucle design */
 a[href^='tel:'] { white-space: nowrap; }
-@media (max-width: 30rem) {
-  .une-photo img { aspect-ratio: 2 / 1; }
-  .une h1 { font-size: 2rem; }
-  .une .chapo { font-size: 1.0625rem; }
-  .actions-une { display: grid; grid-template-columns: 1fr; gap: 0.5rem; margin-top: 1.25rem; }
-  .actions-une .btn { padding-inline: 0.5rem; font-size: 0.9375rem; }
-}
 
 /* Ce que vivent les enfants : photo et fait */
 .vecu { display: grid; gap: 2.25rem; list-style: none; padding: 0; }
@@ -260,7 +253,6 @@ a[href^='tel:'] { white-space: nowrap; }
 @media (min-width: 56rem) { .tete-inscription .carte-formulaire { position: sticky; top: 7rem; } }
 .carte-formulaire { scroll-margin-top: 6rem; }
 
-.une h1 { font-size: clamp(2rem, 1.3rem + 2.4vw, 3.25rem); }
 
 /* Tour 3 */
 .acces-familles { display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; padding-block: 1rem; border-block: 1px solid #ded8cc; font-size: var(--t-petit); }
@@ -277,5 +269,5 @@ a[href^='tel:'] { white-space: nowrap; }
 }
 .journee li { grid-template-columns: 5.5rem 1fr; }
 @media (max-width: 30rem) { .tableau th { width: 6.5rem; } }
-.vecu img[alt^="Des mains"] { object-position: 50% 15%; }
+.vecu img[alt^="Des mains"] { object-position: 88% 50%; }
 .visuellement-cache { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

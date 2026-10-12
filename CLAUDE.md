@@ -4,11 +4,14 @@ Dépôt **public** (GitHub Pages) du site de démonstration. Le contexte (discov
 décisions, routine d'itération) est dans le dépôt privé `charlusminus/sacre-coeur-zola`.
 
 ## Règles
-- **Jamais de push sur `main`** : branche + PR + captures + feu vert de Charles. Fusion = mise en ligne.
+- **Phase de build (décision de Charles du 12/10/2026)** : on déploie directement, push sur `main` sans PR,
+  après `npm run build` vert et captures vérifiées. Push sur `main` = mise en ligne de la démo. La règle
+  branche + PR + feu vert reviendra au passage en production sur le domaine de l'école.
 - Rien de privé ici : ni données de familles, ni noms d'enfants, ni éléments financiers internes.
 - Rédaction : français, vouvoiement, jamais de tiret cadratin (le build le refuse), « Sacré-Cœur »
   avec « œ ». Un fait non vérifié porte `[À CONFIRMER]` (bloquant en production).
-- **Droit à l'image** : n'ajouter une photo d'enfant reconnaissable qu'avec l'accord de l'école.
+- **Aucun visage d'enfant** (règle de Charles du 12/10/2026) : des enfants de dos, des mains, des lieux, jamais
+  un visage, même petit ou au second plan. Recadrer ou écarter la photo. Vérifier chaque image à l'œil avant de l'ajouter.
 - `src/styles/tokens.css` est la source unique du design (charte La Salle France, contrastes notés) ;
   aucune couleur en dur ailleurs. Une seule action principale, le rose.
 - Les contenus (`src/contenus/`) préfigurent les documents du futur CMS (Sanity) : garder les
