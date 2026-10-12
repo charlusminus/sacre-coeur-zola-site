@@ -36,6 +36,7 @@ export function ecole(site: URL | undefined) {
     foundingDate: '1864',
     address: { '@type': 'PostalAddress', streetAddress: p.adresse.rue, postalCode: p.adresse.codePostal, addressLocality: p.adresse.ville, addressRegion: 'Pays de la Loire', addressCountry: 'FR' },
     geo: { '@type': 'GeoCoordinates', latitude: p.geo.latitude, longitude: p.geo.longitude },
+    hasMap: 'https://www.google.com/maps/place/?q=place_id:ChIJ46j9iW3sBUgRVFlEBDHR-wI',
     areaServed: [{ '@type': 'Place', name: 'Quartier Zola, Nantes' }, { '@type': 'City', name: 'Nantes' }],
     openingHoursSpecification: [
       { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Thursday', 'Friday'], opens: '07:45', closes: '18:30' },
