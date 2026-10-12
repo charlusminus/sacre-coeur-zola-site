@@ -1,0 +1,46 @@
+---
+import '../styles/tokens.css';
+import '../styles/site.css';
+import Entete from '../components/Entete.astro';
+import Pied from '../components/Pied.astro';
+import { lien } from '../lib/site';
+
+interface Props { titre: string; description: string; courant?: string; image?: string; schema?: object }
+const { titre, description, courant = '', image, schema } = Astro.props;
+const enLigne = import.meta.env.PUBLIC_EN_LIGNE === 'oui';
+const canonique = new URL(Astro.url.pathname, Astro.site).href;
+const titreComplet = titre.includes('Sacré-Coeur') ? titre : `${titre} · École Sacré-Coeur La Salle, Nantes`;
+const ogImage = new URL(image ?? lien('partage.jpg'), Astro.site).href;
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titreComplet}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonique} />
+    {!enLigne && <meta name="robots" content="noindex, nofollow" />}
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:title" content={titreComplet} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonique} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" href={lien('favicon.svg')} type="image/svg+xml" />
+    <link rel="preload" href={lien('fonts/figtree.woff2')} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={lien('fonts/fraunces.woff2')} as="font" type="font/woff2" crossorigin />
+    <style is:inline set:html={`@font-face{font-family:'Figtree';font-style:normal;font-weight:300 900;font-display:optional;src:url(${lien('fonts/figtree.woff2')}) format('woff2')}@font-face{font-family:'Fraunces';font-style:normal;font-weight:100 900;font-display:optional;src:url(${lien('fonts/fraunces.woff2')}) format('woff2')}`}></style>
+    {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+  </head>
+  <body>
+    <a class="evitement" href="#contenu">Aller au contenu</a>
+    {!enLigne && <p class="bandeau-demo">Maquette de démonstration, proposée par l'APEL. Contenus à valider par l'école.</p>}
+    <Entete courant={courant} />
+    <main id="contenu">
+      <slot />
+    </main>
+    <Pied />
+  </body>
+</html>
