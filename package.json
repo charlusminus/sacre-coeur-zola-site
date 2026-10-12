@@ -6,7 +6,7 @@
   "description": "Site de l'école Sacré-Coeur Zola, Astro statique (démonstration sur GitHub Pages)",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node scripts/check-redaction.mjs && node scripts/check-liens.mjs",
+    "build": "astro build && node scripts/typographie.mjs && node scripts/check-redaction.mjs && node scripts/check-liens.mjs",
     "preview": "astro preview",
     "captures": "node scripts/captures.mjs",
     "astro": "astro"

@@ -11,7 +11,7 @@ const classes = ['Petite section', 'Moyenne section', 'Grande section', 'CP', 'C
 const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
 ---
 <Base titre="Inscrire votre enfant" courant="inscriptions/"
-  description="Inscriptions à l'école Sacré-Coeur La Salle de Nantes, de la petite section au CM2 : étapes, portes ouvertes, tarifs, demande en ligne en deux minutes.">
+  description="Inscriptions à l'école Sacré-Cœur La Salle de Nantes, de la petite section au CM2 : étapes, portes ouvertes, tarifs, demande en ligne en deux minutes.">
   <section class="tete-page conteneur">
     <p class="surtitre">Rentrée {p.rentree} et en cours d'année</p>
     <h1>Inscrire votre enfant</h1>
@@ -56,7 +56,7 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
               <option value="">Choisir</option>
               {classes.map((c) => <option>{c}</option>)}
             </select>
-            <span class="aide" data-aide-classe>Renseignez la date de naissance : nous proposons la classe correspondante.</span>
+            <span class="aide" data-aide-classe>Remplie d'après la date de naissance, modifiable.</span>
           </div>
           <div class="champ"><label for="message">Un mot pour nous (facultatif)</label><textarea id="message" name="message" rows="3"></textarea></div>
           <button class="btn btn-principal" type="submit">Envoyer ma demande</button>
@@ -80,18 +80,23 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
   <section class="section" id="tarifs" aria-labelledby="titre-tarifs">
     <div class="conteneur duo">
       <div>
-        <h2 id="titre-tarifs">Tarifs {p.rentree}</h2>
+        <h2 id="titre-tarifs">Tarifs 2026-2027</h2>
         <p style="margin-top:1rem">L'école est sous contrat d'association avec l'État : les enseignants sont rémunérés par l'Éducation nationale. La contribution des familles finance l'immobilier, l'entretien et le caractère propre de l'école.</p>
       </div>
-      <table class="tableau">
-        <caption class="discret" style="text-align:left;caption-side:bottom;padding-top:.75rem">Tarifs 2026-2027 à reprendre de la grille de l'école. [À CONFIRMER]</caption>
-        <tbody>
-          <tr><th scope="row">Contribution des familles</th><td>[À CONFIRMER] € par mois, sur 10 mois</td></tr>
-          <tr><th scope="row">Cotisation APEL</th><td>[À CONFIRMER] € par famille et par an</td></tr>
-          <tr><th scope="row">Repas</th><td>[À CONFIRMER] € le repas, sans préinscription</td></tr>
-          <tr><th scope="row">Garderie et étude</th><td>[À CONFIRMER] € la séance</td></tr>
-        </tbody>
-      </table>
+      <div>
+        <table class="tableau">
+          <caption class="discret" style="text-align:left;caption-side:bottom;padding-top:.75rem">Contribution facturée sur 10 mois, d'octobre à juillet. Pour les nouvelles familles, l'acompte de 50 € versé à l'inscription est déduit de la facture de septembre.</caption>
+          <tbody>
+            <tr><th scope="row">Contribution des familles</th><td>53 € par mois pour le 1<sup>er</sup> enfant, 50 € pour le 2<sup>e</sup>, 46 € à partir du 3<sup>e</sup></td></tr>
+            <tr><th scope="row">Contribution de solidarité</th><td>9 € de plus par mois, au choix des familles qui le souhaitent</td></tr>
+            <tr><th scope="row">Adhésion à l'APEL</th><td>27 € par famille et par an</td></tr>
+            <tr><th scope="row">Repas</th><td>5,95 €, maternelle et élémentaire</td></tr>
+            <tr><th scope="row">Garderie du matin</th><td>1,50 € par matin</td></tr>
+            <tr><th scope="row">Étude et garderie du soir</th><td>3 € par heure, la 2<sup>e</sup> heure comptée à partir de 17 h 30</td></tr>
+          </tbody>
+        </table>
+        <p class="discret" style="margin-top:1rem">La contribution de solidarité permet à l'école de rester ouverte à tous les élèves, sans distinction de conditions et de ressources.</p>
+      </div>
     </div>
   </section>
 
@@ -101,9 +106,9 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
       <div class="accordeon">
         <details><summary>Faut-il être catholique pour inscrire son enfant ?</summary><div><p>Non. L'école accueille toutes les familles qui adhèrent à son projet éducatif. La pastorale est proposée à tous, dans le respect des convictions de chacun.</p></div></details>
         <details><summary>Peut-on inscrire un enfant en cours d'année ?</summary><div><p>Oui, selon les places disponibles dans la classe. Faites votre demande : nous vous dirons rapidement ce qui est possible.</p></div></details>
-        <details><summary>Les frères et sœurs sont-ils prioritaires ?</summary><div><p>[À CONFIRMER] Réponse à rédiger avec la direction.</p></div></details>
+        <details><summary>Y a-t-il un tarif pour les frères et sœurs ?</summary><div><p>Oui : la contribution passe à 50 € par mois pour le deuxième enfant et à 46 € à partir du troisième.</p></div></details>
         <details><summary>Mon enfant a un PAI ou un besoin particulier, est-ce possible ?</summary><div><p>Nous en parlons ensemble lors du rendez-vous, pour préparer son accueil avec l'équipe et, si besoin, avec les professionnels qui le suivent.</p></div></details>
-        <details><summary>La cantine est-elle obligatoire ?</summary><div><p>Non. Les repas sont servis sans préinscription. Les externes rentrent déjeuner chez eux ; le portail rouvre à 13 h 20.</p></div></details>
+        <details><summary>La cantine est-elle obligatoire ?</summary><div><p>Non. Les repas, à 5,95 €, sont servis sans préinscription. Les externes rentrent déjeuner chez eux ; le portail rouvre à 13 h 20.</p></div></details>
         <details><summary>Y a-t-il classe le mercredi ?</summary><div><p>Non. L'école fonctionne sur quatre jours : lundi, mardi, jeudi et vendredi.</p></div></details>
       </div>
     </div>

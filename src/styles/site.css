@@ -236,3 +236,41 @@ p, li { text-wrap: pretty; }
 .pied-bas { border-top: 1px solid rgb(255 255 255 / 0.2); padding-block: 1.25rem 2rem; font-size: 0.875rem; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
 @media (min-width: 56rem) { .pied-grille { grid-template-columns: 1.3fr 1fr 1fr 1fr; } }
 main + .pied { margin-top: 0; }
+
+/* Tour 2 de la boucle design */
+a[href^='tel:'] { white-space: nowrap; }
+.rendez-vous { margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid #e7e3dc; }
+.rendez-vous strong { color: var(--rose); }
+@media (max-width: 30rem) {
+  .une-photo img { aspect-ratio: 2 / 1; }
+  .une h1 { font-size: 2rem; }
+  .une .chapo { font-size: 1.0625rem; }
+  .actions-une { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 1.25rem; }
+  .actions-une .btn { padding-inline: 0.5rem; font-size: 0.9375rem; }
+}
+
+/* Faits clés : une ligne sobre, séparée par des filets */
+.faits { display: grid; list-style: none; padding: 0; border-block: 1px solid #ded8cc; }
+.faits li { padding-block: 1.1rem; }
+.faits li + li { border-top: 1px solid #ded8cc; }
+.faits strong { display: block; font: 900 1.75rem/1.1 var(--titre); }
+.faits span { display: block; margin-top: 0.25rem; font-size: var(--t-petit); color: var(--encre-douce); }
+@media (min-width: 56rem) {
+  .faits { grid-template-columns: repeat(3, 1fr); }
+  .faits li { padding: 1.75rem 2rem; }
+  .faits li:first-child { padding-left: 0; }
+  .faits li + li { border-top: 0; border-left: 1px solid #ded8cc; }
+  .faits strong { font-size: 2.125rem; }
+}
+
+/* Ce que vivent les enfants : photo et fait */
+.vecu { display: grid; gap: 2.25rem; list-style: none; padding: 0; }
+.vecu img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 1rem; margin-bottom: 1rem; }
+.vecu h3 { margin-bottom: 0.4rem; }
+@media (min-width: 56rem) { .vecu { grid-template-columns: 1.25fr 1fr 1fr; gap: 2.5rem; } .vecu li:first-child img { aspect-ratio: 5 / 4; } }
+
+.menu-jour { padding: 1.5rem; border-radius: 1rem; background: var(--creme); }
+.menu-plat { font: 850 1.5rem/1.2 var(--titre); margin-block: 0.25rem 0.4rem; }
+
+/* Formulaire : même espacement entre tous les champs, sur une ou deux colonnes */
+.champs-duo { display: grid; gap: 1.1rem; }

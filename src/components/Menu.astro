@@ -5,19 +5,20 @@ const du = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', tim
 ---
 {menu && (
   <>
-    <p class="discret">Semaine du {du.format(menu.data.semaine)}. Menu d'exemple pour la démonstration.</p>
+    <p class="discret">Semaine du {du.format(menu.data.semaine)}</p>
     <ul class="menu-jours" style="margin-top:1rem">
-      {jours.map((j) => menu.data[j] && (
+      {jours.map((j) => { const r = menu.data[j]; return r && (
         <li>
-          <h3>{j}</h3>
+          <h3>{j}{r.vegetarien && <span class="etiquette"> · végétarien</span>}</h3>
           <ul>
-            <li>{menu.data[j]!.entree}</li>
-            <li class="plat">{menu.data[j]!.plat}</li>
-            {menu.data[j]!.accompagnement && <li>{menu.data[j]!.accompagnement}</li>}
-            <li>{menu.data[j]!.dessert}</li>
+            {r.entree && <li>{r.entree}</li>}
+            <li class="plat">{r.plat}</li>
+            {r.accompagnement && <li>{r.accompagnement}</li>}
+            {r.laitage && <li>{r.laitage}</li>}
+            {r.dessert && <li>{r.dessert}</li>}
           </ul>
         </li>
-      ))}
+      ); })}
     </ul>
   </>
 )}

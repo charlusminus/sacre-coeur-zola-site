@@ -8,6 +8,9 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+  # Reconstruction chaque nuit : l'agenda et le menu de la semaine avancent seuls.
+  schedule:
+    - cron: '17 3 * * *'
 
 permissions:
   contents: read

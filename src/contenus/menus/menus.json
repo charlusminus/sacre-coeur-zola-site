@@ -2,9 +2,9 @@
   {
     "id": "2026-10-12",
     "semaine": "2026-10-12",
-    "lundi": { "entree": "Carottes râpées à l'orange", "plat": "Poulet rôti", "accompagnement": "Haricots verts persillés", "dessert": "Yaourt fermier" },
-    "mardi": { "entree": "Velouté de potiron", "plat": "Lasagnes végétariennes", "accompagnement": "Salade verte", "dessert": "Pomme de saison" },
-    "jeudi": { "entree": "Betteraves vinaigrette", "plat": "Filet de colin, sauce citron", "accompagnement": "Riz pilaf", "dessert": "Fromage blanc au miel" },
-    "vendredi": { "entree": "Taboulé", "plat": "Sauté de porc ou omelette", "accompagnement": "Purée de patates douces", "dessert": "Compote maison" }
+    "lundi": { "entree": "Salade de riz au jambon", "plat": "Filet de poisson meunière", "accompagnement": "Petits pois", "laitage": "Laitage", "dessert": "Fruit frais" },
+    "mardi": { "entree": "Pastèque", "plat": "Paupiette de veau", "accompagnement": "Farfalles", "laitage": "Fromage", "dessert": "Crème dessert à la vanille" },
+    "jeudi": { "plat": "Repas d'animation" },
+    "vendredi": { "entree": "Carottes râpées au citron", "plat": "Tajine de légumes aux pois chiches", "accompagnement": "Semoule", "laitage": "Fromage", "dessert": "Cake marbré", "vegetarien": true }
   }
 ]

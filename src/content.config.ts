@@ -23,14 +23,17 @@ const evenements = defineCollection({
     debut: z.coerce.date(),
     fin: z.coerce.date().optional(),
     horaires: z.string().optional(),
-    lieu: z.string().default('École Sacré-Coeur La Salle'),
+    lieu: z.string().default('École Sacré-Cœur La Salle'),
     public: z.enum(["Familles de l'école", 'Futures familles', 'Tout public']),
     resume: z.string().max(200),
     enAvant: z.boolean().default(false),
   }),
 });
 
-const plat = z.object({ entree: z.string(), plat: z.string(), accompagnement: z.string().optional(), dessert: z.string() });
+const plat = z.object({
+  entree: z.string().optional(), plat: z.string(), accompagnement: z.string().optional(),
+  laitage: z.string().optional(), dessert: z.string().optional(), vegetarien: z.boolean().default(false),
+});
 const menus = defineCollection({
   loader: file('./src/contenus/menus/menus.json'),
   schema: z.object({

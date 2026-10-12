@@ -16,7 +16,7 @@ const complet = new Intl.DateTimeFormat('fr-FR', { weekday: 'long', day: 'numeri
         <p class="discret">{[
           complet.format(e.data.debut) + (e.data.fin ? ` au ${complet.format(e.data.fin)}` : ''),
           e.data.horaires,
-          e.data.lieu !== 'École Sacré-Coeur La Salle' ? e.data.lieu : undefined,
+          e.data.lieu !== 'École Sacré-Cœur La Salle' ? e.data.lieu : undefined,
         ].filter(Boolean).join(', ')}</p>
         <p>{e.data.resume}</p>
       </div>

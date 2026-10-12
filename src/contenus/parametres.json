@@ -1,8 +1,16 @@
 {
-  "nom": "École Sacré-Coeur La Salle",
+  "nom": "École Sacré-Cœur La Salle",
   "ville": "Nantes",
-  "adresse": { "rue": "24 rue de la Salle Verte", "codePostal": "44100", "ville": "Nantes", "quartier": "Zola" },
-  "geo": { "latitude": 47.21224, "longitude": -1.58598 },
+  "adresse": {
+    "rue": "24 rue de la Salle Verte",
+    "codePostal": "44100",
+    "ville": "Nantes",
+    "quartier": "Zola"
+  },
+  "geo": {
+    "latitude": 47.21224,
+    "longitude": -1.58598
+  },
   "telephone": "02 40 46 27 13",
   "telephoneMobile": "07 82 31 11 10",
   "emailDirection": "ec.nantes.sacre-coeur@ec44.fr",
@@ -10,16 +18,30 @@
   "direction": "Mme Hélène Lampérière, cheffe d'établissement",
   "secretariat": "Mme Anne Calais",
   "horairesSecretariat": [
-    { "jours": "Lundi et vendredi", "heures": "7 h 45 à 12 h 30" },
-    { "jours": "Mardi", "heures": "7 h 45 à 12 h 30 et 13 h 30 à 15 h 30" }
+    {
+      "jours": "Lundi et vendredi",
+      "heures": "7 h 45 à 12 h 30"
+    },
+    {
+      "jours": "Mardi",
+      "heures": "7 h 45 à 12 h 30 et 13 h 30 à 15 h 30"
+    }
   ],
   "instagram": "https://www.instagram.com/sacrecoeurzola/",
   "inscriptionsOuvertes": true,
   "rentree": "2027-2028",
   "chiffres": [
-    { "valeur": "210", "libelle": "élèves, de la petite section au CM2" },
-    { "valeur": "8", "libelle": "classes, une école à taille humaine" },
-    { "valeur": "17", "libelle": "adultes : enseignants, ASEM, personnel" },
-    { "valeur": "7 h 45", "libelle": "accueil le matin, jusqu'à 18 h 30" }
+    {
+      "valeur": "7 h 45 · 18 h 30",
+      "libelle": "accueil quatre jours par semaine, garderie comprise"
+    },
+    {
+      "valeur": "26 élèves",
+      "libelle": "par classe en moyenne, de la petite section au CM2"
+    },
+    {
+      "valeur": "17 h 30",
+      "libelle": "fin de l'étude encadrée, du CP au CM2"
+    }
   ]
 }
