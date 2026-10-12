@@ -1,0 +1,151 @@
+---
+import Base from '../layouts/Base.astro';
+import Agenda from '../components/Agenda.astro';
+import p from '../contenus/parametres.json';
+import { evenementsAVenir } from '../lib/contenu';
+import { lien } from '../lib/site';
+
+const visites = (await evenementsAVenir()).filter((e) => e.data.public === 'Futures familles');
+const [debut] = p.rentree.split('-').map(Number);
+const classes = ['Petite section', 'Moyenne section', 'Grande section', 'CP', 'CE1', 'CE2', 'CM1', 'CM2'];
+const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
+---
+<Base titre="Inscrire votre enfant" courant="inscriptions/"
+  description="Inscriptions à l'école Sacré-Cœur La Salle de Nantes, de la petite section au CM2 : étapes, portes ouvertes, tarifs, demande en ligne en deux minutes.">
+  <section class="conteneur tete-inscription" aria-labelledby="titre-page">
+    <div class="zone-tete">
+      <p class="surtitre">Rentrée {p.rentree} et en cours d'année</p>
+      <h1 id="titre-page">Inscrire votre enfant</h1>
+      <p class="chapo">De la petite section au CM2, quelle que soit son histoire. Chaque inscription commence par une rencontre.</p>
+    </div>
+    <div class="zone-etapes">
+      <h2 class="visuellement-cache">Les trois étapes</h2>
+      <ol class="etapes etapes-verticales">
+        <li><h3>Votre demande</h3><p>Le formulaire, ou un appel au <a href={tel}>{p.telephone}</a>. Nous vous répondons sous deux jours ouvrés.</p></li>
+        <li><h3>Rendez-vous et visite</h3><p>Avec Mme Lampérière, cheffe d'établissement, à l'école ou en visio si vous arrivez d'une autre ville : vous faites connaissance et visitez classes, cour et cantine.</p></li>
+        <li><h3>Le dossier</h3><p>Vous recevez le dossier d'inscription ; l'inscription est confirmée à son retour, avec un acompte de 50 € déduit de la première facture.</p></li>
+      </ol>
+      <div class="secretariat">
+        <h2 class="titre-petit">Le secrétariat</h2>
+        <p>{p.secretariat}, <a href={tel}>{p.telephone}</a></p>
+        <ul>{p.horairesSecretariat.map((h) => <li>{h.jours} : {h.heures}</li>)}</ul>
+      </div>
+    </div>
+    <div class="carte-formulaire zone-formulaire" id="demande">
+      <h2 class="titre-petit">Demander un rendez-vous</h2>
+      <p class="discret" style="margin-bottom:1.25rem">Tous les champs sont obligatoires, sauf le message.</p>
+      <form class="formulaire" data-demande novalidate>
+        <div class="champs-duo">
+          <div class="champ"><label for="parent">Votre nom</label><input id="parent" name="parent" autocomplete="name" required /></div>
+          <div class="champ"><label for="telephone">Téléphone</label><input id="telephone" name="telephone" type="tel" autocomplete="tel" required /></div>
+        </div>
+        <div class="champ"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="email" required /></div>
+        <div class="champs-duo">
+          <div class="champ"><label for="enfant">Prénom de l'enfant</label><input id="enfant" name="enfant" required /></div>
+          <div class="champ"><label for="naissance">Date de naissance</label><input id="naissance" name="naissance" inputmode="numeric" placeholder="jj/mm/aaaa" pattern="\d{2}/\d{2}/\d{4}" maxlength="10" required aria-describedby="aide-classe" /></div>
+        </div>
+        <div class="champs-duo">
+          <div class="champ">
+            <label for="rentree">Rentrée souhaitée</label>
+            <select id="rentree" name="rentree" required>
+              <option>Septembre {debut}</option>
+              <option>En cours d'année {debut - 1}-{debut}</option>
+            </select>
+          </div>
+          <div class="champ">
+            <label for="classe">Classe</label>
+            <select id="classe" name="classe" required>
+              <option value="">Choisir</option>
+              {classes.map((c) => <option>{c}</option>)}
+            </select>
+          </div>
+        </div>
+        <p class="aide" id="aide-classe" data-aide-classe>La classe se remplit d'après la date de naissance ; vous pouvez la modifier.</p>
+        <div class="champ"><label for="message">Un mot pour nous (facultatif)</label><textarea id="message" name="message" rows="3"></textarea></div>
+        <p class="reassurance">Le secrétariat vous rappelle sous deux jours ouvrés pour fixer le rendez-vous avec Mme Lampérière.</p>
+        <button class="btn btn-principal" type="submit">Demander un rendez-vous</button>
+        <p class="note-rgpd">Vos réponses servent uniquement à vous recontacter pour l'inscription. Elles sont conservées un an au plus par l'école, puis supprimées. Pour y accéder ou les faire effacer : {p.emailSecretariat}.</p>
+        <p class="confirmation" data-confirmation hidden role="status">Merci. Dans cette démonstration, rien n'est encore envoyé : sur le site en ligne, votre demande arrivera au secrétariat, qui vous rappellera.</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="section section-creme" id="visiter" aria-labelledby="titre-visiter">
+    <div class="conteneur duo">
+      <div>
+        <h2 id="titre-visiter">Visiter l'école</h2>
+        <p style="margin-top:1rem">Les portes ouvertes sont le meilleur moment pour voir l'école vivre et rencontrer l'équipe. Toute l'année, la visite fait aussi partie du rendez-vous d'inscription.</p>
+      </div>
+      <div>{visites.length ? <Agenda evenements={visites} /> : <p>Les prochaines portes ouvertes seront annoncées ici.</p>}</div>
+    </div>
+  </section>
+
+  <section class="section" id="tarifs" aria-labelledby="titre-tarifs">
+    <div class="conteneur duo">
+      <div>
+        <h2 id="titre-tarifs">Tarifs 2026-2027</h2>
+        <p class="discret" style="margin-top:.5rem">Grille de l'année en cours, révisée au printemps pour la rentrée suivante.</p>
+        <p style="margin-top:1rem">L'école est sous contrat d'association avec l'État : les enseignants sont rémunérés par l'Éducation nationale. La contribution des familles finance l'immobilier, l'entretien et le caractère propre de l'école.</p>
+      </div>
+      <div>
+        <table class="tableau">
+          <caption class="discret" style="text-align:left;caption-side:bottom;padding-top:.75rem">Contribution facturée sur 10 mois, d'octobre à juillet. Pour les nouvelles familles, l'acompte de 50 € versé à l'inscription est déduit de la facture de septembre.</caption>
+          <tbody>
+            <tr><th scope="row">Contribution des familles</th><td>53 € par mois pour le 1<sup>er</sup> enfant, 50 € pour le 2<sup>e</sup>, 46 € à partir du 3<sup>e</sup></td></tr>
+            <tr><th scope="row">Contribution de solidarité</th><td>9 € de plus par mois, au choix des familles qui le souhaitent</td></tr>
+            <tr><th scope="row">Adhésion à l'APEL</th><td>27 € par famille et par an</td></tr>
+            <tr><th scope="row">Repas</th><td>5,95 €, maternelle et élémentaire</td></tr>
+            <tr><th scope="row">Garderie du matin</th><td>1,50 € par matin</td></tr>
+            <tr><th scope="row">Étude et garderie du soir</th><td>3 € par heure, la 2<sup>e</sup> heure comptée à partir de 17 h 30</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:1rem"><strong>Exemple :</strong> un enfant qui déjeune à la cantine quatre jours par semaine, soit environ 16 repas par mois, revient à 53 € + 95 € de repas, environ 148 € par mois, hors garderie.</p>
+        <p class="discret" style="margin-top:1rem">La contribution de solidarité permet à l'école de rester ouverte à tous les élèves, sans distinction de conditions et de ressources.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-creme" aria-labelledby="titre-questions">
+    <div class="conteneur etroit">
+      <h2 id="titre-questions" style="margin-bottom:1.5rem">Questions fréquentes</h2>
+      <div class="accordeon">
+        <details><summary>Faut-il être catholique pour inscrire son enfant ?</summary><div><p>Non. L'école accueille toutes les familles qui adhèrent à son projet éducatif. La pastorale est proposée à tous, dans le respect des convictions de chacun.</p></div></details>
+        <details><summary>Peut-on inscrire un enfant en cours d'année ?</summary><div><p>Oui, selon les places disponibles dans la classe. Faites votre demande : nous vous dirons rapidement ce qui est possible.</p></div></details>
+        <details><summary>Y a-t-il un tarif pour les frères et sœurs ?</summary><div><p>Oui : la contribution passe à 50 € par mois pour le deuxième enfant et à 46 € à partir du troisième.</p></div></details>
+        <details><summary>Mon enfant a un PAI ou un besoin particulier, est-ce possible ?</summary><div><p>Nous en parlons ensemble lors du rendez-vous, pour préparer son accueil avec l'équipe et, si besoin, avec les professionnels qui le suivent.</p></div></details>
+        <details><summary>La cantine est-elle obligatoire ?</summary><div><p>Non. Les repas, à 5,95 €, sont servis sans préinscription. Les externes rentrent déjeuner chez eux ; le portail rouvre à 13 h 20.</p></div></details>
+        <details><summary>Y a-t-il classe le mercredi ?</summary><div><p>Non. L'école fonctionne sur quatre jours : lundi, mardi, jeudi et vendredi.</p></div></details>
+      </div>
+    </div>
+  </section>
+</Base>
+<script define:vars={{ debut }}>
+  const classes = ['CM2', 'CM1', 'CE2', 'CE1', 'CP', 'Grande section', 'Moyenne section', 'Petite section'];
+  const form = document.querySelector('[data-demande]');
+  const naissance = form.querySelector('#naissance');
+  const rentree = form.querySelector('#rentree');
+  const classe = form.querySelector('#classe');
+  const aide = form.querySelector('[data-aide-classe]');
+  const proposer = () => {
+    const m = naissance.value.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    if (!m) return;
+    const annee = rentree.selectedIndex === 0 ? debut : debut - 1;
+    const rang = Number(m[3]) - (annee - 10); // né en (rentrée - 10) : CM2 ; en (rentrée - 3) : petite section
+    if (rang >= 0 && rang < classes.length) {
+      classe.value = classes[rang];
+      aide.textContent = `Pour cette rentrée, votre enfant entre en ${classes[rang]}. Vous pouvez modifier ce choix.`;
+    }
+  };
+  naissance.addEventListener('input', () => {
+    const chiffres = naissance.value.replace(/\D/g, '').slice(0, 8);
+    naissance.value = [chiffres.slice(0, 2), chiffres.slice(2, 4), chiffres.slice(4)].filter(Boolean).join('/');
+    proposer();
+  });
+  rentree.addEventListener('change', proposer);
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+    form.querySelector('[data-confirmation]').hidden = false;
+    form.querySelector('button[type=submit]').disabled = true;
+  });
+</script>

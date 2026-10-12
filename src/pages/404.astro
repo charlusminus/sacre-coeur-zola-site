@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+import { lien } from '../lib/site';
+---
+<Base titre="Page introuvable" description="Cette page n'existe pas ou a changé d'adresse.">
+  <section class="tete-page conteneur etroit">
+    <h1>Cette page a changé de place</h1>
+    <p class="chapo">Le site de l'école a été refait : l'adresse que vous avez suivie n'existe plus.</p>
+    <div class="actions"><a class="btn btn-principal" href={lien('inscriptions/')}>Inscriptions</a><a class="btn btn-secondaire" href={lien()}>Accueil</a></div>
+  </section>
+</Base>

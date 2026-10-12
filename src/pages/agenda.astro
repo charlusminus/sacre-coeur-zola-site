@@ -1,0 +1,44 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Agenda from '../components/Agenda.astro';
+import { evenementsAVenir, actualites } from '../lib/contenu';
+import { lien, dateLongue } from '../lib/site';
+const evenements = await evenementsAVenir();
+const actus = await actualites();
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': evenements.map((e) => ({
+    '@type': 'Event', name: e.data.titre, startDate: e.data.debut.toISOString(), endDate: (e.data.fin ?? e.data.debut).toISOString(),
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode', eventStatus: 'https://schema.org/EventScheduled', description: e.data.resume,
+    location: { '@type': 'Place', name: e.data.lieu, address: e.data.lieu.includes('Zola') ? 'Place Émile Zola, 44100 Nantes' : '24 rue de la Salle Verte, 44100 Nantes' },
+    organizer: { '@type': 'Organization', name: 'École Sacré-Cœur La Salle, Nantes' },
+  })),
+};
+---
+<Base titre="Agenda et actualités" courant="agenda/" description="Les prochains rendez-vous et les actualités de l'école Sacré-Cœur La Salle de Nantes : portes ouvertes, fêtes, vie des classes." schema={schema}>
+  <section class="tete-page conteneur">
+    <p class="surtitre">Agenda et actualités</p>
+    <h1>Ce qui se passe à l'école</h1>
+  </section>
+  <section class="section section-creme" aria-labelledby="titre-agenda">
+    <div class="conteneur etroit">
+      <h2 id="titre-agenda" style="margin-bottom:1.5rem">Prochains rendez-vous</h2>
+      <Agenda evenements={evenements} />
+    </div>
+  </section>
+  <section class="section" id="actualites" aria-labelledby="titre-actus">
+    <div class="conteneur">
+      <h2 id="titre-actus" style="margin-bottom:2rem">Actualités</h2>
+      <ul class="actus">
+        {actus.map((a) => (
+          <li><a href={lien(`actualites/${a.id}/`)}>
+            {a.data.photo && <Image src={a.data.photo} alt={a.data.alt ?? ''} widths={[390, 560]} sizes="(min-width: 48rem) 33vw, 100vw" />}
+            <span class="etiquette">{a.data.rubrique} · {dateLongue(a.data.date)}</span>
+            <h3>{a.data.titre}</h3><p>{a.data.resume}</p>
+          </a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>

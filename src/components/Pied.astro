@@ -1,0 +1,44 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo-ecole.png';
+import p from '../contenus/parametres.json';
+import { lien } from '../lib/site';
+const tel = (n: string) => 'tel:+33' + n.replace(/\s/g, '').slice(1);
+---
+<footer class="pied">
+  <div class="conteneur pied-grille">
+    <div>
+      <a class="pied-logo" href={lien()}><Image src={logo} alt="École Sacré-Cœur La Salle Nantes, Frères des Écoles Chrétiennes" height={144} widths={[180, 360]} sizes="180px" /></a>
+      <p style="margin-top:1rem">Un établissement du réseau <a href="https://lasallefrance.fr/">La Salle France</a>, sous contrat d'association avec l'État, membre de l'<a href="https://www.ec44.fr/">Enseignement catholique de Loire-Atlantique</a>.</p>
+    </div>
+    <div>
+      <h2>Nous trouver</h2>
+      <p>{p.adresse.rue}<br />{p.adresse.codePostal} {p.adresse.ville}</p>
+      <p style="margin-top:.5rem"><a href={tel(p.telephone)}>{p.telephone}</a></p>
+      <p><a href={`mailto:${p.emailSecretariat}`}>{p.emailSecretariat}</a></p>
+    </div>
+    <div>
+      <h2>Familles</h2>
+      <ul>
+        <li><a href={lien('vie-scolaire/#cantine')}>Menus de la cantine</a></li>
+        <li><a href={lien('vie-scolaire/#horaires')}>Horaires et garderie</a></li>
+        <li><a href={lien('agenda/')}>Agenda et actualités</a></li>
+        <li><a href={lien('ecole/#apel')}>APEL et OGEC</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Rejoindre l'école</h2>
+      <ul>
+        <li><a href={lien('inscriptions/')}>Inscriptions</a></li>
+        <li><a href={lien('inscriptions/#tarifs')}>Tarifs</a></li>
+        <li><a href={lien('contact/')}>Venir nous voir</a></li>
+        <li><a href={p.instagram}>Instagram</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="conteneur pied-bas">
+    <span>© {new Date().getFullYear()} {p.nom}, {p.ville}</span>
+    <a href={lien('mentions-legales/')}>Mentions légales et confidentialité</a>
+    <a href={lien('plan-du-site/')}>Plan du site</a>
+  </div>
+</footer>

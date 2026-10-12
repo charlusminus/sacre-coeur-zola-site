@@ -1,0 +1,68 @@
+---
+import Base from '../layouts/Base.astro';
+import Menu from '../components/Menu.astro';
+import { lien } from '../lib/site';
+---
+<Base titre="Vie scolaire : horaires, cantine, garderie" courant="vie-scolaire/" description="Horaires, cantine et menus, garderie et étude, ateliers périscolaires de l'école Sacré-Cœur La Salle de Nantes.">
+  <section class="tete-page conteneur">
+    <p class="surtitre">Vie scolaire</p>
+    <h1>Le quotidien à l'école</h1>
+    <p class="chapo">Horaires, cantine, garderie et ateliers : tout ce qu'il faut savoir pour organiser la semaine de votre enfant.</p>
+  </section>
+
+  <section class="section section-creme" id="horaires" aria-labelledby="titre-horaires">
+    <div class="conteneur duo">
+      <div>
+        <h2 id="titre-horaires">Horaires</h2>
+        <p style="margin-top:1rem">Quatre jours par semaine : lundi, mardi, jeudi et vendredi. Pas de classe le mercredi.</p>
+      </div>
+      <table class="tableau">
+        <tbody>
+          <tr><th scope="row">Accueil du matin</th><td>7 h 45 à 8 h 20</td></tr>
+          <tr><th scope="row">Classe le matin</th><td>8 h 30 à 11 h 45</td></tr>
+          <tr><th scope="row">Pause méridienne</th><td>11 h 45 à 13 h 30 ; pour les externes, le portail ouvre à 13 h 20</td></tr>
+          <tr><th scope="row">Classe l'après-midi</th><td>13 h 30 à 16 h 30</td></tr>
+          <tr><th scope="row">Accueil du soir</th><td>16 h 40 à 18 h 30</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" id="cantine" aria-labelledby="titre-cantine">
+    <div class="conteneur">
+      <div class="entete-section">
+        <div>
+          <h2 id="titre-cantine">La cantine</h2>
+          <p style="margin-top:1rem;max-width:36em">Les repas sont cuisinés le matin même par Convivio, dans la cuisine de Saint-Joseph du Loquidy La Salle, puis livrés chauds dans des bacs en inox. Les élèves d'élémentaire déjeunent en self-service. Pas de préinscription : votre enfant déjeune à l'école quand vous le souhaitez, pour 5,95 € le repas.</p>
+          <p style="margin-top:.75rem;max-width:36em">Les menus respectent la loi Egalim : viandes entières 100 % françaises, au moins un produit bio chaque jour, un repas végétarien par semaine.</p>
+        </div>
+      </div>
+      <h3 style="margin-bottom:.5rem">Le menu de la semaine</h3>
+      <Menu />
+      <p class="discret" style="margin-top:1rem">Tous les menus sont aussi sur <a href="https://www.clicetmiam.fr">clicetmiam.fr</a> (code BA8NE3). Allergies et régimes particuliers : parlez-en à l'enseignant et au secrétariat ; un PAI peut être mis en place avec le médecin.</p>
+    </div>
+  </section>
+
+  <section class="section section-creme" id="periscolaire" aria-labelledby="titre-peri">
+    <div class="conteneur">
+      <h2 id="titre-peri" style="margin-bottom:1.5rem">Avant et après la classe</h2>
+      <ul class="fiches fiches-3">
+        <li><h3>Garderie du matin</h3><p>De 7 h 45 à 8 h 20, pour toutes les classes. 1,50 € le matin.</p></li>
+        <li><h3>Garderie et étude du soir</h3><p>De 16 h 40 à 18 h 30. Du CP au CM2, les élèves inscrits en garderie ont un temps d'étude obligatoire de 16 h 40 à 17 h 30. 3 € de l'heure.</p></li>
+        <li><h3>Ateliers périscolaires</h3><p>Dès la moyenne section, à l'heure du déjeuner ou après la classe : selon les années, anglais (avec NPLA et Tiny Tiny School), échecs, musique ou théâtre. Inscriptions en fin d'année pour l'année suivante.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="pratique" aria-labelledby="titre-pratique">
+    <div class="conteneur etroit">
+      <h2 id="titre-pratique" style="margin-bottom:1.5rem">En pratique</h2>
+      <div class="accordeon">
+        <details><summary>Fournitures de la rentrée</summary><div><p>La liste de chaque classe est publiée en juin. [À CONFIRMER : lien vers les listes 2026-2027]</p></div></details>
+        <details><summary>Calendrier des vacances</summary><div><p>Toussaint : du samedi 17 octobre au lundi 2 novembre au matin. Noël : du samedi 19 décembre au lundi 4 janvier au matin. Hiver : du samedi 20 février au lundi 8 mars au matin. Printemps : du samedi 17 avril au lundi 3 mai au matin. [À CONFIRMER : le document de rentrée indique « lundi 7 mars » et « lundi 2 mai », qui tombent un dimanche] Pas de classe le vendredi 7 mai (pont de l'Ascension). Fin de l'année : jeudi 1er juillet après la classe. Deux samedis matin d'école : le 5 décembre (fête de Noël) et le 20 mars (enduro).</p></div></details>
+        <details><summary>Absences et retards</summary><div><p>En cas de maladie ou d'absence imprévue, envoyez un SMS au 07 82 31 11 10 avec le nom de votre enfant et le motif de l'absence. En dehors des horaires d'ouverture du portail, les allées et venues ne sont pas autorisées, sauf dérogation pour un suivi régulier (orthophonie par exemple), à demander par e-mail à la directrice quelques jours avant.</p></div></details>
+        <details><summary>L'application des familles</summary><div><p>L'équipe échange avec les parents via une application : cahier de liaison, photos de classe, informations.</p></div></details>
+      </div>
+    </div>
+  </section>
+</Base>

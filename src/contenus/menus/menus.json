@@ -1,0 +1,10 @@
+[
+  {
+    "id": "2026-10-12",
+    "semaine": "2026-10-12",
+    "lundi": { "entree": "Salade de riz au jambon", "plat": "Filet de poisson meunière", "accompagnement": "Petits pois", "laitage": "Laitage", "dessert": "Fruit frais" },
+    "mardi": { "entree": "Pastèque", "plat": "Paupiette de veau", "accompagnement": "Farfalles", "laitage": "Fromage", "dessert": "Crème dessert à la vanille" },
+    "jeudi": { "plat": "Repas d'animation" },
+    "vendredi": { "entree": "Carottes râpées au citron", "plat": "Tajine de légumes aux pois chiches", "accompagnement": "Semoule", "laitage": "Fromage", "dessert": "Cake marbré", "vegetarien": true }
+  }
+]

@@ -1,0 +1,17 @@
+---
+// Le menu du jour d'école en cours (ou du prochain), tiré du menu de la semaine.
+import { menuDeLaSemaine, jours } from '../lib/contenu';
+const menu = await menuDeLaSemaine();
+const indices = { 1: 'lundi', 2: 'mardi', 4: 'jeudi', 5: 'vendredi' } as const;
+const auj = new Date().getDay() as keyof typeof indices;
+const jour = (menu && (indices[auj] && menu.data[indices[auj]] ? indices[auj] : jours.find((j) => menu.data[j]))) || undefined;
+const plat = jour ? menu!.data[jour] : undefined;
+---
+{plat && (
+  <div class="menu-jour">
+    <p class="etiquette">Au menu {indices[auj] === jour ? "aujourd'hui" : jour}</p>
+    <p class="menu-plat">{plat.plat}</p>
+    <p>{[plat.entree, plat.accompagnement, plat.laitage, plat.dessert].filter(Boolean).join(' · ')}</p>
+    <p class="discret" style="margin-top:.75rem">Repas cuisinés le matin même et livrés chauds, sans préinscription.</p>
+  </div>
+)}

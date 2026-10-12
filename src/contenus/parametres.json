@@ -1,0 +1,33 @@
+{
+  "nom": "École Sacré-Cœur La Salle",
+  "ville": "Nantes",
+  "adresse": {
+    "rue": "24 rue de la Salle Verte",
+    "codePostal": "44100",
+    "ville": "Nantes",
+    "quartier": "Zola"
+  },
+  "geo": {
+    "latitude": 47.21224,
+    "longitude": -1.58598
+  },
+  "telephone": "02 40 46 27 13",
+  "telephoneMobile": "07 82 31 11 10",
+  "emailDirection": "ec.nantes.sacre-coeur@ec44.fr",
+  "emailSecretariat": "secretariat.ecole@sacrecoeurzola.fr",
+  "direction": "Mme Hélène Lampérière, cheffe d'établissement",
+  "secretariat": "Mme Anne Calais",
+  "horairesSecretariat": [
+    {
+      "jours": "Lundi et vendredi",
+      "heures": "7 h 45 à 12 h 30"
+    },
+    {
+      "jours": "Mardi",
+      "heures": "7 h 45 à 12 h 30 et 13 h 30 à 15 h 30"
+    }
+  ],
+  "instagram": "https://www.instagram.com/sacrecoeurzola/",
+  "inscriptionsOuvertes": true,
+  "rentree": "2027-2028"
+}

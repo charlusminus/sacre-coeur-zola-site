@@ -1,0 +1,46 @@
+/* Design system du site, source unique. Charte La Salle France 2016 (page « Les couleurs ») et
+   teintes de l'étoile du logo officiel. Contrastes WCAG mesurés et notés à côté de chaque usage :
+   texte 4,5 minimum, filets, focus et icônes 3,0 minimum, sur le pire fond où le couple apparaît.
+   Jaune et vert ne portent jamais de texte : ce sont des aplats, on écrit dessus en encre. */
+:root {
+  /* Fonds */
+  --fond: #ffffff;
+  --creme: #f7f4ee;          /* sections douces */
+  --nuit: #0b3d63;           /* bleu La Salle foncé, aplat de pied de page */
+
+  /* Texte */
+  --encre: #13100d;          /* noir de la charte : 18,96 sur blanc, 17,27 sur crème */
+  --encre-douce: #5c5853;    /* légendes, métadonnées : 7,06 sur blanc, 6,43 sur crème */
+
+  /* Couleurs de la charte */
+  --rose: #c82a59;           /* action principale, unique : blanc dessus 5,34 ; en texte 4,87 sur crème */
+  --rose-fonce: #a6204a;     /* survol de l'action principale : blanc dessus 7,17 */
+  --bleu: #006ba8;           /* liens, action secondaire : 5,72 sur blanc, 5,21 sur crème */
+  --jaune: #fcc433;          /* aplat seulement : encre dessus 11,81 ; sur nuit 7,03 */
+  --vert: #80b527;           /* aplat seulement : encre dessus 7,73 */
+  --jaune-clair: #f8c76b;    /* aplat : encre 12,07 */
+  --vert-clair: #9ccb6f;     /* aplat : encre 10,10 */
+
+  /* Bandeau des huit teintes de l'étoile (signature de la charte, décor uniquement) */
+  --bandeau: linear-gradient(90deg,
+    #da2b78 0 12.5%, #e16996 0 25%, #21649b 0 37.5%, #5a80af 0 50%,
+    #80be43 0 62.5%, #9ccb6f 0 75%, #f0b541 0 87.5%, #f8c76b 0);
+
+  /* Typographie : titres arrondis (proches de la Unit Rounded de la plaquette), texte Fira Sans
+     (police du site La Salle France). */
+  --titre: 'Nunito', ui-rounded, system-ui, sans-serif;
+  --texte: 'Fira Sans', system-ui, sans-serif;
+  --t-corps: 1.0625rem;      /* 17 px */
+  --t-petit: 0.9375rem;      /* 15 px */
+  --t-h1: clamp(2.25rem, 1.4rem + 3.6vw, 3.75rem);
+  --t-h2: clamp(1.75rem, 1.3rem + 1.9vw, 2.625rem);
+  --t-h3: 1.3125rem;
+
+  /* Espaces et formes */
+  --gouttiere: clamp(1rem, 0.4rem + 3vw, 3.5rem);
+  --section: clamp(3rem, 2rem + 4vw, 6rem);
+  --largeur: 76rem;
+  --rayon: 1.25rem;
+  --rayon-bouton: 999px;
+  --focus: 3px solid var(--bleu); /* 5,72 sur blanc */
+}

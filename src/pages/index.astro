@@ -1,0 +1,148 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Agenda from '../components/Agenda.astro';
+import MenuDuJour from '../components/MenuDuJour.astro';
+import p from '../contenus/parametres.json';
+import { lien, dateLongue } from '../lib/site';
+import { evenementsAVenir, actualites } from '../lib/contenu';
+import { schemaEcole } from '../lib/schema';
+import bibliotheque from '../assets/photos/bibliotheque.jpg';
+import forum from '../assets/photos/forum.jpg';
+import potager from '../assets/photos/potager.jpg';
+import jardinieres from '../assets/photos/jardinieres.jpg';
+
+const aVenir = await evenementsAVenir();
+const visite = aVenir.find((e) => e.data.public === 'Futures familles');
+const prochains = aVenir.filter((e) => e !== visite).slice(0, 4);
+const dernieres = await actualites(3);
+const jourMois = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', timeZone: 'Europe/Paris' });
+const jourLong = new Intl.DateTimeFormat('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'Europe/Paris' });
+const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
+---
+<Base titre="École Sacré-Cœur La Salle, école privée maternelle et élémentaire à Nantes Zola"
+  description="École catholique sous contrat de la petite section au CM2, quartier Zola à Nantes. 210 élèves, école neuve, accueil de 7 h 45 à 18 h 30. Inscriptions ouvertes."
+  schema={schemaEcole(Astro.site, import.meta.env.BASE_URL)}>
+
+  <section class="une" aria-labelledby="titre-une">
+    <div class="une-photo">
+      <Image src={bibliotheque} alt="Des élèves de CP et CE1 lisent, assis par terre dans la bibliothèque aux cabanes en bois." widths={[390, 780, 1200]} sizes="(min-width: 56rem) 50vw, 100vw" loading="eager" fetchpriority="high" />
+    </div>
+    <div class="une-texte">
+      <h1 id="titre-une">210 élèves, de la petite section au CM2, dans une école neuve du quartier Zola</h1>
+      <p class="chapo">Une école catholique lasallienne sous contrat, à Nantes : apprendre avec exigence, grandir avec attention à chacun.</p>
+      <div class="actions actions-une">
+        <a class="btn btn-principal" href={lien('inscriptions/#demande')}>Demander un rendez-vous</a>
+        {visite && <a class="btn btn-secondaire" href={lien('inscriptions/#visiter')}>Portes ouvertes le {jourMois.format(visite.data.debut)}</a>}
+      </div>
+      <p class="discret" style="margin-top:.75rem">Réponse sous deux jours ouvrés. Inscriptions ouvertes pour la rentrée {p.rentree} et en cours d'année.</p>
+    </div>
+  </section>
+
+  <nav class="acces-familles conteneur" aria-label="Accès rapides pour les familles de l'école">
+    <span>Familles de l'école :</span>
+    <a href={lien('vie-scolaire/#cantine')}>Menu de la semaine</a>
+    <a href={lien('agenda/')}>Agenda</a>
+    <a href={lien('vie-scolaire/#horaires')}>Horaires</a>
+    <a href={lien('vie-scolaire/#pratique')}>Absences et vacances</a>
+  </nav>
+
+  <section class="section" aria-labelledby="titre-projet">
+    <div class="conteneur">
+      <div class="entete-section">
+        <h2 id="titre-projet">Ce que vos enfants vivent ici</h2>
+        <a class="lien-fleche" href={lien('ecole/')}>Le projet éducatif</a>
+      </div>
+      <ul class="vecu">
+        <li class="vecu-grand">
+          <Image src={forum} alt="Tous les élèves réunis, assis au forum de l'école." widths={[390, 800, 1100]} sizes="(min-width: 56rem) 60vw, 100vw" />
+          <h3>Toute l'école réunie chaque mois</h3>
+          <p>À l'assemblée mensuelle, chaque classe présente un projet, la directrice parle à tous les élèves, et l'on fête les anniversaires du mois.</p>
+        </li>
+        <li>
+          <Image src={potager} alt="Des mains d'enfants plantent des graines dans un bac de terre." widths={[390, 600]} sizes="(min-width: 56rem) 30vw, 100vw" />
+          <h3>Label Éco-École niveau Or</h3>
+          <p>Potager, jardinières, eau de pluie : toutes les classes portent le projet.</p>
+        </li>
+        <li>
+          <Image src={jardinieres} alt="Des jardinières peintes par les élèves de CM, devant une baie vitrée." widths={[390, 600]} sizes="(min-width: 56rem) 30vw, 100vw" />
+          <h3>Apprendre en faisant</h3>
+          <p>Du potager aux jardinières fabriquées par les CM1-CM2, les projets se mènent en classe, en groupe.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section-creme" aria-labelledby="titre-inscription">
+    <div class="conteneur">
+      <div class="entete-section">
+        <div>
+          <p class="surtitre">Rentrée {p.rentree}, inscriptions ouvertes</p>
+          <h2 id="titre-inscription">Inscrire votre enfant, en trois étapes</h2>
+        </div>
+        <p>Pour une rentrée en septembre ou en cours d'année, de la petite section au CM2.</p>
+      </div>
+      <ol class="etapes">
+        <li><h3>Votre demande</h3><p>Quelques questions en ligne, ou un appel au <a href={tel}>{p.telephone}</a>. Réponse sous deux jours ouvrés.</p></li>
+        <li><h3>Rendez-vous et visite</h3><p>Avec Mme Lampérière, cheffe d'établissement : vous faites connaissance et visitez l'école.</p></li>
+        <li><h3>Le dossier</h3><p>Vous recevez le dossier ; l'inscription est confirmée à son retour.</p></li>
+      </ol>
+      <div class="actions">
+        <a class="btn btn-principal" href={lien('inscriptions/#demande')}>Demander un rendez-vous</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="titre-journee">
+    <div class="conteneur duo">
+      <div>
+        <h2 id="titre-journee">De 7 h 45 à 18 h 30, quatre jours par semaine</h2>
+        <ul class="journee" style="margin-top:1.5rem">
+          <li><span class="heure">7 h 45</span><span>Accueil du matin en garderie</span></li>
+          <li><span class="heure">8 h 30</span><span>Classe jusqu'à 11 h 45</span></li>
+          <li><span class="heure">11 h 45</span><span>Déjeuner, self pour les élémentaires</span></li>
+          <li><span class="heure">13 h 30</span><span>Classe jusqu'à 16 h 30</span></li>
+          <li><span class="heure">16 h 40</span><span>Garderie, avec étude jusqu'à 17 h 30 du CP au CM2</span></li>
+          <li><span class="heure">18 h 30</span><span>Fin de l'accueil du soir</span></li>
+        </ul>
+        <p class="discret" style="margin-top:1rem">Lundi, mardi, jeudi et vendredi. Pas de classe le mercredi. <a href={lien('vie-scolaire/')}>Horaires et tarifs</a></p>
+      </div>
+      <div>
+        <h2 class="titre-bloc">À la cantine</h2>
+        <MenuDuJour />
+        <p style="margin-top:1rem"><a class="lien-fleche" href={lien('vie-scolaire/#cantine')}>Tous les menus de la semaine</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-creme" aria-labelledby="titre-agenda">
+    <div class="conteneur duo">
+      <div>
+        <div class="entete-section"><h2 id="titre-agenda">À venir</h2><a class="lien-fleche" href={lien('agenda/')}>Tout l'agenda</a></div>
+        <Agenda evenements={prochains} />
+      </div>
+      <div>
+        <div class="entete-section"><h2 id="titre-actus">Actualités</h2><a class="lien-fleche" href={lien('agenda/#actualites')}>Toutes</a></div>
+        <ul class="actus-liste">
+          {dernieres.map((a) => (
+            <li>
+              <span class="etiquette">{dateLongue(a.data.date)}</span>
+              <h3><a href={lien(`actualites/${a.id}/`)}>{a.data.titre}</a></h3>
+              <p>{a.data.resume}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="titre-mot">
+    <div class="conteneur etroit">
+      <h2 id="titre-mot" class="surtitre">Le mot de la cheffe d'établissement</h2>
+      <blockquote>
+        <p class="mot">« Ici, tout le monde se connaît et se reconnaît. Notre mission est claire : accueillir chaque élève tel qu'il est, avec bienveillance, en portant une attention toute particulière aux plus fragiles. »</p>
+        <footer class="mot-signature">Hélène Lampérière, cheffe d'établissement. <a href={lien('ecole/')}>Lire son mot en entier</a></footer>
+      </blockquote>
+    </div>
+  </section>
+</Base>

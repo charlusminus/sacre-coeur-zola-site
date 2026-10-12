@@ -1,0 +1,49 @@
+# Démonstration sur GitHub Pages. Fusionner une PR sur main = mettre la démo en ligne.
+# Réglage requis une fois : Settings > Pages > Source = « GitHub Actions ».
+# Chaque PR est vérifiée (build complet avec contrôles de rédaction et de liens) avant fusion.
+name: Démo GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  # Reconstruction chaque nuit : l'agenda et le menu de la semaine avancent seuls.
+  schedule:
+    - cron: '17 3 * * *'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  construire:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deployer:
+    if: github.event_name != 'pull_request'
+    needs: construire
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploiement.outputs.page_url }}
+    steps:
+      - id: deploiement
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { lien, navigation } from '../lib/site';
+const actus = await getCollection('actualites');
+---
+<Base titre="Plan du site" description="Toutes les pages du site de l'école Sacré-Cœur La Salle de Nantes.">
+  <section class="tete-page conteneur etroit prose">
+    <h1>Plan du site</h1>
+    <ul>
+      <li><a href={lien()}>Accueil</a></li>
+      {navigation.map((n) => <li><a href={lien(n.href)}>{n.titre}</a></li>)}
+      <li><a href={lien('mentions-legales/')}>Mentions légales et confidentialité</a></li>
+    </ul>
+    <h2>Actualités</h2>
+    <ul>{actus.map((a) => <li><a href={lien(`actualites/${a.id}/`)}>{a.data.titre}</a></li>)}</ul>
+  </section>
+</Base>
