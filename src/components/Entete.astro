@@ -1,8 +1,9 @@
 ---
 import { Image } from 'astro:assets';
 import logo from '../assets/logo-ecole-compact.png';
-import { lien, navigation } from '../lib/site';
+import { lien, navigation, sansAncre } from '../lib/site';
 const { courant = '' } = Astro.props;
+const actif = (n: (typeof navigation)[number]) => n.href === courant || !!n.enfants?.some((e) => sansAncre(e.href) === courant);
 ---
 <header class="entete" data-entete>
   <div class="conteneur entete-barre">
@@ -11,10 +12,22 @@ const { courant = '' } = Astro.props;
     </a>
     <nav class="navigation" id="navigation" aria-label="Navigation principale">
       <ul>
-        {navigation.map((n) => <li><a href={lien(n.href)} aria-current={courant === n.href ? 'page' : undefined}>{n.titre}</a></li>)}
+        {navigation.map((n, i) => n.enfants ? (
+          <li class="nav-groupe" data-groupe data-actif={actif(n) ? '' : undefined}>
+            <button class="nav-ouvrir" type="button" aria-expanded="false" aria-controls={`sous-menu-${i}`}>
+              {n.titre}
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
+            </button>
+            <ul class="sous-menu" id={`sous-menu-${i}`} hidden>
+              {n.enfants.map((e) => <li><a href={lien(e.href)} aria-current={e.href === courant ? 'page' : undefined}>{e.titre}</a></li>)}
+            </ul>
+          </li>
+        ) : (
+          <li><a href={lien(n.href)} aria-current={actif(n) ? 'page' : undefined}>{n.titre}</a></li>
+        ))}
       </ul>
     </nav>
-    {courant !== 'inscriptions/' && <a class="btn btn-principal entete-action" href={lien('inscriptions/#demande')}><span class="court">Inscription</span><span class="long">Inscrire mon enfant</span></a>}
+    <a class="btn btn-principal entete-action" href={lien('inscriptions/#demande')} aria-current={courant === 'inscriptions/' ? 'page' : undefined}><span class="court">Inscription</span><span class="long">Inscrire mon enfant</span></a>
     <button class="menu-bouton" type="button" aria-expanded="false" aria-controls="navigation" data-menu>
       <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
       <span>Menu</span>
@@ -24,12 +37,41 @@ const { courant = '' } = Astro.props;
 <script>
   const entete = document.querySelector<HTMLElement>('[data-entete]');
   const bouton = document.querySelector<HTMLButtonElement>('[data-menu]');
+  const groupes = [...document.querySelectorAll<HTMLElement>('[data-groupe]')];
+  const survol = matchMedia('(hover: hover) and (min-width: 64rem)');
+
+  const deplier = (g: HTMLElement, ouvert: boolean) => {
+    g.querySelector('button')!.setAttribute('aria-expanded', String(ouvert));
+    g.querySelector<HTMLElement>('.sous-menu')!.hidden = !ouvert;
+  };
+  const replier = (sauf?: HTMLElement) => groupes.forEach((g) => g !== sauf && deplier(g, false));
   const basculer = (ouvert: boolean) => {
     if (!entete || !bouton) return;
     entete.toggleAttribute('data-ouvert', ouvert);
     bouton.setAttribute('aria-expanded', String(ouvert));
     bouton.querySelector('span')!.textContent = ouvert ? 'Fermer' : 'Menu';
+    // Sur téléphone, la rubrique de la page courante s'ouvre avec le menu.
+    groupes.forEach((g) => deplier(g, ouvert && g.hasAttribute('data-actif')));
   };
+
   bouton?.addEventListener('click', () => basculer(!entete?.hasAttribute('data-ouvert')));
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') basculer(false); });
+  groupes.forEach((g) => {
+    const b = g.querySelector('button')!;
+    b.addEventListener('click', () => {
+      const ouvrir = b.getAttribute('aria-expanded') !== 'true';
+      if (!entete?.hasAttribute('data-ouvert')) replier(g);
+      deplier(g, ouvrir);
+    });
+    g.addEventListener('pointerenter', (e) => { if (survol.matches && e.pointerType === 'mouse') { replier(g); deplier(g, true); } });
+    g.addEventListener('pointerleave', (e) => { if (survol.matches && e.pointerType === 'mouse') deplier(g, false); });
+    g.addEventListener('focusout', (e) => { if (!entete?.hasAttribute('data-ouvert') && !g.contains(e.relatedTarget as Node)) deplier(g, false); });
+  });
+  document.addEventListener('click', (e) => { if (!entete?.hasAttribute('data-ouvert') && !(e.target as Element).closest('[data-groupe]')) replier(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    const g = (document.activeElement as Element | null)?.closest<HTMLElement>('[data-groupe]');
+    if (g && !entete?.hasAttribute('data-ouvert')) { deplier(g, false); g.querySelector('button')!.focus(); return; }
+    replier();
+    basculer(false);
+  });
 </script>

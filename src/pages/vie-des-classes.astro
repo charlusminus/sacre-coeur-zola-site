@@ -17,7 +17,7 @@ const cycles = [
 const cycleDe = (a: (typeof toutes)[number]) => cycles.find((c) => c.niveaux.includes(a.data.niveaux[0]))?.id;
 const parCycle = cycles.map((c) => ({ ...c, actus: toutes.filter((a) => cycleDe(a) === c.id).slice(0, 6) }));
 ---
-<Base titre="La vie des classes" courant="vie-des-classes/" fil={[{ nom: 'Vie des classes' }]}
+<Base titre="La vie des classes" courant="vie-des-classes/" fil={[{ nom: 'Vie scolaire', href: 'vie-scolaire/' }, { nom: 'Vie des classes' }]}
   description="Sorties, potager, bibliothèque, gym, projets : la vie des classes de l'école Sacré-Cœur La Salle à Nantes, de la petite section au CM2, racontée par les classes.">
   <section class="tete-page conteneur">
     <p class="surtitre">De la petite section au CM2</p>

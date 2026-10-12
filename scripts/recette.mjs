@@ -124,19 +124,46 @@ const tel = formats['téléphone 390'];
 const bureau = formats['bureau 1440'];
 const affirmer = (c, m) => { if (!c) throw new Error(m); };
 
-await parcours('menu téléphone : ouverture, lien actif, Échap', tel, async (page) => {
-  await page.goto(url('ecole/'));
+await parcours('menu téléphone : ouverture, sous-menu, lien actif, Échap', tel, async (page) => {
+  await page.goto(url('pastorale/'));
   const bouton = page.locator('[data-menu]');
   affirmer(await page.locator('#navigation').isHidden(), 'la navigation est visible avant ouverture');
   await bouton.click();
   affirmer((await bouton.getAttribute('aria-expanded')) === 'true', 'aria-expanded reste false');
-  affirmer(await page.locator('#navigation a[href$="/inscriptions/"]').isVisible(), 'lien Inscriptions invisible menu ouvert');
-  affirmer((await page.locator('#navigation a[aria-current="page"]').textContent()).includes("L'école") || (await page.locator('#navigation a[aria-current="page"]').textContent()).includes('L’école'), 'rubrique courante non marquée');
+  affirmer((await page.locator('#navigation a[aria-current="page"]').textContent()).includes('Pastorale'), 'page courante non marquée dans le sous-menu');
+  affirmer(await page.locator('#navigation a[href$="/pastorale/"]').isVisible(), 'la rubrique courante ne se déplie pas à l’ouverture');
+  affirmer(await page.locator('#navigation a[href$="/inscriptions/"]').count() === 0, 'Inscriptions est revenu dans le menu');
   await page.keyboard.press('Escape');
   affirmer((await bouton.getAttribute('aria-expanded')) === 'false', 'Échap ne ferme pas le menu');
+  await page.goto(url('agenda/'));
   await bouton.click();
-  await page.locator('#navigation a[href$="/agenda/"]').click();
-  await page.waitForURL(/agenda\/$/);
+  const groupe = page.locator('.nav-ouvrir', { hasText: 'Vie scolaire' });
+  affirmer(await page.locator('#navigation a[href$="/cantine/"]').isHidden(), 'sous-menu ouvert sans clic');
+  await groupe.click();
+  affirmer((await groupe.getAttribute('aria-expanded')) === 'true', 'le sous-menu ne se déplie pas');
+  await page.locator('#navigation a[href$="/cantine/"]').click();
+  await page.waitForURL(/cantine\/$/);
+  affirmer(await page.locator('.entete-action').isVisible(), 'bouton Inscrire mon enfant absent');
+});
+
+await parcours('menu bureau : sous-menu au clavier et à la souris', bureau, async (page) => {
+  await page.goto(url());
+  const groupe = page.locator('.nav-ouvrir', { hasText: 'Vie scolaire' });
+  const lienCantine = page.locator('#navigation a[href$="/cantine/"]');
+  await groupe.hover();
+  affirmer(await lienCantine.isVisible(), 'le survol ne déplie pas le sous-menu');
+  await page.mouse.move(5, 600);
+  affirmer(await lienCantine.isHidden(), 'le sous-menu reste ouvert hors survol');
+  await groupe.focus();
+  await page.keyboard.press('Enter');
+  affirmer((await groupe.getAttribute('aria-expanded')) === 'true', 'Entrée ne déplie pas le sous-menu');
+  await page.keyboard.press('Tab');
+  affirmer(await page.evaluate(() => document.activeElement?.getAttribute('href')?.endsWith('/cantine/')), 'Tab ne mène pas au premier lien du sous-menu');
+  await page.keyboard.press('Escape');
+  affirmer(await lienCantine.isHidden(), 'Échap ne referme pas le sous-menu');
+  affirmer(await page.evaluate(() => document.activeElement?.classList.contains('nav-ouvrir')), 'Échap ne rend pas le focus au bouton');
+  await page.goto(url('inscriptions/'));
+  affirmer((await page.locator('.entete-action').getAttribute('aria-current')) === 'page', 'le bouton d’inscription n’est pas marqué sur sa page');
 });
 
 await parcours("parcours d'inscription téléphone : accueil, bouton, formulaire", tel, async (page) => {

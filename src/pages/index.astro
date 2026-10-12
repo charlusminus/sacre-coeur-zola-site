@@ -39,7 +39,7 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
 
   <nav class="acces-familles conteneur" aria-label="Accès rapides pour les familles de l'école">
     <span>Familles de l'école :</span>
-    <a href={lien('vie-scolaire/#cantine')}>Menu de la semaine</a>
+    <a href={lien('cantine/')}>Menu de la semaine</a>
     <a href={lien('agenda/')}>Agenda</a>
     <a href={lien('vie-scolaire/#horaires')}>Horaires</a>
     <a href={lien('vie-scolaire/#pratique')}>Absences et vacances</a>
@@ -108,7 +108,7 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
       <div>
         <h2 class="titre-bloc">À la cantine</h2>
         <MenuDuJour />
-        <p style="margin-top:1rem"><a class="lien-fleche" href={lien('vie-scolaire/#cantine')}>Tous les menus de la semaine</a></p>
+        <p style="margin-top:1rem"><a class="lien-fleche" href={lien('cantine/')}>Tous les menus de la semaine</a></p>
       </div>
     </div>
   </section>

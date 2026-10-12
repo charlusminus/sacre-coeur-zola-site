@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
-import { lien, navigation } from '../lib/site';
+import { lien, pagesDuMenu } from '../lib/site';
 const actus = await getCollection('actualites');
 ---
 <Base fil={[{ nom: 'Plan du site' }]} titre="Plan du site" description="Toutes les pages du site de l'école Sacré-Cœur La Salle, école catholique maternelle et élémentaire du quartier Zola à Nantes : inscriptions, vie scolaire, agenda.">
@@ -9,10 +9,8 @@ const actus = await getCollection('actualites');
     <h1>Plan du site</h1>
     <ul>
       <li><a href={lien()}>Accueil</a></li>
-      {navigation.map((n) => <li><a href={lien(n.href)}>{n.titre}</a></li>)}
-      <li><a href={lien('pastorale/')}>Pastorale</a></li>
-      <li><a href={lien('eco-ecole/')}>Éco-École</a></li>
-      <li><a href={lien('apel/')}>APEL</a></li>
+      {pagesDuMenu.map((n) => <li><a href={lien(n.href)}>{n.titre}</a></li>)}
+      <li><a href={lien('inscriptions/')}>Inscriptions et tarifs</a></li>
       <li><a href={lien('questions-frequentes/')}>Questions fréquentes</a></li>
       <li><a href={lien('mentions-legales/')}>Mentions légales et confidentialité</a></li>
     </ul>

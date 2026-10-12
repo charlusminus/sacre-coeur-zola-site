@@ -6,7 +6,7 @@ import { getCollection } from 'astro:content';
 import vierge from '../assets/actualites/paques-vierge.jpg';
 const actus = (await getCollection('actualites')).filter((a) => a.data.rubrique === 'Pastorale').sort((a, b) => +b.data.date - +a.data.date);
 ---
-<Base titre="La pastorale" courant="ecole/" fil={[{ nom: "L'école", href: 'ecole/' }, { nom: 'Pastorale' }]}
+<Base titre="La pastorale" courant="pastorale/" fil={[{ nom: "L'école", href: 'ecole/' }, { nom: 'Pastorale' }]}
   description="La pastorale de l'école Sacré-Cœur La Salle à Nantes : célébrations à l'église Saint-Clair, temps forts, solidarité, dans le respect des convictions de chacun.">
   <section class="tete-page conteneur">
     <p class="surtitre">Croire, s'engager, s'épanouir</p>

@@ -5,7 +5,7 @@ import { evenementsAVenir } from '../lib/contenu';
 import { lien } from '../lib/site';
 const rdv = (await evenementsAVenir()).filter((e) => /APEL|vide-grenier|tombola|Noël/i.test(e.data.titre + e.data.resume)).slice(0, 4);
 ---
-<Base titre="L'APEL, association des parents d'élèves" courant="ecole/" fil={[{ nom: "L'école", href: 'ecole/' }, { nom: 'APEL' }]}
+<Base titre="L'APEL, association des parents d'élèves" courant="apel/" fil={[{ nom: "L'école", href: 'ecole/' }, { nom: 'APEL' }]}
   description="L'APEL de l'école Sacré-Cœur La Salle à Nantes : café de rentrée, marché de Noël, vide-grenier de la place Zola, kermesse, sorties financées pour les élèves.">
   <section class="tete-page conteneur">
     <p class="surtitre">Association des parents d'élèves</p>

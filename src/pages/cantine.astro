@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import Menu from '../components/Menu.astro';
+import { lien } from '../lib/site';
+---
+<Base titre="Menus de la cantine" courant="cantine/" fil={[{ nom: 'Vie scolaire', href: 'vie-scolaire/' }, { nom: 'Menus de la cantine' }]}
+  description="Le menu de la semaine à la cantine de l'école Sacré-Cœur La Salle (Nantes, quartier Zola) : repas cuisinés le matin même, un produit bio par jour.">
+  <section class="tete-page conteneur">
+    <p class="surtitre">Vie scolaire</p>
+    <h1>Les menus de la cantine</h1>
+    <p class="chapo">Les repas sont cuisinés le matin même par Convivio, dans la cuisine de Saint-Joseph du Loquidy La Salle, puis livrés chauds dans des bacs en inox.</p>
+  </section>
+
+  <section class="section" aria-labelledby="titre-semaine">
+    <div class="conteneur">
+      <h2 id="titre-semaine" style="margin-bottom:.5rem">Le menu de la semaine</h2>
+      <Menu />
+      <p class="discret" style="margin-top:1rem">Tous les menus sont aussi sur <a href="https://www.clicetmiam.fr">clicetmiam.fr</a> (code BA8NE3).</p>
+    </div>
+  </section>
+
+  <section class="section section-creme" aria-labelledby="titre-fonctionnement">
+    <div class="conteneur">
+      <h2 id="titre-fonctionnement" style="margin-bottom:1.5rem">Comment ça marche</h2>
+      <ul class="fiches fiches-3">
+        <li><h3>Sans préinscription</h3><p>Votre enfant déjeune à l'école quand vous le souhaitez, pour 5,95 € le repas. Les élèves d'élémentaire déjeunent en self-service.</p></li>
+        <li><h3>Des menus Egalim</h3><p>Viandes entières 100 % françaises, au moins un produit bio chaque jour, un repas végétarien par semaine.</p></li>
+        <li><h3>Allergies et régimes</h3><p>Parlez-en à l'enseignant et au secrétariat ; un PAI peut être mis en place avec le médecin.</p></li>
+      </ul>
+      <p style="margin-top:1.5rem"><a class="lien-fleche" href={lien('vie-scolaire/')}>Horaires, garderie et étude</a></p>
+    </div>
+  </section>
+</Base>
