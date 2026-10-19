@@ -14,11 +14,13 @@ touche jamais à la mise en page ni à une adresse de page : le site s'en charge
 | Menus de la cantine | semaine (un lundi), PDF, date de mise en ligne facultative, petit mot facultatif | sans date, le menu apparaît le vendredi précédent à 8 h ; sans mot, « Voici le menu de la cantine pour la semaine du … » |
 | Informations générales (document unique) | téléphones, e-mails, horaires du secrétariat, accès, Instagram, direction, secrétariat, équipe, prochaine rentrée, destinataires des demandes d'inscription | ni création d'un second exemplaire, ni suppression |
 | Questions fréquentes (document unique) | questions et réponses, et la page où les afficher ; ordre par glisser-déposer | |
-| Textes des pages : Éco-École, Pastorale, Tarifs (documents uniques, depuis le 19/10/2026) | un champ par bloc de texte, à sa place fixe dans la page ; listes (années, temps forts, lignes de tarif) ; photo de la page | la mise en page ne bouge pas ; un champ vidé reprend le texte d'origine (`src/contenus/pages/`) ; ligne de liste incomplète écartée et signalée |
+| Textes des pages : L'école (mot de la cheffe d'établissement, projet éducatif, histoire), Vie scolaire (horaires, garderie, ateliers, vacances), Cantine, Éco-École, Pastorale, APEL, Tarifs (documents uniques, depuis le 19/10/2026) | un champ par bloc de texte, à sa place fixe dans la page ; listes (années, temps forts, lignes de tarif) ; photo de la page | la mise en page ne bouge pas ; un champ vidé reprend le texte d'origine (`src/contenus/pages/`) ; ligne de liste incomplète écartée et signalée |
 
 Aucun champ technique : pas d'adresse de page, pas de balise, pas de référencement à remplir. Le
-tiret long est refusé dès la saisie (le site le refuse aussi). Les autres pages (projet, vie
-scolaire, APEL, etc.) restent dans le code : leur texte change par Charles. Pour rendre une page
+tiret long est refusé dès la saisie (le site le refuse aussi). Restent dans le code, leur texte
+change par Charles : l'accueil (ouverture validée, synthèse des autres pages), les étapes
+d'inscription, les questions de la page Contact et les mentions légales (texte juridique, la
+directrice de la publication y est tirée des Informations générales). Pour rendre une page
 éditable : un document dans `studio/schemaTypes/pages.ts`, ses textes d'origine dans
 `src/contenus/pages/`, la fusion dans `src/lib/pages.ts`, le type dans `scripts/sanity-sync.mjs` et dans
 le filtre du webhook.
@@ -71,7 +73,7 @@ public : le site le lit sans jeton.
 - [x] **Webhook** (19/10/2026, vérifié : une publication remet le site à jour en moins d'une minute ; jeton GitHub valable un an, à renouveler en octobre 2027) : projet > API > Webhooks > « Create webhook » : URL
   `https://api.github.com/repos/charlusminus/sacre-coeur-zola-site/dispatches`, méthode POST, jeu
   `production`, déclencheur création, mise à jour et suppression, filtre
-  `_type in ["actualite","evenement","menu","parametres","questionsFrequentes","pageEcoEcole","pagePastorale","pageTarifs"]`, projection
+  `_type in ["actualite","evenement","menu","parametres","questionsFrequentes","pageEcole","pageVieScolaire","pageCantine","pageEcoEcole","pagePastorale","pageApel","pageTarifs"]`, projection
   `{"event_type": "sanity"}`, en-têtes `Authorization: Bearer <jeton GitHub>` (jeton à grain fin,
   ce seul dépôt, droit « Contents: read and write ») et `Accept: application/vnd.github+json`.
   Sans webhook, une publication n'apparaît qu'à la reconstruction suivante (chaque nuit et chaque

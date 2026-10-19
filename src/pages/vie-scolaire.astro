@@ -1,4 +1,5 @@
 ---
+import { pageVieScolaire as t, paragraphes } from '../lib/pages';
 import { parametres as p } from '../lib/donnees';
 import Base from '../layouts/Base.astro';
 import { lien } from '../lib/site';
@@ -6,24 +7,20 @@ import { lien } from '../lib/site';
 <Base titre="Horaires, garderie et vie pratique" courant="vie-scolaire/" fil={[{ nom: 'Vie scolaire' }]}
   description="Horaires, garderie et étude, ateliers et vacances 2026-2027 à l'école Sacré-Cœur La Salle, école primaire catholique du quartier Zola à Nantes.">
   <section class="tete-page conteneur">
-    <p class="surtitre">Vie scolaire</p>
-    <h1>Le quotidien à l'école Sacré-Cœur La Salle</h1>
-    <p class="chapo">Horaires, cantine, garderie et ateliers : tout ce qu'il faut savoir pour organiser la semaine de votre enfant.</p>
+    <p class="surtitre">{t.surtitre}</p>
+    <h1>{t.titre}</h1>
+    <p class="chapo">{t.chapo}</p>
   </section>
 
   <section class="section section-creme" id="horaires" aria-labelledby="titre-horaires">
     <div class="conteneur duo">
       <div>
         <h2 id="titre-horaires">Horaires</h2>
-        <p style="margin-top:1rem">Quatre jours par semaine : lundi, mardi, jeudi et vendredi. Pas de classe le mercredi.</p>
+        {paragraphes(t.horairesTexte).map((x) => <p style="margin-top:1rem">{x}</p>)}
       </div>
       <table class="tableau">
         <tbody>
-          <tr><th scope="row">Accueil du matin</th><td>7 h 45 à 8 h 20</td></tr>
-          <tr><th scope="row">Classe le matin</th><td>8 h 30 à 11 h 45</td></tr>
-          <tr><th scope="row">Pause méridienne</th><td>11 h 45 à 13 h 30 ; pour les externes, le portail ouvre à 13 h 20</td></tr>
-          <tr><th scope="row">Classe l'après-midi</th><td>13 h 30 à 16 h 30</td></tr>
-          <tr><th scope="row">Accueil du soir</th><td>16 h 40 à 18 h 30</td></tr>
+          {t.horaires.map((h) => <tr><th scope="row">{h.moment}</th><td>{h.horaire}</td></tr>)}
         </tbody>
       </table>
     </div>
@@ -33,7 +30,7 @@ import { lien } from '../lib/site';
     <div class="conteneur duo">
       <div>
         <h2 id="titre-cantine">La cantine</h2>
-        <p style="margin-top:1rem;max-width:36em">Repas cuisinés le matin même et livrés chauds, sans préinscription, 5,95 € le repas.</p>
+        {paragraphes(t.cantineTexte).map((x) => <p style="margin-top:1rem;max-width:36em">{x}</p>)}
         <div class="actions"><a class="btn btn-secondaire" href={lien('cantine/')}>Voir les menus de la cantine</a></div>
       </div>
     </div>
@@ -43,9 +40,9 @@ import { lien } from '../lib/site';
     <div class="conteneur">
       <h2 id="titre-peri" style="margin-bottom:1.5rem">Avant et après la classe</h2>
       <ul class="fiches fiches-3">
-        <li><h3>Garderie du matin</h3><p>De 7 h 45 à 8 h 20, pour toutes les classes. 1,50 € le matin.</p></li>
-        <li><h3>Garderie et étude du soir</h3><p>De 16 h 40 à 18 h 30. Du CP au CM2, les élèves inscrits en garderie ont un temps d'étude obligatoire de 16 h 40 à 17 h 30. 3 € de l'heure.</p></li>
-        <li><h3>Ateliers périscolaires</h3><p>Dès la moyenne section, à l'heure du déjeuner ou après la classe : selon les années, anglais (avec NPLA et Tiny Tiny School), échecs, musique ou théâtre. Inscriptions en fin d'année pour l'année suivante.</p></li>
+        <li><h3>Garderie du matin</h3>{paragraphes(t.garderieMatin).map((x) => <p>{x}</p>)}</li>
+        <li><h3>Garderie et étude du soir</h3>{paragraphes(t.garderieSoir).map((x) => <p>{x}</p>)}</li>
+        <li><h3>Ateliers périscolaires</h3>{paragraphes(t.ateliers).map((x) => <p>{x}</p>)}</li>
       </ul>
     </div>
   </section>
@@ -57,9 +54,9 @@ import { lien } from '../lib/site';
         <details><summary><span>Fournitures de la rentrée</span></summary><div>{p.listesFournitures.length
           ? <><p>Listes {p.anneeFournitures}, à télécharger :</p><ul class="liste-fournitures">{p.listesFournitures.map((l) => <li><a href={lien(`fournitures/${l.pdf}`)}>{l.classe} (PDF)</a></li>)}</ul></>
           : <p>La liste de chaque classe est publiée en juin.</p>}</div></details>
-        <details><summary><span>Calendrier des vacances</span></summary><div><p>Toussaint : du samedi 17 octobre au lundi 2 novembre au matin. Noël : du samedi 19 décembre au lundi 4 janvier au matin. Hiver : du samedi 20 février au lundi 8 mars au matin. Printemps : du samedi 17 avril au lundi 3 mai au matin. Pas de classe le vendredi 7 mai (pont de l'Ascension). Fin de l'année : jeudi 1er juillet après la classe. Deux samedis matin d'école : le 5 décembre (fête de Noël) et le 13 mars (enduro).</p></div></details>
+        <details><summary><span>Calendrier des vacances</span></summary><div>{paragraphes(t.calendrier).map((x) => <p>{x}</p>)}</div></details>
         <details><summary><span>Absences et retards</span></summary><div><p>En cas de maladie ou d'absence imprévue, envoyez un SMS au {p.telephoneMobile} avec le nom de votre enfant et le motif de l'absence. En dehors des horaires d'ouverture du portail, les allées et venues ne sont pas autorisées, sauf dérogation pour un suivi régulier (orthophonie par exemple), à demander par e-mail à la directrice quelques jours avant.</p></div></details>
-        <details><summary><span>L'application des familles</span></summary><div><p>L'équipe échange avec les parents via une application : cahier de liaison, photos de classe, informations.</p></div></details>
+        <details><summary><span>L'application des familles</span></summary><div>{paragraphes(t.application).map((x) => <p>{x}</p>)}</div></details>
       </div>
     </div>
   </section>

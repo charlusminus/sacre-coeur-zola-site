@@ -1,4 +1,5 @@
 ---
+import { pageCantine as t, paragraphes } from '../lib/pages';
 import Base from '../layouts/Base.astro';
 import MenusCantine from '../components/MenusCantine.astro';
 import { lien } from '../lib/site';
@@ -8,14 +9,14 @@ import { lien } from '../lib/site';
   <section class="tete-page conteneur">
     <p class="surtitre">Vie scolaire</p>
     <h1>Les menus de la cantine</h1>
-    <p class="chapo">Les repas sont cuisinés le matin même par Convivio, dans la cuisine de Saint-Joseph du Loquidy La Salle, puis livrés chauds dans des bacs en inox.</p>
+    <p class="chapo">{t.chapo}</p>
   </section>
 
   <section class="section section-creme" aria-labelledby="titre-semaine">
     <div class="conteneur">
       <h2 id="titre-semaine" style="margin-bottom:1rem">Le menu de la semaine</h2>
       <MenusCantine />
-      <p class="discret" style="margin-top:1rem">Tous les menus sont aussi sur <a href="https://www.clicetmiam.fr">clicetmiam.fr</a> (code BA8NE3).</p>
+      <p class="discret" style="margin-top:1rem">Tous les menus sont aussi sur <a href="https://www.clicetmiam.fr">clicetmiam.fr</a> (code {t.codeClicetmiam}).</p>
     </div>
   </section>
 
@@ -23,9 +24,7 @@ import { lien } from '../lib/site';
     <div class="conteneur">
       <h2 id="titre-fonctionnement" style="margin-bottom:1.5rem">Comment ça marche</h2>
       <ul class="fiches fiches-3">
-        <li><h3>Sans préinscription</h3><p>Votre enfant déjeune à l'école quand vous le souhaitez, pour 5,95 € le repas. Une aide de la mairie est possible, selon les revenus du foyer fiscal. Les élèves d'élémentaire déjeunent en self-service.</p></li>
-        <li><h3>Des menus Egalim</h3><p>Viandes entières 100 % françaises, au moins un produit bio chaque jour, un repas végétarien par semaine.</p></li>
-        <li><h3>Allergies et régimes</h3><p>Parlez-en à l'enseignant et au secrétariat ; un PAI peut être mis en place avec le médecin.</p></li>
+        {t.fiches.map((x) => <li><h3>{x.titre}</h3>{paragraphes(x.texte).map((y) => <p>{y}</p>)}</li>)}
       </ul>
       <div class="actions"><a class="btn btn-secondaire" href={lien('vie-scolaire/')}>Voir les horaires et la garderie</a></div>
     </div>

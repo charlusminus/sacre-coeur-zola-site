@@ -1,0 +1,34 @@
+{
+  "surtitre": "Vie scolaire",
+  "titre": "Le quotidien à l'école Sacré-Cœur La Salle",
+  "chapo": "Horaires, cantine, garderie et ateliers : tout ce qu'il faut savoir pour organiser la semaine de votre enfant.",
+  "horairesTexte": "Quatre jours par semaine : lundi, mardi, jeudi et vendredi. Pas de classe le mercredi.",
+  "horaires": [
+    {
+      "moment": "Accueil du matin",
+      "horaire": "7 h 45 à 8 h 20"
+    },
+    {
+      "moment": "Classe le matin",
+      "horaire": "8 h 30 à 11 h 45"
+    },
+    {
+      "moment": "Pause méridienne",
+      "horaire": "11 h 45 à 13 h 30 ; pour les externes, le portail ouvre à 13 h 20"
+    },
+    {
+      "moment": "Classe l'après-midi",
+      "horaire": "13 h 30 à 16 h 30"
+    },
+    {
+      "moment": "Accueil du soir",
+      "horaire": "16 h 40 à 18 h 30"
+    }
+  ],
+  "cantineTexte": "Repas cuisinés le matin même et livrés chauds, sans préinscription, 5,95 € le repas.",
+  "garderieMatin": "De 7 h 45 à 8 h 20, pour toutes les classes. 1,50 € le matin.",
+  "garderieSoir": "De 16 h 40 à 18 h 30. Du CP au CM2, les élèves inscrits en garderie ont un temps d'étude obligatoire de 16 h 40 à 17 h 30. 3 € de l'heure.",
+  "ateliers": "Dès la moyenne section, à l'heure du déjeuner ou après la classe : selon les années, anglais (avec NPLA et Tiny Tiny School), échecs, musique ou théâtre. Inscriptions en fin d'année pour l'année suivante.",
+  "calendrier": "Toussaint : du samedi 17 octobre au lundi 2 novembre au matin. Noël : du samedi 19 décembre au lundi 4 janvier au matin. Hiver : du samedi 20 février au lundi 8 mars au matin. Printemps : du samedi 17 avril au lundi 3 mai au matin. Pas de classe le vendredi 7 mai (pont de l'Ascension). Fin de l'année : jeudi 1er juillet après la classe. Deux samedis matin d'école : le 5 décembre (fête de Noël) et le 13 mars (enduro).",
+  "application": "L'équipe échange avec les parents via une application : cahier de liaison, photos de classe, informations."
+}

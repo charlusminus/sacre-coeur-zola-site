@@ -1,0 +1,18 @@
+{
+  "chapo": "Les repas sont cuisinés le matin même par Convivio, dans la cuisine de Saint-Joseph du Loquidy La Salle, puis livrés chauds dans des bacs en inox.",
+  "codeClicetmiam": "BA8NE3",
+  "fiches": [
+    {
+      "titre": "Sans préinscription",
+      "texte": "Votre enfant déjeune à l'école quand vous le souhaitez, pour 5,95 € le repas. Une aide de la mairie est possible, selon les revenus du foyer fiscal. Les élèves d'élémentaire déjeunent en self-service."
+    },
+    {
+      "titre": "Des menus Egalim",
+      "texte": "Viandes entières 100 % françaises, au moins un produit bio chaque jour, un repas végétarien par semaine."
+    },
+    {
+      "titre": "Allergies et régimes",
+      "texte": "Parlez-en à l'enseignant et au secrétariat ; un PAI peut être mis en place avec le médecin."
+    }
+  ]
+}

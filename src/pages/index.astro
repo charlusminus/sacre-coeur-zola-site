@@ -1,4 +1,5 @@
 ---
+import { pageEcole } from '../lib/pages';
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Agenda from '../components/Agenda.astro';
@@ -17,6 +18,7 @@ const prochains = aVenir.filter((e) => e !== visite).slice(0, 4);
 const dernieres = await actualites(3);
 const jourLong = new Intl.DateTimeFormat('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'Europe/Paris' });
 const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
+const motCitation = pageEcole.motCitation.replace(/^«\s*|\s*»$/g, '');
 ---
 <Base titre="École privée Sacré-Cœur La Salle à Nantes Zola, de la PS au CM2"
   description="École Sacré-Cœur La Salle, école catholique sous contrat à Nantes Zola : 210 élèves de la petite section au CM2, accueil 7 h 45 à 18 h 30. Inscriptions ouvertes.">
@@ -131,7 +133,7 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
     <div class="conteneur etroit">
       <h2 id="titre-mot" class="surtitre">Le mot de la cheffe d'établissement</h2>
       <blockquote>
-        <p class="mot">« Ici, tout le monde se connaît et se reconnaît. Notre mission est claire : accueillir chaque élève tel qu'il est, avec bienveillance, en portant une attention toute particulière aux plus fragiles. »</p>
+        <p class="mot">« {motCitation} »</p>
         <footer class="mot-signature">{p.directionNom}, {p.directionFonction}.</footer>
       </blockquote>
       <div class="actions"><a class="btn btn-secondaire" href={lien('ecole/')}>Lire son mot en entier</a></div>

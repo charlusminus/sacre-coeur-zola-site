@@ -73,7 +73,7 @@ async function lireDocuments() {
   const projet = process.env.SANITY_PROJECT_ID;
   if (!projet) throw new Error('SANITY_PROJECT_ID manquant (identifiant du projet Sanity de l\'école).');
   const jeu = process.env.SANITY_DATASET ?? 'production';
-  const requete = `*[_type in ["actualite","evenement","menu","parametres","questionsFrequentes","pageEcoEcole","pagePastorale","pageTarifs"] && !(_id in path("drafts.**"))]{
+  const requete = `*[_type in ["actualite","evenement","menu","parametres","questionsFrequentes","pageEcoEcole","pagePastorale","pageTarifs","pageEcole","pageVieScolaire","pageCantine","pageApel"] && !(_id in path("drafts.**"))]{
     ..., "photoUrl": photo.asset->url, "pdfUrl": pdf.asset->url,
     "fournituresUrls": listesFournitures[]{classe, "url": pdf.asset->url} }`;
   const url = `https://${projet}.api.sanity.io/v2025-02-19/data/query/${jeu}?perspective=published&query=${encodeURIComponent(requete)}`;
@@ -165,8 +165,8 @@ async function main() {
   // Textes des pages : seuls les champs remplis remplacent le texte d'origine (src/lib/pages.ts).
   // Le tiret long, refusé par le build, ne peut pas passer le back-office ; on le retire par sûreté.
   const propre = (v) => (typeof v === 'string' ? v.replace(/\s*\u2014\s*/g, ', ').trim() : Array.isArray(v) ? v.map(propre) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).filter(([k]) => !k.startsWith('_')).map(([k, x]) => [k, propre(x)])) : v);
-  const PAGES = { pageEcoEcole: 'eco-ecole', pagePastorale: 'pastorale', pageTarifs: 'tarifs' };
-  const LISTES = { annees: ['annee', 'theme', 'texte'], tempsForts: ['nom', 'texte'], lignes: ['libelle', 'montant'] };
+  const PAGES = { pageEcoEcole: 'eco-ecole', pagePastorale: 'pastorale', pageTarifs: 'tarifs', pageEcole: 'ecole', pageVieScolaire: 'vie-scolaire', pageCantine: 'cantine', pageApel: 'apel' };
+  const LISTES = { annees: ['annee', 'theme', 'texte'], tempsForts: ['nom', 'texte'], lignes: ['libelle', 'montant'], dates: ['annee', 'texte'], horaires: ['moment', 'horaire'], fiches: ['titre', 'texte'], axes: ['titre'] };
   await mkdir(join(SORTIE, 'pages'), { recursive: true });
   for (const [type, nom] of Object.entries(PAGES)) {
     const doc = de(type)[0];
@@ -175,7 +175,8 @@ async function main() {
     for (const [k, v] of Object.entries(propre(doc))) {
       if (['photo', 'photoUrl', 'pdfUrl', 'fournituresUrls'].includes(k) || v == null || v === '') continue;
       if (LISTES[k]) {
-        const complets = (v ?? []).filter((x) => LISTES[k].every((c) => typeof x?.[c] === 'string' && x[c]));
+        const complets = (v ?? []).filter((x) => LISTES[k].every((c) => typeof x?.[c] === 'string' && x[c]))
+          .map((x) => (k === 'axes' ? { ...x, points: (x.points ?? []).filter((pt) => typeof pt === 'string' && pt) } : x)).filter((x) => k !== 'axes' || x.points.length);
         if (complets.length < v.length) signaler(`page ${nom} : ${v.length - complets.length} ligne(s) incomplète(s) écartée(s) dans « ${k} ».`);
         if (complets.length) champs[k] = complets;
       } else if (typeof v === 'string') champs[k] = v;

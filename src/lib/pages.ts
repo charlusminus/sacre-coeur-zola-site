@@ -1,4 +1,5 @@
-// Textes des pages éditables dans le back-office (Pages du site : Éco-École, Pastorale, Tarifs).
+// Textes des pages éditables dans le back-office (Textes des pages : L'école, Vie scolaire, Cantine,
+// Éco-École, Pastorale, APEL, Tarifs).
 // La mise en page reste dans le code ; seuls les textes et la photo changent. Valeurs de
 // src/contenus/pages/, remplacées champ par champ par celles de Sanity quand le site est construit
 // avec PUBLIC_CONTENU=sanity (fichiers écrits par scripts/sanity-sync.mjs). Un champ laissé vide dans
@@ -7,6 +8,10 @@ import type { ImageMetadata } from 'astro';
 import ecoEcole from '../contenus/pages/eco-ecole.json';
 import pastorale from '../contenus/pages/pastorale.json';
 import tarifs from '../contenus/pages/tarifs.json';
+import ecole from '../contenus/pages/ecole.json';
+import vieScolaire from '../contenus/pages/vie-scolaire.json';
+import cantine from '../contenus/pages/cantine.json';
+import apel from '../contenus/pages/apel.json';
 
 const depuisSanity = import.meta.env.PUBLIC_CONTENU === 'sanity';
 const synchro = import.meta.glob<Record<string, unknown>>('../../contenu-sanity/pages/*.json', { eager: true, import: 'default' });
@@ -29,6 +34,10 @@ function fusion<T extends object>(nom: string, local: T): T & Photo {
 export const pageEcoEcole = fusion('eco-ecole', ecoEcole);
 export const pagePastorale = fusion('pastorale', pastorale);
 export const pageTarifs = fusion('tarifs', tarifs);
+export const pageEcole = fusion('ecole', ecole);
+export const pageVieScolaire = fusion('vie-scolaire', vieScolaire);
+export const pageCantine = fusion('cantine', cantine);
+export const pageApel = fusion('apel', apel);
 
 // Un texte saisi en plusieurs paragraphes (séparés par une ligne vide).
 export const paragraphes = (t = '') => t.split(/\n\s*\n/).map((p) => p.replace(/\s*\n\s*/g, ' ').trim()).filter(Boolean);
