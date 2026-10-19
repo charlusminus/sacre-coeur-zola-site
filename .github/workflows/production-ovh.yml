@@ -1,0 +1,81 @@
+# Site de l'école en ligne sur l'hébergement OVH : https://sacrecoeurzola.fr (racine www/).
+# Construit depuis Sanity, envoi réel des demandes d'inscription (PHP), ouvert aux moteurs.
+#
+# Première mise en ligne : lancer ce workflow à la main (Actions > Production OVH > Run workflow),
+# case « Première mise en ligne » cochée. Les fichiers du WordPress que le site remplace sont mis de
+# côté hors de www/ ; si la vérification échoue, le WordPress est remis en place automatiquement.
+# Ensuite, le site se met à jour seul : push sur main, publication dans Sanity, chaque nuit et chaque
+# matin vers 8 h 10 (menus programmés). Tant que la première mise en ligne n'est pas faite, ces
+# déclenchements n'envoient rien. Détail : scripts/production-ovh.sh.
+#
+# Secrets : OVH_FTP_HOTE, OVH_FTP_UTILISATEUR, OVH_FTP_MOT_DE_PASSE (ceux de la préproduction).
+name: Production OVH
+
+on:
+  workflow_dispatch:
+    inputs:
+      premiere:
+        description: Première mise en ligne (WordPress mis de côté, retour arrière automatique en cas d'échec)
+        type: boolean
+        default: false
+  push:
+    branches: [main]
+  repository_dispatch:
+    types: [sanity]
+  schedule:
+    - cron: '17 3 * * *'
+    - cron: '10 6,7 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-ovh
+  cancel-in-progress: false
+
+jobs:
+  deployer:
+    runs-on: ubuntu-latest
+    env:
+      HOTE: ${{ secrets.OVH_FTP_HOTE }}
+      UTILISATEUR: ${{ secrets.OVH_FTP_UTILISATEUR }}
+      MOT_DE_PASSE: ${{ secrets.OVH_FTP_MOT_DE_PASSE }}
+      RACINE: ${{ vars.OVH_FTP_RACINE || 'www' }}
+    steps:
+      - name: Vérifier les accès
+        id: acces
+        run: |
+          if [ -z "$HOTE" ] || [ -z "$UTILISATEUR" ] || [ -z "$MOT_DE_PASSE" ]; then
+            echo "::notice::Secrets OVH absents : rien envoyé."
+            echo "pret=non" >> "$GITHUB_OUTPUT"
+          else
+            echo "pret=oui" >> "$GITHUB_OUTPUT"
+          fi
+      - if: steps.acces.outputs.pret == 'oui'
+        uses: actions/checkout@v4
+      - if: steps.acces.outputs.pret == 'oui'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - if: steps.acces.outputs.pret == 'oui'
+        run: npm ci && sudo apt-get -qq install -y lftp > /dev/null
+      - name: Construire la version en ligne
+        if: steps.acces.outputs.pret == 'oui'
+        env:
+          SANITY_PROJECT_ID: ${{ vars.SANITY_PROJECT_ID || 'vqyjjech' }}
+          SITE: https://sacrecoeurzola.fr
+          BASE_PATH: /
+          PUBLIC_EN_LIGNE: oui
+          PUBLIC_FORMULAIRE: php
+        run: npm run build:sanity
+      - name: Envoyer sur OVH
+        id: envoi
+        if: steps.acces.outputs.pret == 'oui'
+        run: bash scripts/production-ovh.sh envoyer ${{ inputs.premiere && 'premiere' || '' }}
+      - name: Vérifier le site en ligne
+        if: steps.envoi.outputs.envoye == 'oui'
+        run: bash scripts/production-ovh.sh verifier
+      - name: Retour arrière
+        if: failure() && inputs.premiere && steps.envoi.outputs.envoye == 'oui'
+        run: bash scripts/production-ovh.sh retour-arriere

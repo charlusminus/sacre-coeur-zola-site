@@ -36,10 +36,20 @@ ErrorDocument 410 ${base}404.html
 
 <IfModule mod_rewrite.c>
 RewriteEngine On
-${enLigne ? `# Une seule adresse : https://sacrecoeurzola.fr
-RewriteCond %{HTTPS} !=on [OR]
+${enLigne ? `# Une seule adresse : https://sacrecoeurzola.fr. Derrière le relais HTTPS d'OVH, %{HTTPS} reste
+# « off » : on teste le port, comme le préconise OVH (sinon la redirection boucle).
+RewriteCond %{SERVER_PORT} ^80$ [OR]
 RewriteCond %{HTTP_HOST} ^www\\. [NC]
 RewriteRule ^ https://sacrecoeurzola.fr%{REQUEST_URI} [R=301,L]
+
+# L'ancien WordPress reste sur le serveur (retour arrière possible) mais n'est plus joignable.
+# Ses médias restent servis : documents imprimés et QR codes qui y mènent.
+RewriteRule ^wp-(admin|includes)(/|$) - [R=404,L]
+RewriteRule ^(wp-[a-z-]+|xmlrpc|index)\\.php$ - [R=404,L]
+RewriteRule ^wp-content/.*\\.(php|phtml|log|sql|zip)$ - [R=404,L]
+RewriteRule ^(readme\\.html|license\\.txt|liesmich\\.html)$ - [R=404,L]
+# Listes nominatives d'élèves déposées dans les médias du WordPress : jamais servies.
+RewriteRule ^wp-content/uploads/.*liste.{0,6}l.{1,2}ve - [NC,G,L]
 ` : ''}
 # Anciennes adresses du WordPress
 ${regles.join('\n')}
