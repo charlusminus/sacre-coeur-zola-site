@@ -79,7 +79,9 @@ verifier() {
   attendre "http://sacrecoeurzola.fr/" 301 "$DOMAINE/"
   attendre "https://www.sacrecoeurzola.fr/" 301 "$DOMAINE/"
   attendre "$DOMAINE/inscriptions/" 200
-  attendre "$DOMAINE/menus-cantine/" 200
+  attendre "$DOMAINE/cantine/" 200
+  local menu; menu=$(ls dist/menus-cantine 2>/dev/null | head -1)
+  [ -n "$menu" ] && attendre "$DOMAINE/menus-cantine/$menu" 200
   attendre "$DOMAINE/envoi-demande.php" 405
   attendre "$DOMAINE/sitemap.xml" 200
   attendre "$DOMAINE/accueil/" 301 "$DOMAINE/"
