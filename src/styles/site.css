@@ -277,9 +277,6 @@ a[href^='tel:'] { white-space: nowrap; }
 
 
 /* Tour 3 */
-.acces-familles { display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; padding-block: 1rem; border-block: 1px solid #ded8cc; font-size: var(--t-petit); }
-.acces-familles span { color: var(--encre-douce); }
-.acces-familles a { font-weight: 600; }
 .tete-inscription { display: grid; gap: 2rem; grid-template-areas: 'tete' 'formulaire' 'etapes'; }
 .zone-tete { grid-area: tete; }
 .zone-formulaire { grid-area: formulaire; }
