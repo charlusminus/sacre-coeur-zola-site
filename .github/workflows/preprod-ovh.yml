@@ -7,6 +7,9 @@
 #   OVH_FTP_HOTE            ex. ftp.cluster111.hosting.ovh.net
 #   OVH_FTP_UTILISATEUR     identifiant FTP de l'hébergement
 #   OVH_FTP_MOT_DE_PASSE    mot de passe FTP
+# Variable facultative OVH_FTP_DOSSIER : dossier d'envoi vu par cet utilisateur FTP. Par défaut
+# www/nouveau-site (utilisateur principal) ; « . » pour un utilisateur dédié dont le dossier
+# racine est déjà www/nouveau-site.
 # Sans ces secrets, le workflow s'arrête sans erreur.
 name: Préproduction OVH
 
@@ -33,6 +36,7 @@ jobs:
       HOTE: ${{ secrets.OVH_FTP_HOTE }}
       UTILISATEUR: ${{ secrets.OVH_FTP_UTILISATEUR }}
       MOT_DE_PASSE: ${{ secrets.OVH_FTP_MOT_DE_PASSE }}
+      DOSSIER: ${{ vars.OVH_FTP_DOSSIER || 'www/nouveau-site' }}
     steps:
       - name: Vérifier les accès
         id: acces
@@ -66,8 +70,8 @@ jobs:
           sudo apt-get -qq install -y lftp > /dev/null
           lftp -u "$UTILISATEUR","$MOT_DE_PASSE" "$HOTE" -e "
             set ftp:ssl-allow true; set net:max-retries 3;
-            mkdir -p www/nouveau-site;
-            mirror --reverse --delete --parallel=4 --verbose=1 dist/ www/nouveau-site/;
+            mkdir -p -f $DOSSIER;
+            mirror --reverse --delete --parallel=4 --verbose=1 dist/ $DOSSIER/;
             bye"
       - name: Vérifier la préproduction
         if: steps.acces.outputs.pret == 'oui'
