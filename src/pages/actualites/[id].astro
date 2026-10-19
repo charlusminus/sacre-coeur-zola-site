@@ -9,6 +9,17 @@ export async function getStaticPaths() {
 }
 const { a } = Astro.props;
 const { Content } = await render(a);
+// En fin d'article, la suite logique selon la rubrique.
+const suites: Record<string, { href: string; texte: string }> = {
+  "Vie de l'école": { href: 'ecole/', texte: "Découvrir l'école" },
+  'Vie des classes': { href: 'vie-des-classes/', texte: 'Voir la vie des classes' },
+  Sorties: { href: 'vie-des-classes/', texte: 'Voir la vie des classes' },
+  Pastorale: { href: 'pastorale/', texte: 'Découvrir la pastorale' },
+  'Éco-École': { href: 'eco-ecole/', texte: 'Découvrir le projet Éco-École' },
+  APEL: { href: 'apel/', texte: "Découvrir l'APEL" },
+  Inscriptions: { href: 'inscriptions/', texte: 'Les inscriptions' },
+};
+const suite = suites[a.data.rubrique] ?? suites["Vie de l'école"];
 const article = {
   '@type': 'NewsArticle', headline: a.data.titre, description: a.data.resume, datePublished: a.data.date.toISOString(),
   dateModified: (a.data.modifie ?? a.data.date).toISOString(),
@@ -19,10 +30,14 @@ const article = {
 ---
 <Base titre={a.data.titre} description={a.data.resume.length < 120 ? `${a.data.resume} École Sacré-Cœur La Salle, Nantes.` : a.data.resume} courant="agenda/" fil={[{ nom: 'Agenda et actualités', href: 'agenda/' }, { nom: a.data.titre }]} schema={[article]}>
   <article class="conteneur etroit tete-page">
-    <p class="surtitre"><a href={lien('agenda/#actualites')}>Actualités</a> · {a.data.rubrique}</p>
+    <p class="surtitre">Actualités · {a.data.rubrique}</p>
     <h1>{a.data.titre}</h1>
     <p class="discret"><time datetime={a.data.date.toISOString()}>{dateLongue(a.data.date)}</time></p>
-    {a.data.photo && <div class="photo-ronde" style="margin-block:2rem"><Image src={a.data.photo} alt={a.data.alt ?? ''} loading="eager" fetchpriority="high" widths={[390, 780, 1280]} sizes="(min-width: 40rem) 640px, 100vw" loading="eager" /></div>}
+    {a.data.photo && <div class="photo-ronde" style="margin-block:2rem"><Image src={a.data.photo} alt={a.data.alt ?? ''} loading="eager" fetchpriority="high" widths={[390, 780, 1280]} sizes="(min-width: 40rem) 640px, 100vw" /></div>}
     <div class="prose"><p class="chapo">{a.data.resume}</p><Content /></div>
+    <div class="actions">
+      <a class="btn btn-secondaire" href={lien(suite.href)}>{suite.texte}</a>
+      <a class="btn btn-secondaire" href={lien('agenda/#actualites')}>Voir toutes les actualités</a>
+    </div>
   </article>
 </Base>

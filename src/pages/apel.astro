@@ -40,7 +40,7 @@ const rdv = (await evenementsAVenir()).filter((e) => /APEL|vide-grenier|tombola|
     <div class="conteneur etroit prose">
       <h2 style="margin-top:0">Nous contacter</h2>
       <p>Une idée, une envie de donner un coup de main ? Écrivez à l'APEL : <a href="mailto:contact-apel@sacrecoeurzola.fr">contact-apel@sacrecoeurzola.fr</a>. L'APEL a aussi sa <a href="https://www.facebook.com/APEL-Sacr%C3%A9Coeur-Nantes-542319505922626/">page Facebook</a>.</p>
-      <p><a href={lien('agenda/')}>Tout l'agenda de l'école</a></p>
+      <div class="actions"><a class="btn btn-secondaire" href={lien('agenda/')}>Voir l'agenda de l'école</a></div>
     </div>
   </section>
 </Base>

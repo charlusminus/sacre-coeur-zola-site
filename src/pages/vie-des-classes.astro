@@ -53,7 +53,10 @@ const parCycle = cycles.map((c) => ({ ...c, actus: toutes.filter((a) => cycleDe(
         <li><h3>Les grands et les petits</h3><p>Parrainages entre classes, assemblées mensuelles de toute l'école, élèves médiateurs formés en CE2 et CM1.</p></li>
         <li><h3>La classe découverte</h3><p>En fin d'année, les CM1-CM2 partent quelques jours en classe découverte, en juin 2026 à Campbon.</p></li>
       </ul>
-      <p style="margin-top:1.5rem"><a href={lien('agenda/#actualites')}>Toutes les actualités</a> · <a href={lien('eco-ecole/')}>Le projet Éco-École</a> · <a href={lien('pastorale/')}>La pastorale</a></p>
+      <div class="actions">
+        <a class="btn btn-secondaire" href={lien('agenda/#actualites')}>Voir toutes les actualités</a>
+        <a class="btn btn-secondaire" href={lien('eco-ecole/')}>Découvrir le projet Éco-École</a>
+      </div>
     </div>
   </section>
 </Base>

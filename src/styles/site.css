@@ -336,3 +336,6 @@ main:focus { outline: none; }
 
 /* Surtitre en deux lignes fixes : jamais coupé au milieu d'une expression */
 .surtitre-lignes span { display: block; }
+
+/* Titre de section seul (le lien vers la suite est un bouton en fin de section) */
+.titre-section { margin-bottom: 1.5rem; }
