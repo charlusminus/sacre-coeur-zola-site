@@ -7,7 +7,7 @@ import {schemaTypes} from './schemaTypes'
 // Projet Sanity de l'école : identifiant fourni par la variable SANITY_STUDIO_PROJECT_ID
 // (fichier .env du dossier studio, jamais versionné, ou variable de la GitHub Action).
 declare const process: {env: Record<string, string | undefined>}
-const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'a-renseigner'
+const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'vqyjjech'
 
 // Documents uniques : on les ouvre directement, sans liste ; ni création d'un second, ni suppression.
 const UNIQUES = new Set(['parametres', 'questionsFrequentes'])

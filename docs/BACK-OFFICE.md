@@ -46,27 +46,28 @@ GitHub Pages, sans PHP, garde une confirmation simulée.
 Recette : `PUBLIC_FORMULAIRE=php npx astro build --outDir /tmp/dist-php && npm run recette:formulaire -- /tmp/dist-php`
 (PHP local, faux sendmail : parcours complet, e-mail vérifié, échec géré).
 
-## Mise en route (une fois)
+## Mise en route
 
-1. **Créer le projet** sur https://www.sanity.io/manage (compte de Charles) : nom « École Sacré-Cœur
-   La Salle », jeu de données `production`, **public** (le site le lit sans jeton). Noter l'identifiant
-   du projet (8 caractères).
-2. **Jeton d'amorce** : projet > API > Tokens > « Add API token », nom « Amorce », droits **Editor**.
-   Il sert une fois, puis se supprime.
-3. **Amorcer** avec les contenus de la démo (aucun document existant n'est écrasé) :
-   `SANITY_PROJECT_ID=… SANITY_TOKEN=… node scripts/sanity-amorcer.mjs --simulation`, puis sans
-   `--simulation`.
-4. **Publier le back-office** : dans `studio/`, `.env` avec `SANITY_STUDIO_PROJECT_ID=…`, puis
-   `npx sanity deploy` → https://sacrecoeurzola.sanity.studio
-5. **GitHub** : variable de dépôt `SANITY_PROJECT_ID` (Settings > Secrets and variables > Actions >
-   Variables). La démo se construit alors depuis Sanity.
-6. **Webhook** : projet > API > Webhooks > « Create webhook » : URL
-   `https://api.github.com/repos/charlusminus/sacre-coeur-zola-site/dispatches`, méthode POST,
-   jeu `production`, déclencheur création, mise à jour et suppression, filtre
-   `_type in ["actualite","evenement","menu","parametres","questionsFrequentes"]`, projection
-   `{"event_type": "sanity"}`, en-têtes `Authorization: Bearer <jeton GitHub>` (jeton à grain fin,
-   ce seul dépôt, droit « Contents: read and write ») et `Accept: application/vnd.github+json`.
-7. **Inviter** Anne (Éditrice) et Hélène Lampérière (Éditrice ou Lectrice) : projet > Members.
+Projet Sanity **`vqyjjech`** (« École Sacré-Cœur La Salle », organisation Paktiz), jeu `production`
+public : le site le lit sans jeton.
+
+- [x] Projet créé par Charles (19/10/2026).
+- [x] Amorce : les 38 documents de la démo chargés le 19/10/2026 (`scripts/sanity-amorcer.mjs`,
+  createIfNotExists). **Depuis, Sanity fait foi** : la démo se construit depuis Sanity, modifier
+  `src/contenus/` ne change plus le site.
+- [ ] **Secret GitHub** `SANITY_DEPLOY_TOKEN_SCLS` (Settings > Secrets and variables > Actions >
+  New repository secret) : la GitHub Action publie alors le back-office sur
+  https://sacrecoeurzola.sanity.studio à chaque modification de `studio/`. Le jeton doit avoir le
+  droit « Deploy Studio » (ou être Administrateur) ; sinon, un jeton dédié.
+- [ ] **Webhook** : projet > API > Webhooks > « Create webhook » : URL
+  `https://api.github.com/repos/charlusminus/sacre-coeur-zola-site/dispatches`, méthode POST, jeu
+  `production`, déclencheur création, mise à jour et suppression, filtre
+  `_type in ["actualite","evenement","menu","parametres","questionsFrequentes"]`, projection
+  `{"event_type": "sanity"}`, en-têtes `Authorization: Bearer <jeton GitHub>` (jeton à grain fin,
+  ce seul dépôt, droit « Contents: read and write ») et `Accept: application/vnd.github+json`.
+  Sans webhook, une publication n'apparaît qu'à la reconstruction suivante (chaque nuit et chaque
+  matin vers 8 h 10).
+- [ ] **Inviter** Anne (Éditrice) et Hélène Lampérière (Éditrice) : projet > Members.
 
 Jamais de `sanity dataset import --replace` une fois Anne au travail : une correction passe par le
 back-office, ou par l'API en `patch` document par document.

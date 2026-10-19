@@ -19,7 +19,8 @@ décisions, routine d'itération) est dans le dépôt privé `charlusminus/sacre
   ignoré) ou, sans `PUBLIC_CONTENU=sanity`, les fichiers de démonstration de `src/contenus/`. Pour Anne : aucun champ
   technique (adresses de pages générées par le site), listes fermées, saisie incomplète écartée et signalée à Charles
   (ticket GitHub), jamais bloquante. Menus de la cantine = PDF, mis en ligne le vendredi précédent à 8 h par défaut.
-  Une fois Anne au travail, Sanity fait foi : jamais de `dataset import --replace`.
+  **Sanity fait foi depuis le 19/10/2026** (projet `vqyjjech`, amorcé avec la démo) : un contenu se corrige dans le
+  back-office ou par l'API en `patch`, jamais dans `src/contenus/` ni par `dataset import --replace`.
 - **Demandes d'inscription** : e-mail aux destinataires choisis dans Sanity, par `envoi-demande.php` généré au build
   (`PUBLIC_FORMULAIRE=php`, hébergement OVH). Recette : `npm run recette:formulaire`.
 - Les contenus (`src/contenus/`) préfigurent les documents du futur CMS (Sanity) : garder les

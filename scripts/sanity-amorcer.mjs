@@ -110,8 +110,9 @@ async function main() {
   const mutations = [];
   for (const d of docs) {
     const doc = propre(d);
-    if (d._photo) doc.photo = { ...d.photo, asset: { _type: 'reference', _ref: await televerser(d._photo, 'images', `image/${d._photo.split('.').pop().toLowerCase().replace('jpg', 'jpeg')}`) } };
-    if (d._pdf) doc.pdf = { _type: 'file', asset: { _type: 'reference', _ref: await televerser(d._pdf, 'files', 'application/pdf') } };
+    // En simulation, rien n'est téléversé : photos et PDF ne sont pas rattachés.
+    if (d._photo && !simulation) doc.photo = { ...d.photo, asset: { _type: 'reference', _ref: await televerser(d._photo, 'images', `image/${d._photo.split('.').pop().toLowerCase().replace('jpg', 'jpeg')}`) } };
+    if (d._pdf && !simulation) doc.pdf = { _type: 'file', asset: { _type: 'reference', _ref: await televerser(d._pdf, 'files', 'application/pdf') } };
     mutations.push({ createIfNotExists: doc });
   }
   const r = await fetch(`${api}/data/mutate/${jeu}?dryRun=${simulation}`, { method: 'POST', headers: { ...entetes, 'Content-Type': 'application/json' }, body: JSON.stringify({ mutations }) });

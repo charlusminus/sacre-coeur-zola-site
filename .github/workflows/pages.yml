@@ -37,11 +37,10 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      # Contenus : depuis Sanity dès que la variable SANITY_PROJECT_ID du dépôt est renseignée,
-      # sinon les fichiers de démonstration de src/contenus/.
+      # Contenus : depuis le projet Sanity de l'école (vqyjjech, lecture publique, sans jeton).
       - name: Construire le site
         env:
-          SANITY_PROJECT_ID: ${{ vars.SANITY_PROJECT_ID }}
+          SANITY_PROJECT_ID: ${{ vars.SANITY_PROJECT_ID || 'vqyjjech' }}
         run: |
           if [ -n "$SANITY_PROJECT_ID" ]; then npm run build:sanity; else npm run build; fi
       # Une saisie écartée ou un conflit (deux actualités au même titre) : un ticket pour Charles,
@@ -70,6 +69,8 @@ jobs:
         working-directory: studio
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -79,7 +80,18 @@ jobs:
       - run: npx tsc --noEmit
       - run: npx sanity build --yes
         env:
-          SANITY_STUDIO_PROJECT_ID: ${{ vars.SANITY_PROJECT_ID || 'verification' }}
+          SANITY_STUDIO_PROJECT_ID: ${{ vars.SANITY_PROJECT_ID || 'vqyjjech' }}
+      # Publication du back-office (https://sacrecoeurzola.sanity.studio) à chaque modification de
+      # studio/ sur main, avec le secret SANITY_DEPLOY_TOKEN_SCLS (jeton du projet Sanity).
+      - name: Publier le back-office
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY_TOKEN_SCLS }}
+          SANITY_STUDIO_PROJECT_ID: ${{ vars.SANITY_PROJECT_ID || 'vqyjjech' }}
+        run: |
+          if [ -z "$SANITY_AUTH_TOKEN" ]; then echo "::notice::Secret SANITY_DEPLOY_TOKEN_SCLS absent : back-office non publié."; exit 0; fi
+          git -C .. diff --quiet HEAD~1 HEAD -- studio 2>/dev/null && [ "${{ github.event_name }}" = push ] && { echo "studio/ inchangé"; exit 0; }
+          npx sanity deploy --yes
 
   deployer:
     if: github.event_name != 'pull_request'
