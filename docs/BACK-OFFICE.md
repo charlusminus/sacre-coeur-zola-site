@@ -67,7 +67,7 @@ public : le site le lit sans jeton.
   ce seul dépôt, droit « Contents: read and write ») et `Accept: application/vnd.github+json`.
   Sans webhook, une publication n'apparaît qu'à la reconstruction suivante (chaque nuit et chaque
   matin vers 8 h 10).
-- [ ] **Inviter** Anne (Éditrice) et Hélène Lampérière (Éditrice) : projet > Members.
+- [x] **Invitations** envoyées le 19/10/2026, rôle Éditrice : Anne (secretariat.ecole@sacrecoeurzola.fr) et Hélène Lampérière (ec.nantes.sacre-coeur@ec44.fr). Suivi : projet > Members.
 
 Jamais de `sanity dataset import --replace` une fois Anne au travail : une correction passe par le
 back-office, ou par l'API en `patch` document par document.
