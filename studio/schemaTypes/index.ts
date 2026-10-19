@@ -4,5 +4,6 @@ import menu from './menu'
 import parametres from './parametres'
 import questionsFrequentes from './questionsFrequentes'
 import texteArticle from './texteArticle'
+import {pageEcoEcole, pagePastorale, pageTarifs} from './pages'
 
-export const schemaTypes = [actualite, evenement, menu, parametres, questionsFrequentes, texteArticle]
+export const schemaTypes = [actualite, evenement, menu, parametres, questionsFrequentes, texteArticle, pageEcoEcole, pagePastorale, pageTarifs]

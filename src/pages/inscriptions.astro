@@ -5,6 +5,7 @@ import Faq from '../components/Faq.astro';
 import { parametres as p } from '../lib/donnees';
 import { evenementsAVenir } from '../lib/contenu';
 import { lien, turnstileCle } from '../lib/site';
+import { pageTarifs as tarifs, paragraphes, ordinaux, apresDeuxPoints } from '../lib/pages';
 
 const visites = (await evenementsAVenir()).filter((e) => e.data.public === 'Futures familles');
 const [debut] = p.rentree.split('-').map(Number);
@@ -101,24 +102,19 @@ const envoiReel = import.meta.env.PUBLIC_FORMULAIRE === 'php';
   <section class="section" id="tarifs" aria-labelledby="titre-tarifs">
     <div class="conteneur duo">
       <div>
-        <h2 id="titre-tarifs">Tarifs 2026-2027</h2>
-        <p class="discret" style="margin-top:.5rem">Grille de l'année en cours, révisée au printemps pour la rentrée suivante.</p>
-        <p style="margin-top:1rem">L'école est sous contrat d'association avec l'État : les enseignants sont rémunérés par l'Éducation nationale. La contribution des familles finance l'immobilier, l'entretien et le caractère propre de l'école.</p>
+        <h2 id="titre-tarifs">{tarifs.titre}</h2>
+        <p class="discret" style="margin-top:.5rem">{tarifs.note}</p>
+        {paragraphes(tarifs.intro).map((x) => <p style="margin-top:1rem">{x}</p>)}
       </div>
       <div>
         <table class="tableau">
-          <caption class="discret" style="text-align:left;caption-side:bottom;padding-top:.75rem">Contribution facturée sur 10 mois, d'octobre à juillet. Pour les nouvelles familles, l'acompte de 50 € versé à l'inscription est déduit de la facture de septembre.</caption>
+          <caption class="discret" style="text-align:left;caption-side:bottom;padding-top:.75rem">{tarifs.legende}</caption>
           <tbody>
-            <tr><th scope="row">Contribution des familles</th><td>53 € par mois pour le 1<sup>er</sup> enfant, 50 € pour le 2<sup>e</sup>, 46 € à partir du 3<sup>e</sup></td></tr>
-            <tr><th scope="row">Contribution de solidarité</th><td>9 € de plus par mois, au choix des familles qui le souhaitent</td></tr>
-            <tr><th scope="row">Adhésion à l'APEL</th><td>27 € par famille et par an</td></tr>
-            <tr><th scope="row">Repas</th><td>5,95 €, maternelle et élémentaire ; aide possible de la mairie, selon les revenus du foyer fiscal</td></tr>
-            <tr><th scope="row">Garderie du matin</th><td>1,50 € par matin</td></tr>
-            <tr><th scope="row">Étude et garderie du soir</th><td>3 € par heure, la 2<sup>e</sup> heure comptée à partir de 17 h 30</td></tr>
+            {tarifs.lignes.map((l) => <tr><th scope="row">{l.libelle}</th><td set:html={ordinaux(l.montant)} /></tr>)}
           </tbody>
         </table>
-        <p style="margin-top:1rem"><strong>Exemple :</strong> un enfant qui déjeune à la cantine quatre jours par semaine, soit environ 16 repas par mois, revient à 53 € + 95 € de repas, environ 148 € par mois, hors garderie.</p>
-        <p class="discret" style="margin-top:1rem">La contribution de solidarité permet à l'école de rester ouverte à tous les élèves, sans distinction de conditions et de ressources.</p>
+        <p style="margin-top:1rem"><strong>Exemple :</strong> {apresDeuxPoints(tarifs.exemple)}</p>
+        <p class="discret" style="margin-top:1rem">{tarifs.solidarite}</p>
       </div>
     </div>
   </section>
