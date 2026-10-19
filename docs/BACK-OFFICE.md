@@ -55,11 +55,11 @@ public : le site le lit sans jeton.
 - [x] Amorce : les 38 documents de la démo chargés le 19/10/2026 (`scripts/sanity-amorcer.mjs`,
   createIfNotExists). **Depuis, Sanity fait foi** : la démo se construit depuis Sanity, modifier
   `src/contenus/` ne change plus le site.
-- [ ] **Secret GitHub** `SANITY_DEPLOY_TOKEN_SCLS` (Settings > Secrets and variables > Actions >
+- [x] **Secret GitHub** `SANITY_DEPLOY_TOKEN_SCLS` (19/10/2026, back-office publié) (Settings > Secrets and variables > Actions >
   New repository secret) : la GitHub Action publie alors le back-office sur
   https://sacrecoeurzola.sanity.studio à chaque modification de `studio/`. Le jeton doit avoir le
   droit « Deploy Studio » (ou être Administrateur) ; sinon, un jeton dédié.
-- [ ] **Webhook** : projet > API > Webhooks > « Create webhook » : URL
+- [x] **Webhook** (19/10/2026, vérifié : une publication remet le site à jour en moins d'une minute ; jeton GitHub valable un an, à renouveler en octobre 2027) : projet > API > Webhooks > « Create webhook » : URL
   `https://api.github.com/repos/charlusminus/sacre-coeur-zola-site/dispatches`, méthode POST, jeu
   `production`, déclencheur création, mise à jour et suppression, filtre
   `_type in ["actualite","evenement","menu","parametres","questionsFrequentes"]`, projection
