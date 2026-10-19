@@ -74,7 +74,7 @@ async function documents() {
   const avecCles = (l) => l.map((x) => ({ _key: cle(), ...x }));
   docs.push({
     _id: 'parametres', _type: 'parametres',
-    ...Object.fromEntries(['telephone', 'telephoneMobile', 'emailSecretariat', 'emailDirection', 'accesTransports', 'accesStationnement', 'instagram', 'direction', 'secretariat', 'anneeEquipe', 'rentree', 'inscriptionsOuvertes', 'destinatairesDemandes'].map((k) => [k, p[k]])),
+    ...Object.fromEntries(['telephone', 'telephoneMobile', 'emailSecretariat', 'emailDirection', 'accesTransports', 'accesStationnement', 'instagram', 'direction', 'secretariat', 'anneeEquipe', 'rentree', 'inscriptionsOuvertes', 'destinatairesDemandes', 'copieCacheeDemandes'].map((k) => [k, p[k]])),
     horairesSecretariat: avecCles(p.horairesSecretariat).map((h) => ({ _type: 'creneau', ...h })),
     equipe: avecCles(p.equipe).map((l) => ({ _type: 'ligneEquipe', ...l })),
   });

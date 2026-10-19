@@ -91,6 +91,15 @@ export default defineType({
       of: [{type: 'string', validation: (r) => r.email()}],
       validation: (r) => r.required().min(1).max(3),
     }),
+    defineField({
+      name: 'copieCacheeDemandes',
+      title: 'En copie cachée (facultatif)',
+      type: 'array',
+      group: 'inscriptions',
+      description: 'Reçoivent aussi chaque demande, sans que les autres destinataires le voient.',
+      of: [{type: 'string', validation: (r) => r.email()}],
+      validation: (r) => r.max(3),
+    }),
   ],
   preview: {prepare: () => ({title: 'Informations générales'})},
 })

@@ -31,5 +31,6 @@
   ],
   "rentree": "2027-2028",
   "inscriptionsOuvertes": true,
-  "destinatairesDemandes": ["ec.nantes.sacre-coeur@ec44.fr", "secretariat.ecole@sacrecoeurzola.fr"]
+  "destinatairesDemandes": ["ec.nantes.sacre-coeur@ec44.fr", "secretariat.ecole@sacrecoeurzola.fr"],
+  "copieCacheeDemandes": []
 }

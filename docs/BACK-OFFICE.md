@@ -37,7 +37,7 @@ pastorale, tarifs, etc.) restent dans le code : leur texte change par Charles.
 
 En ligne (`PUBLIC_FORMULAIRE=php`), le formulaire envoie la demande à `envoi-demande.php`, généré au
 build sur l'hébergement OVH de l'école : un e-mail part aux adresses choisies dans « Informations
-générales > Inscriptions » (direction et secrétariat), avec la famille en adresse de réponse. Rien
+générales > Inscriptions » (direction et secrétariat), plus une copie cachée facultative (Charles depuis le 19/10/2026), avec la famille en adresse de réponse. Rien
 n'est stocké sur le serveur. Protections : champ piège et délai minimal contre les robots, même site
 seulement, 5 demandes par heure et par adresse IP, champs validés. Expéditeur
 `ne-pas-repondre@sacrecoeurzola.fr` (domaine de l'école, couvert par le SPF OVH). La démo sur

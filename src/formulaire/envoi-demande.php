@@ -9,6 +9,7 @@ header('X-Robots-Tag: noindex');
 header('Cache-Control: no-store');
 
 const DESTINATAIRES = __DESTINATAIRES__;
+const COPIE_CACHEE = __COPIE_CACHEE__;
 const EXPEDITEUR = 'ne-pas-repondre@sacrecoeurzola.fr';
 const NOM_EXPEDITEUR = "Site de l'école Sacré-Cœur La Salle";
 const TELEPHONE = __TELEPHONE__;
@@ -114,6 +115,7 @@ $partie = fn (string $type, string $contenu): string => "--$frontiere\r\nContent
 $corps = $partie('text/plain', $texte) . $partie('text/html', $html) . "--$frontiere--\r\n";
 
 $entetes = implode("\r\n", [
+    ...(COPIE_CACHEE ? ['Bcc: ' . implode(', ', COPIE_CACHEE)] : []),
     'From: ' . mb_encode_mimeheader(NOM_EXPEDITEUR, 'UTF-8', 'B') . ' <' . EXPEDITEUR . '>',
     'Reply-To: ' . mb_encode_mimeheader($d['parent'], 'UTF-8', 'B') . ' <' . $d['email'] . '>',
     'MIME-Version: 1.0',

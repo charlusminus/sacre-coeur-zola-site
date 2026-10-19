@@ -142,7 +142,7 @@ async function main() {
   // Informations générales : seuls les champs remplis remplacent les valeurs locales.
   const p = de('parametres')[0];
   if (p) {
-    const garder = ['telephone', 'telephoneMobile', 'emailSecretariat', 'emailDirection', 'horairesSecretariat', 'accesTransports', 'accesStationnement', 'instagram', 'direction', 'secretariat', 'equipe', 'anneeEquipe', 'rentree', 'inscriptionsOuvertes', 'destinatairesDemandes'];
+    const garder = ['telephone', 'telephoneMobile', 'emailSecretariat', 'emailDirection', 'horairesSecretariat', 'accesTransports', 'accesStationnement', 'instagram', 'direction', 'secretariat', 'equipe', 'anneeEquipe', 'rentree', 'inscriptionsOuvertes', 'destinatairesDemandes', 'copieCacheeDemandes'];
     const sans = (o) => (Array.isArray(o) ? o.map(sans) : o && typeof o === 'object' ? Object.fromEntries(Object.entries(o).filter(([k]) => !k.startsWith('_')).map(([k, v]) => [k, sans(v)])) : o);
     const champs = Object.fromEntries(garder.filter((k) => p[k] !== undefined && p[k] !== null && p[k] !== '').map((k) => [k, sans(p[k])]));
     await writeFile(join(SORTIE, 'parametres.json'), JSON.stringify(champs, null, 2));

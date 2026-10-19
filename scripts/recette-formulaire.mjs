@@ -43,6 +43,8 @@ try {
   const mail = existsSync(boite) ? readFileSync(boite, 'utf8') : '';
   affirmer(/^To: .+@.+/m.test(mail), "aucun e-mail parti vers les destinataires");
   affirmer(/^Reply-To: .*<marie\.essai@example\.fr>/m.test(mail), 'réponse non adressée à la famille');
+  const copie = readFileSync(join(dist, 'envoi-demande.php'), 'utf8').match(/const COPIE_CACHEE = \[(.*)\];/)?.[1] ?? '';
+  if (copie.trim()) affirmer(/^Bcc: .+@.+/m.test(mail), 'copie cachée absente du courriel');
   // Corps en deux versions (texte et mise en forme), encodées en base64.
   const parties = [...mail.matchAll(/Content-Type: (text\/(?:plain|html)); charset=UTF-8\r?\nContent-Transfer-Encoding: base64\r?\n\r?\n([A-Za-z0-9+/=\r\n]+)/g)]
     .map(([, type, b64]) => [type, Buffer.from(b64.replace(/\s/g, ''), 'base64').toString('utf8')]);

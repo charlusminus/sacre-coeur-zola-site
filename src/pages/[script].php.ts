@@ -11,12 +11,14 @@ export function getStaticPaths() {
 }
 
 const chaine = (s: string) => `'${s.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`;
-const destinataires = (p.destinatairesDemandes?.length ? p.destinatairesDemandes : [p.emailSecretariat])
-  .filter((a) => /^[^\s@,;<>'"]+@[^\s@,;<>'"]+\.[a-z]{2,}$/i.test(a));
+const adresseValide = (a: string) => /^[^\s@,;<>'"]+@[^\s@,;<>'"]+\.[a-z]{2,}$/i.test(a);
+const destinataires = (p.destinatairesDemandes?.length ? p.destinatairesDemandes : [p.emailSecretariat]).filter(adresseValide);
+const copieCachee = ((p as { copieCacheeDemandes?: string[] }).copieCacheeDemandes ?? []).filter(adresseValide);
 
 export const GET: APIRoute = () => {
   const code = modele
     .replace('__DESTINATAIRES__', `[${destinataires.map(chaine).join(', ')}]`)
+    .replace('__COPIE_CACHEE__', `[${copieCachee.map(chaine).join(', ')}]`)
     .replace('__TELEPHONE__', chaine(p.telephone));
   return new Response(code, { headers: { 'content-type': 'text/plain; charset=utf-8' } });
 };
