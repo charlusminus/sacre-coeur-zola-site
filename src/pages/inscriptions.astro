@@ -183,6 +183,9 @@ const envoiReel = import.meta.env.PUBLIC_FORMULAIRE === 'php';
     if (invalides.length) { invalides[0].focus(); return; }
     const confirmation = document.querySelector('[data-confirmation]');
     const confirmer = () => { form.hidden = true; confirmation.hidden = false; confirmation.focus(); };
+    // Demande arrivée au secrétariat : événement Google Analytics « generate_lead » (Consentement.astro),
+    // parti seulement si la famille a accepté la mesure. Classe et rentrée seulement, rien de nominatif.
+    const mesurer = () => window.gtag?.('event', 'generate_lead', { form_name: 'inscription', classe: form.classe.value, rentree: form.rentree.value });
     if (!envoiReel) { confirmer(); return; }
     const bouton = form.querySelector('[data-envoyer]');
     const erreur = form.querySelector('[data-erreur-envoi]');
@@ -194,7 +197,7 @@ const envoiReel = import.meta.env.PUBLIC_FORMULAIRE === 'php';
     bouton.disabled = true; bouton.textContent = 'Envoi en cours…'; erreur.hidden = true;
     fetch(adresseEnvoi, { method: 'POST', body: new FormData(form) })
       .then((r) => r.json().then((d) => ({ statut: r.status, d })))
-      .then(({ d }) => (d.ok ? confirmer() : echec(d.message ?? `La demande n'est pas partie. Vérifiez les champs, ou appelez-nous au ${telephone}.`)))
+      .then(({ d }) => (d.ok ? (confirmer(), mesurer()) : echec(d.message ?? `La demande n'est pas partie. Vérifiez les champs, ou appelez-nous au ${telephone}.`)))
       .catch(() => echec(`La demande n'est pas partie (connexion). Réessayez, ou appelez-nous au ${telephone}.`));
   });
 </script>
