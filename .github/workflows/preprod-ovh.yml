@@ -13,14 +13,10 @@
 # Sans ces secrets, le workflow s'arrête sans erreur.
 name: Préproduction OVH
 
+# Depuis la mise en ligne (19/10/2026), lancée à la main seulement : le site en ligne suit seul
+# (workflow Production OVH).
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
-  repository_dispatch:
-    types: [sanity]
-  schedule:
-    - cron: '10 6,7 * * *'
 
 permissions:
   contents: read

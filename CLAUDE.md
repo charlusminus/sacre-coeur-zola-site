@@ -4,9 +4,11 @@ Dépôt **public** (GitHub Pages) du site de démonstration. Le contexte (discov
 décisions, routine d'itération) est dans le dépôt privé `charlusminus/sacre-coeur-zola`.
 
 ## Règles
-- **Phase de build (décision de Charles du 12/10/2026)** : on déploie directement, push sur `main` sans PR,
-  après `npm run build` vert et captures vérifiées. Push sur `main` = mise en ligne de la démo. La règle
-  branche + PR + feu vert reviendra au passage en production sur le domaine de l'école.
+- **En ligne sur sacrecoeurzola.fr depuis le 19/10/2026** (feu vert de la direction, workflow « Production OVH »,
+  `scripts/production-ovh.sh`). **Push sur `main` = mise en ligne du site de l'école** : tout changement de code
+  passe par branche + PR + feu vert de Charles, après `npm run build` vert et captures vérifiées. Les contenus
+  (Sanity) se publient seuls. L'ancien WordPress reste sur le serveur, fermé par le `.htaccess` (médias servis) ;
+  ses fichiers remplacés sont dans `sauvegarde-avant-site-astro/`, hors de `www/`.
 - Rien de privé ici : ni données de familles, ni noms d'enfants, ni éléments financiers internes.
 - Rédaction : français, vouvoiement, jamais de tiret cadratin (le build le refuse), « Sacré-Cœur »
   avec « œ ». Un fait non vérifié porte `[À CONFIRMER]` (bloquant en production).
