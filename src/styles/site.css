@@ -336,7 +336,12 @@ main:focus { outline: none; }
 .erreur-envoi { margin-bottom: 1rem; padding: 0.75rem 1rem; border-radius: 0.75rem; background: var(--creme); color: var(--encre); border-left: 4px solid var(--rose); }
 
 /* Surtitre en deux lignes fixes : jamais coupé au milieu d'une expression */
-.surtitre-lignes span { display: block; }
+/* Surtitre en morceaux : une ligne séparée par un point quand elle tient, sinon un morceau par ligne,
+   jamais coupé au milieu. Le point de début de ligne est rogné (marge négative, débordement masqué). */
+.surtitre-lignes { overflow: hidden; }
+.surtitre-lignes > span { display: flex; flex-wrap: wrap; margin-left: -1.5em; }
+.surtitre-lignes > span > span { margin-left: 1.5em; white-space: nowrap; }
+.surtitre-lignes > span > span::before { content: "·" / ""; display: inline-block; width: 1.5em; margin-left: -1.5em; text-align: center; }
 
 /* Titre de section seul (le lien vers la suite est un bouton en fin de section) */
 .titre-section { margin-bottom: 1.5rem; }
