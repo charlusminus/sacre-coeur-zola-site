@@ -3,6 +3,7 @@ import '../styles/tokens.css';
 import '../styles/site.css';
 import Entete from '../components/Entete.astro';
 import Pied from '../components/Pied.astro';
+import ModalePdf from '../components/ModalePdf.astro';
 import { lien } from '../lib/site';
 import { website, ecole, filAriane } from '../lib/schema';
 
@@ -62,6 +63,7 @@ const ogImage = new URL(image ?? lien('partage.jpg'), Astro.site).href;
       <slot />
     </main>
     <Pied />
+    <ModalePdf />
     <script>
       // Le lien d'évitement place vraiment le focus clavier dans le contenu (le saut d'ancre seul ne
       // le déplace pas dans Chromium).
