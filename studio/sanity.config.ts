@@ -10,11 +10,15 @@ declare const process: {env: Record<string, string | undefined>}
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'vqyjjech'
 
 // Documents uniques : on les ouvre directement, sans liste ; ni création d'un second, ni suppression.
-const UNIQUES = new Set(['parametres', 'questionsFrequentes', 'pageEcoEcole', 'pagePastorale', 'pageTarifs'])
+const UNIQUES = new Set(['parametres', 'questionsFrequentes', 'pageEcole', 'pageVieScolaire', 'pageCantine', 'pageEcoEcole', 'pagePastorale', 'pageApel', 'pageTarifs'])
 // Pages dont le texte s'édite ici (la mise en page reste dans le code du site).
 const PAGES = [
+  {id: 'pageEcole', titre: 'L\'école (et le mot de la cheffe d\'établissement)'},
+  {id: 'pageVieScolaire', titre: 'Vie scolaire (horaires, garderie, vacances)'},
+  {id: 'pageCantine', titre: 'Cantine'},
   {id: 'pageEcoEcole', titre: 'Éco-École'},
   {id: 'pagePastorale', titre: 'Pastorale'},
+  {id: 'pageApel', titre: 'APEL'},
   {id: 'pageTarifs', titre: 'Tarifs (page Inscriptions)'},
 ]
 

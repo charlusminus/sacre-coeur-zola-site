@@ -129,3 +129,137 @@ export const pageTarifs = defineType({
   ],
   preview: {prepare: () => ({title: 'Tarifs'})},
 })
+
+// Une liste de blocs « titre + texte » (fiches de la cantine, actions de l'APEL).
+const fiches = (description: string) =>
+  defineField({
+    name: 'fiches',
+    title: 'Les blocs',
+    type: 'array',
+    description,
+    of: [
+      defineArrayMember({
+        type: 'object',
+        name: 'fiche',
+        fields: [
+          defineField({name: 'titre', title: 'Titre', type: 'string', validation: (r) => r.required().max(60).custom(sansCadratin)}),
+          defineField({name: 'texte', title: 'Texte', type: 'text', rows: 3, validation: (r) => r.required().max(500).custom(sansCadratin)}),
+        ],
+        preview: {select: {title: 'titre', subtitle: 'texte'}},
+      }),
+    ],
+  })
+
+export const pageEcole = defineType({
+  name: 'pageEcole',
+  title: 'Page L\'école',
+  type: 'document',
+  groups: [
+    {name: 'mot', title: 'Mot de la cheffe d\'établissement', default: true},
+    {name: 'projet', title: 'Projet éducatif'},
+    {name: 'equipe', title: 'Équipe et histoire'},
+  ],
+  fields: [
+    ...tete.map((f) => ({...f, group: 'mot'})),
+    {...ligne('motTitre', 'Titre du mot'), group: 'mot'},
+    {...texte('motTexte', 'Le mot, en entier', 4000, 14), group: 'mot'},
+    defineField({name: 'motCitation', title: 'Extrait cité sur la page d\'accueil', type: 'text', rows: 3, group: 'mot', description: 'Une ou deux phrases, sans guillemets.', validation: (r) => r.max(300).custom(sansCadratin)}),
+    {...ligne('projetSurtitre', 'Petite ligne au-dessus du projet', 60, '« Projet éducatif 2025-2030 »'), group: 'projet'},
+    {...ligne('projetTitre', 'Titre du projet éducatif'), group: 'projet'},
+    defineField({
+      name: 'axes',
+      title: 'Les axes du projet',
+      type: 'array',
+      group: 'projet',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          name: 'axe',
+          fields: [
+            defineField({name: 'titre', title: 'Axe', type: 'string', validation: (r) => r.required().max(80).custom(sansCadratin)}),
+            defineField({name: 'points', title: 'Ce qu\'il recouvre', type: 'array', of: [defineArrayMember({type: 'string', validation: (r) => r.max(140).custom(sansCadratin)})], validation: (r) => r.required().min(1)}),
+          ],
+          preview: {select: {title: 'titre'}},
+        }),
+      ],
+    }),
+    {...ligne('equipeTitre', 'Titre du bloc équipe'), group: 'equipe'},
+    {...texte('equipeTexte', 'Texte du bloc équipe', 600, 3), group: 'equipe'},
+    {...photo, group: 'equipe'},
+    {...ligne('histoireTitre', 'Titre de l\'histoire'), group: 'equipe'},
+    {...texte('histoireTexte', 'Texte de l\'histoire', 800, 3), group: 'equipe'},
+    defineField({
+      name: 'dates',
+      title: 'Les dates de l\'histoire',
+      type: 'array',
+      group: 'equipe',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          name: 'date',
+          fields: [
+            defineField({name: 'annee', title: 'Année', type: 'string', validation: (r) => r.required().regex(/^[0-9]{4}$/, {name: 'année'}).error('Une année sur quatre chiffres.')}),
+            defineField({name: 'texte', title: 'Ce qui s\'est passé', type: 'text', rows: 2, validation: (r) => r.required().max(300).custom(sansCadratin)}),
+          ],
+          preview: {select: {title: 'annee', subtitle: 'texte'}},
+        }),
+      ],
+    }),
+    {...texte('ogecTexte', 'Texte : l\'OGEC', 600, 3), group: 'equipe'},
+    {...texte('reseauTexte', 'Texte : le réseau La Salle', 800, 3), group: 'equipe'},
+  ],
+  preview: {prepare: () => ({title: 'Page L\'école'})},
+})
+
+export const pageVieScolaire = defineType({
+  name: 'pageVieScolaire',
+  title: 'Page Vie scolaire',
+  type: 'document',
+  fields: [
+    ...tete,
+    texte('horairesTexte', 'Texte des horaires', 400, 2),
+    defineField({
+      name: 'horaires',
+      title: 'Les horaires',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          name: 'horaire',
+          fields: [
+            defineField({name: 'moment', title: 'Moment', type: 'string', description: '« Classe le matin »', validation: (r) => r.required().max(60).custom(sansCadratin)}),
+            defineField({name: 'horaire', title: 'Horaire', type: 'string', description: '« 8 h 30 à 11 h 45 »', validation: (r) => r.required().max(160).custom(sansCadratin)}),
+          ],
+          preview: {select: {title: 'moment', subtitle: 'horaire'}},
+        }),
+      ],
+    }),
+    texte('cantineTexte', 'Texte sur la cantine', 400, 2),
+    texte('garderieMatin', 'Garderie du matin', 400, 2),
+    texte('garderieSoir', 'Garderie et étude du soir', 500, 3),
+    texte('ateliers', 'Ateliers périscolaires', 600, 3),
+    texte('calendrier', 'Calendrier des vacances', 1200, 6),
+    texte('application', 'L\'application des familles', 400, 2),
+  ],
+  preview: {prepare: () => ({title: 'Page Vie scolaire'})},
+})
+
+export const pageCantine = defineType({
+  name: 'pageCantine',
+  title: 'Page Cantine',
+  type: 'document',
+  fields: [
+    defineField({name: 'chapo', title: 'Phrase d\'introduction', type: 'text', rows: 3, validation: (r) => r.max(320).custom(sansCadratin)}),
+    ligne('codeClicetmiam', 'Code Clic & Miam des familles', 20),
+    fiches('Les trois blocs « Comment ça marche ».'),
+  ],
+  preview: {prepare: () => ({title: 'Page Cantine'})},
+})
+
+export const pageApel = defineType({
+  name: 'pageApel',
+  title: 'Page APEL',
+  type: 'document',
+  fields: [...tete, fiches('Ce que fait l\'APEL, dans l\'ordre d\'affichage.')],
+  preview: {prepare: () => ({title: 'Page APEL'})},
+})

@@ -1,0 +1,31 @@
+{
+  "surtitre": "Association des parents d'élèves",
+  "titre": "L'APEL de l'école Sacré-Cœur La Salle",
+  "chapo": "L'APEL fait vivre l'école avec l'équipe : elle accueille les nouvelles familles, organise les fêtes et finance des sorties pour tous les élèves. Chaque parent peut y participer, à la mesure de son temps.",
+  "fiches": [
+    {
+      "titre": "Accueillir",
+      "texte": "Café de rentrée après l'entrée des enfants en classe, accueil des nouvelles familles, un parent relais dans chaque classe pour faire le lien entre l'enseignant, les parents et l'association."
+    },
+    {
+      "titre": "Faire la fête",
+      "texte": "Marché de Noël, loto de Pâques, kermesse de fin d'année avec les spectacles des classes, et le grand vide-grenier de printemps sur la place Zola."
+    },
+    {
+      "titre": "Financer les projets",
+      "texte": "Cinéma des maternelles, sorties de fin d'année, participation à la classe découverte des CM : les bénéfices des fêtes vont aux enfants."
+    },
+    {
+      "titre": "Mettre la main à la pâte",
+      "texte": "Ateliers animés par des parents, matinées travaux, aide au déménagement dans la nouvelle école en 2022."
+    },
+    {
+      "titre": "Représenter les familles",
+      "texte": "L'APEL siège au conseil d'établissement, qui réunit deux fois par an toute la communauté éducative."
+    },
+    {
+      "titre": "Adhérer",
+      "texte": "27 € par famille et par an, sur la facture d'octobre (sauf demande contraire)."
+    }
+  ]
+}

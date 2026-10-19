@@ -4,36 +4,30 @@ import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import { lien } from '../lib/site';
 import tableau from '../assets/photos/tableau.jpg';
+import { pageEcole as t, paragraphes } from '../lib/pages';
 ---
 <Base titre="L'école : projet éducatif et histoire" courant="ecole/" fil={[{ nom: "L'école" }]}
   description="L'école Sacré-Cœur La Salle de Nantes : école catholique lasallienne fondée en 1864, 8 classes de la PS au CM2, projet éducatif 2025-2030, APEL et OGEC.">
   <section class="tete-page conteneur">
-    <p class="surtitre">L'école Sacré-Cœur La Salle, Nantes</p>
-    <h1>Grandir, apprendre et s'épanouir, chacun à son rythme</h1>
-    <p class="chapo">Une école lasallienne de 210 élèves au cœur du quartier Zola, où la proximité crée un vrai climat de confiance entre enfants, familles et équipe.</p>
+    <p class="surtitre">{t.surtitre}</p>
+    <h1>{t.titre}</h1>
+    <p class="chapo">{t.chapo}</p>
   </section>
 
   <section class="section section-creme" aria-labelledby="titre-mot">
     <div class="conteneur etroit prose">
-      <h2 id="titre-mot" style="margin-top:0">Le mot de la cheffe d'établissement</h2>
-      <p>Chers parents,</p>
-      <p>C'est avec joie et fierté que je vous présente notre école, située au cœur du quartier Zola à Nantes. Avec 210 élèves répartis dans 8 classes, notre établissement se distingue par sa taille humaine, propice à une ambiance chaleureuse et bienveillante. Ici, « tout le monde se connaît et se reconnaît », et cette proximité crée un véritable climat de confiance et de collaboration.</p>
-      <p>Notre communauté éducative, composée de 17 membres (enseignants, ASEM et personnel administratif), est pleinement investie dans l'accompagnement des enfants qui nous sont confiés. Chacun joue un rôle essentiel pour les aider à grandir, à apprendre et à s'épanouir.</p>
-      <p>Fidèles à l'héritage de saint Jean-Baptiste de La Salle (1651-1719), notre fondateur, nous nous inscrivons dans une démarche éducative inspirée par la foi, la fraternité et le service. Notre mission est claire : accueillir chaque élève tel qu'il est, avec bienveillance, en portant une attention toute particulière aux plus fragiles.</p>
-      <p>Notre ambition est de proposer à chaque enfant une instruction de qualité, alliée à une éducation ancrée dans le respect de l'autre, l'ouverture et le vivre ensemble. Nous souhaitons offrir un cadre sécurisant et épanouissant, où chacun peut trouver sa place et se construire, à son rythme, dans un esprit de confiance et d'espérance.</p>
+      <h2 id="titre-mot" style="margin-top:0">{t.motTitre}</h2>
+      {paragraphes(t.motTexte).map((x) => <p>{x}</p>)}
       <p class="mot-signature">{p.directionNom}, {p.directionFonction}</p>
     </div>
   </section>
 
   <section class="section" aria-labelledby="titre-projet">
     <div class="conteneur">
-      <p class="surtitre">Projet éducatif 2025-2030</p>
-      <h2 id="titre-projet" style="margin-bottom:2rem">Semer les savoirs, cultiver les talents</h2>
+      <p class="surtitre">{t.projetSurtitre}</p>
+      <h2 id="titre-projet" style="margin-bottom:2rem">{t.projetTitre}</h2>
       <ul class="axes">
-        <li><h3>Espérer, donner confiance</h3><ul><li>Pratiques pédagogiques et éducatives innovantes</li><li>Mise en avant des talents des enfants</li><li>Assemblées mensuelles des enfants et des adultes</li><li>Lire et faire lire : une bibliothèque vivante</li></ul></li>
-        <li><h3>Croire, s'engager, s'épanouir</h3><ul><li>Une pastorale pour s'approprier les valeurs de l'humanisme chrétien</li><li>Un label éco-école vivant et renouvelé chaque année</li><li>Des projets Santé et Sécurité</li><li>Des parrainages inter-classes</li></ul></li>
-        <li><h3>Accompagner, nourrir, grandir</h3><ul><li>Travail des adultes en lien avec les parents via une application</li><li>Élèves médiateurs entre pairs</li><li>Prise en compte des émotions et écoute attentive</li><li>Sorties culturelles et classe découverte en CM</li></ul></li>
-        <li><h3>Transmettre, partager, fraterniser</h3><ul><li>Travaux de groupe en classe pour apprendre</li><li>Partenariats avec les établissements du réseau</li><li>Temps forts de partage fraternel en communauté éducative</li><li>Actions au profit d'associations</li></ul></li>
+        {t.axes.map((x) => <li><h3>{x.titre}</h3><ul>{x.points.map((pt) => <li>{pt}</li>)}</ul></li>)}
       </ul>
     </div>
   </section>
@@ -41,8 +35,8 @@ import tableau from '../assets/photos/tableau.jpg';
   <section class="section section-creme" aria-labelledby="titre-classes">
     <div class="conteneur duo duo-centre">
       <div>
-        <h2 id="titre-classes">Huit classes, une équipe de quinze adultes</h2>
-        <p style="margin-top:1rem">Enseignants, ASEM, AESH, surveillants et secrétariat travaillent ensemble, et avec les parents via une application.</p>
+        <h2 id="titre-classes">{t.equipeTitre}</h2>
+        {paragraphes(t.equipeTexte).map((x) => <p style="margin-top:1rem">{x}</p>)}
         <table class="tableau" style="margin-top:1.25rem">
           <caption class="discret" style="text-align:left;caption-side:bottom;padding-top:.75rem">L'équipe {p.anneeEquipe}.</caption>
           <tbody>
@@ -50,23 +44,18 @@ import tableau from '../assets/photos/tableau.jpg';
           </tbody>
         </table>
       </div>
-      <div class="photo-ronde"><Image src={tableau} alt="Un élève, de dos, montre une réponse au tableau numérique de sa classe." widths={[281]} sizes="(min-width: 56rem) 40vw, 100vw" /></div>
+      <div class="photo-ronde"><Image src={t.photo ?? tableau} alt={t.alt ?? "Un élève, de dos, montre une réponse au tableau numérique de sa classe."} widths={t.photo ? [390, 780] : [281]} sizes="(min-width: 56rem) 40vw, 100vw" /></div>
     </div>
   </section>
 
   <section class="section" aria-labelledby="titre-histoire">
     <div class="conteneur duo">
       <div>
-        <h2 id="titre-histoire">Une école de quartier depuis 1864</h2>
-        <p style="margin-top:1rem">Fondée rue Giton par les Filles de la Charité du Sacré-Cœur de Jésus, l'école a rejoint le réseau La Salle en 2016, puis s'est installée en 2022 dans des locaux neufs, rue de la Salle Verte.</p>
+        <h2 id="titre-histoire">{t.histoireTitre}</h2>
+        {paragraphes(t.histoireTexte).map((x) => <p style="margin-top:1rem">{x}</p>)}
       </div>
       <ul class="journee">
-        <li><span class="heure">1864</span><span>Les sœurs de La Salle de Vihiers ouvrent une école de filles rue Giton.</span></li>
-        <li><span class="heure">2016</span><span>Entrée dans le réseau La Salle ; décision de reconstruire l'école.</span></li>
-        <li><span class="heure">2021</span><span>Permis de construire et début des travaux.</span></li>
-        <li><span class="heure">2022</span><span>Le 18 octobre, dernier jour rue Giton, après 158 ans ; le 7 novembre, les élèves entrent dans l'école neuve et chacun dépose une pierre décorée le long de la cour.</span></li>
-        <li><span class="heure">2023</span><span>Inauguration, le 21 janvier.</span></li>
-        <li><span class="heure">2026</span><span>Label Éco-École niveau Or.</span></li>
+        {t.dates.map((x) => <li><span class="heure">{x.annee}</span><span>{x.texte}</span></li>)}
       </ul>
     </div>
   </section>
@@ -76,15 +65,15 @@ import tableau from '../assets/photos/tableau.jpg';
       <h2 id="titre-vivre" style="margin-bottom:1.5rem">Vivre l'école</h2>
       <ul class="portes">
         <li><a href={lien('vie-des-classes/')}><h3>La vie des classes</h3><p>Sorties, potager, bibliothèque, gym : ce que vivent les élèves, de la petite section au CM2.</p></a></li>
-        <li><a href={lien('eco-ecole/')}><h3>Éco-École</h3><p>Déchets, biodiversité, eau : trois années de projets, un label niveau Or en 2026.</p></a></li>
+        <li><a href={lien('eco-ecole/')}><h3>Éco-École</h3><p>Un thème par an, des projets menés par les élèves, un label niveau Or en 2026.</p></a></li>
         <li><a href={lien('pastorale/')}><h3>La pastorale</h3><p>Une école lasallienne : temps forts, célébrations à Saint-Clair, solidarité.</p></a></li>
         <li><a href={lien('apel/')}><h3>L'APEL</h3><p>Les parents qui font vivre l'école : fêtes, vide-grenier, sorties financées.</p></a></li>
       </ul>
       <div class="prose" style="margin-top:2.5rem;max-width:42rem">
         <h3>L'OGEC</h3>
-        <p>L'OGEC gère l'école : bâtiments, budget, restauration, personnel non enseignant. C'est lui qui a porté la construction de l'école neuve. Ses membres sont bénévoles.</p>
+        {paragraphes(t.ogecTexte).map((x) => <p>{x}</p>)}
         <h3>Le réseau La Salle</h3>
-        <p>L'école appartient au réseau La Salle France, fondé sur l'œuvre de saint Jean-Baptiste de La Salle et animé par les Frères des Écoles Chrétiennes, ainsi qu'à l'Enseignement catholique de Loire-Atlantique. Elle travaille en partenariat avec les établissements lasalliens de Nantes, comme Saint-Joseph du Loquidy.</p>
+        {paragraphes(t.reseauTexte).map((x) => <p>{x}</p>)}
       </div>
     </div>
   </section>

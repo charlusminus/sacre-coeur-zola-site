@@ -1,0 +1,80 @@
+{
+  "surtitre": "L'école Sacré-Cœur La Salle, Nantes",
+  "titre": "Grandir, apprendre et s'épanouir, chacun à son rythme",
+  "chapo": "Une école lasallienne de 210 élèves au cœur du quartier Zola, où la proximité crée un vrai climat de confiance entre enfants, familles et équipe.",
+  "motTitre": "Le mot de la cheffe d'établissement",
+  "motTexte": "Chers parents,\n\nC'est avec joie et fierté que je vous présente notre école, située au cœur du quartier Zola à Nantes. Avec 210 élèves répartis dans 8 classes, notre établissement se distingue par sa taille humaine, propice à une ambiance chaleureuse et bienveillante. Ici, « tout le monde se connaît et se reconnaît », et cette proximité crée un véritable climat de confiance et de collaboration.\n\nNotre communauté éducative, composée de 15 membres (enseignants, ASEM, AESH et personnel administratif), est pleinement investie dans l'accompagnement des enfants qui nous sont confiés. Chacun joue un rôle essentiel pour les aider à grandir, à apprendre et à s'épanouir.\n\nFidèles à l'héritage de saint Jean-Baptiste de La Salle (1651-1719), notre fondateur, nous nous inscrivons dans une démarche éducative inspirée par la foi, la fraternité et le service. Notre mission est claire : accueillir chaque élève tel qu'il est, avec bienveillance, en portant une attention toute particulière aux plus fragiles.\n\nNotre ambition est de proposer à chaque enfant une instruction de qualité, alliée à une éducation ancrée dans le respect de l'autre, l'ouverture et le vivre ensemble. Nous souhaitons offrir un cadre sécurisant et épanouissant, où chacun peut trouver sa place et se construire, à son rythme, dans un esprit de confiance et d'espérance.",
+  "motCitation": "Ici, tout le monde se connaît et se reconnaît. Notre mission est claire : accueillir chaque élève tel qu'il est, avec bienveillance, en portant une attention toute particulière aux plus fragiles.",
+  "projetSurtitre": "Projet éducatif 2025-2030",
+  "projetTitre": "Semer les savoirs, cultiver les talents",
+  "axes": [
+    {
+      "titre": "Espérer, donner confiance",
+      "points": [
+        "Pratiques pédagogiques et éducatives innovantes",
+        "Mise en avant des talents des enfants",
+        "Assemblées mensuelles des enfants et des adultes",
+        "Lire et faire lire : une bibliothèque vivante"
+      ]
+    },
+    {
+      "titre": "Croire, s'engager, s'épanouir",
+      "points": [
+        "Une pastorale pour s'approprier les valeurs de l'humanisme chrétien",
+        "Un label éco-école vivant et renouvelé chaque année",
+        "Des projets Santé et Sécurité",
+        "Des parrainages inter-classes"
+      ]
+    },
+    {
+      "titre": "Accompagner, nourrir, grandir",
+      "points": [
+        "Travail des adultes en lien avec les parents via une application",
+        "Élèves médiateurs entre pairs",
+        "Prise en compte des émotions et écoute attentive",
+        "Sorties culturelles et classe découverte en CM"
+      ]
+    },
+    {
+      "titre": "Transmettre, partager, fraterniser",
+      "points": [
+        "Travaux de groupe en classe pour apprendre",
+        "Partenariats avec les établissements du réseau",
+        "Temps forts de partage fraternel en communauté éducative",
+        "Actions au profit d'associations"
+      ]
+    }
+  ],
+  "equipeTitre": "Huit classes, une équipe de quinze adultes",
+  "equipeTexte": "Enseignants, ASEM, AESH, surveillants et secrétariat travaillent ensemble, et avec les parents via une application.",
+  "histoireTitre": "Une école de quartier depuis 1864",
+  "histoireTexte": "Fondée rue Giton par les Filles de la Charité du Sacré-Cœur de Jésus, l'école a rejoint le réseau La Salle en 2016, puis s'est installée en 2022 dans des locaux neufs, rue de la Salle Verte.",
+  "dates": [
+    {
+      "annee": "1864",
+      "texte": "Les sœurs de La Salle de Vihiers ouvrent une école de filles rue Giton."
+    },
+    {
+      "annee": "2016",
+      "texte": "Entrée dans le réseau La Salle ; décision de reconstruire l'école."
+    },
+    {
+      "annee": "2021",
+      "texte": "Permis de construire et début des travaux."
+    },
+    {
+      "annee": "2022",
+      "texte": "Le 18 octobre, dernier jour rue Giton, après 158 ans ; le 7 novembre, les élèves entrent dans l'école neuve et chacun dépose une pierre décorée le long de la cour."
+    },
+    {
+      "annee": "2023",
+      "texte": "Inauguration, le 21 janvier."
+    },
+    {
+      "annee": "2026",
+      "texte": "Label Éco-École niveau Or."
+    }
+  ],
+  "ogecTexte": "L'OGEC gère l'école : bâtiments, budget, restauration, personnel non enseignant. C'est lui qui a porté la construction de l'école neuve. Ses membres sont bénévoles.",
+  "reseauTexte": "L'école appartient au réseau La Salle France, fondé sur l'œuvre de saint Jean-Baptiste de La Salle et animé par les Frères des Écoles Chrétiennes, ainsi qu'à l'Enseignement catholique de Loire-Atlantique. Elle travaille en partenariat avec les établissements lasalliens de Nantes, comme Saint-Joseph du Loquidy."
+}
