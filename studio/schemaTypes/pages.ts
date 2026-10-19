@@ -196,7 +196,7 @@ export const pageEcole = defineType({
       of: [
         defineArrayMember({
           type: 'object',
-          name: 'date',
+          name: 'dateHistoire',
           fields: [
             defineField({name: 'annee', title: 'Année', type: 'string', validation: (r) => r.required().regex(/^[0-9]{4}$/, {name: 'année'}).error('Une année sur quatre chiffres.')}),
             defineField({name: 'texte', title: 'Ce qui s\'est passé', type: 'text', rows: 2, validation: (r) => r.required().max(300).custom(sansCadratin)}),
