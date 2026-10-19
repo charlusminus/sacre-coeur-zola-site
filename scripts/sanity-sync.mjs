@@ -74,7 +74,8 @@ async function lireDocuments() {
   if (!projet) throw new Error('SANITY_PROJECT_ID manquant (identifiant du projet Sanity de l\'école).');
   const jeu = process.env.SANITY_DATASET ?? 'production';
   const requete = `*[_type in ["actualite","evenement","menu","parametres","questionsFrequentes"] && !(_id in path("drafts.**"))]{
-    ..., "photoUrl": photo.asset->url, "pdfUrl": pdf.asset->url }`;
+    ..., "photoUrl": photo.asset->url, "pdfUrl": pdf.asset->url,
+    "fournituresUrls": listesFournitures[]{classe, "url": pdf.asset->url} }`;
   const url = `https://${projet}.api.sanity.io/v2025-02-19/data/query/${jeu}?perspective=published&query=${encodeURIComponent(requete)}`;
   const r = await fetch(url, { headers: process.env.SANITY_TOKEN ? { Authorization: `Bearer ${process.env.SANITY_TOKEN}` } : {} });
   if (!r.ok) throw new Error(`Sanity a répondu ${r.status} : ${await r.text()}`);
@@ -142,9 +143,18 @@ async function main() {
   // Informations générales : seuls les champs remplis remplacent les valeurs locales.
   const p = de('parametres')[0];
   if (p) {
-    const garder = ['telephone', 'telephoneMobile', 'emailSecretariat', 'emailDirection', 'horairesSecretariat', 'accesTransports', 'accesStationnement', 'instagram', 'direction', 'secretariat', 'equipe', 'anneeEquipe', 'rentree', 'inscriptionsOuvertes', 'destinatairesDemandes', 'copieCacheeDemandes'];
+    const garder = ['telephone', 'telephoneMobile', 'emailSecretariat', 'emailDirection', 'horairesSecretariat', 'accesTransports', 'accesStationnement', 'instagram', 'direction', 'secretariat', 'equipe', 'anneeEquipe', 'rentree', 'inscriptionsOuvertes', 'destinatairesDemandes', 'copieCacheeDemandes', 'anneeFournitures'];
     const sans = (o) => (Array.isArray(o) ? o.map(sans) : o && typeof o === 'object' ? Object.fromEntries(Object.entries(o).filter(([k]) => !k.startsWith('_')).map(([k, v]) => [k, sans(v)])) : o);
     const champs = Object.fromEntries(garder.filter((k) => p[k] !== undefined && p[k] !== null && p[k] !== '').map((k) => [k, sans(p[k])]));
+    // Listes de fournitures : un PDF par classe, servi par le site (src/pages/fournitures/).
+    const listes = [];
+    for (const l of p.fournituresUrls ?? []) {
+      if (!l?.classe || !l?.url) { signaler(`liste de fournitures ${l?.classe ?? 'sans classe'} écartée : classe ou PDF manquant.`); continue; }
+      const pdf = `${adresse(l.classe)}.pdf`;
+      try { await mkdir(join(SORTIE, 'fournitures'), { recursive: true }); await recuperer(l.url, join(SORTIE, 'fournitures', pdf)); listes.push({ classe: l.classe, pdf }); }
+      catch (e) { signaler(`liste de fournitures ${l.classe} non récupérée (${e.message}).`); }
+    }
+    champs.listesFournitures = listes;
     await writeFile(join(SORTIE, 'parametres.json'), JSON.stringify(champs, null, 2));
   } else signaler('informations générales absentes de Sanity : valeurs du dépôt utilisées.');
 

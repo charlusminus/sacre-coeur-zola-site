@@ -340,3 +340,4 @@ main:focus { outline: none; }
 
 /* Titre de section seul (le lien vers la suite est un bouton en fin de section) */
 .titre-section { margin-bottom: 1.5rem; }
+.liste-fournitures { columns: 2; padding-left: 1.2rem; margin-top: 0.5rem; }

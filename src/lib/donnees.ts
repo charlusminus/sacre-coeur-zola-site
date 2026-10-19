@@ -10,7 +10,8 @@ const brut = depuisSanity ? synchro['../../contenu-sanity/parametres.json'] : un
 const faqSanity = depuisSanity ? (synchro['../../contenu-sanity/faq.json'] as unknown as typeof faqLocale | undefined) : undefined;
 
 type Personne = { civilite: string; prenom: string; nom: string; fonction?: string };
-const base = { ...locaux, ...(brut ?? {}) } as typeof locaux;
+type Fournitures = { listesFournitures: { classe: string; pdf: string }[]; anneeFournitures: string };
+const base = { ...locaux, ...(brut ?? {}) } as unknown as Omit<typeof locaux, keyof Fournitures> & Fournitures;
 const d = base.direction as Personne;
 const s = base.secretariat as Personne;
 

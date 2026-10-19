@@ -31,6 +31,7 @@ export default defineType({
     {name: 'contact', title: 'Coordonnées', default: true},
     {name: 'equipe', title: 'Direction et équipe'},
     {name: 'inscriptions', title: 'Inscriptions'},
+    {name: 'vieScolaire', title: 'Vie scolaire'},
   ],
   fields: [
     defineField({name: 'telephone', title: 'Téléphone de l\'école', type: 'string', group: 'contact', validation: (r) => r.required().custom(telephoneValide)}),
@@ -99,6 +100,25 @@ export default defineType({
       description: 'Reçoivent aussi chaque demande, sans que les autres destinataires le voient.',
       of: [{type: 'string', validation: (r) => r.email()}],
       validation: (r) => r.max(3),
+    }),
+    defineField({name: 'anneeFournitures', title: 'Année des listes de fournitures', type: 'string', group: 'vieScolaire', description: '« 2026-2027 »', validation: (r) => r.regex(/^20[0-9]{2}-20[0-9]{2}$/, {name: 'année scolaire'}).error('Écrivez l\'année ainsi : 2026-2027.')}),
+    defineField({
+      name: 'listesFournitures',
+      title: 'Listes de fournitures (PDF)',
+      type: 'array',
+      group: 'vieScolaire',
+      description: 'Un PDF par classe, dans l\'ordre des classes. Remplacez-les chaque année en juin.',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          name: 'listeFournitures',
+          fields: [
+            defineField({name: 'classe', title: 'Classe', type: 'string', options: {list: ['Petite section', 'Moyenne section', 'Grande section', 'CP', 'CE1', 'CE2', 'CM1', 'CM2']}, validation: (r) => r.required()}),
+            defineField({name: 'pdf', title: 'Liste (PDF)', type: 'file', options: {accept: 'application/pdf'}, validation: (r) => r.required()}),
+          ],
+          preview: {select: {title: 'classe'}},
+        }),
+      ],
     }),
   ],
   preview: {prepare: () => ({title: 'Informations générales'})},

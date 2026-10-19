@@ -31,7 +31,7 @@ export const GET: APIRoute = async ({ site }) => {
     '',
     '## Faits clés',
     '',
-    '- Environ 210 élèves, 8 classes de la petite section au CM2, 17 adultes (enseignants, ASEM, personnel administratif).',
+    '- Environ 210 élèves, 8 classes de la petite section au CM2, 15 adultes (enseignants, ASEM, AESH, personnel administratif).',
     '- Fondée en 1864 rue Giton, dans le réseau La Salle depuis 2016, installée en 2022 dans des locaux neufs inaugurés en janvier 2023.',
     '- Classe le lundi, mardi, jeudi et vendredi, de 8 h 30 à 11 h 45 et de 13 h 30 à 16 h 30 ; accueil de 7 h 45 à 18 h 30 ; pas de classe le mercredi.',
     '- Cantine en liaison chaude (Convivio), 5,95 € le repas, sans préinscription ; garderie et étude du soir.',
