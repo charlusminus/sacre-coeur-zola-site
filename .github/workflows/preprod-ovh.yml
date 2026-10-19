@@ -1,0 +1,78 @@
+# Préproduction sur l'hébergement OVH de l'école : https://sacrecoeurzola.fr/nouveau-site/
+# Même contenu que la démo (Sanity), mais avec l'envoi réel des demandes d'inscription (PHP).
+# Le WordPress actuel n'est pas touché : seul le dossier www/nouveau-site/ est remplacé.
+# Toujours fermée aux moteurs de recherche (noindex, bandeau « maquette »).
+#
+# Secrets du dépôt nécessaires (Settings > Secrets and variables > Actions) :
+#   OVH_FTP_HOTE            ex. ftp.cluster111.hosting.ovh.net
+#   OVH_FTP_UTILISATEUR     identifiant FTP de l'hébergement
+#   OVH_FTP_MOT_DE_PASSE    mot de passe FTP
+# Sans ces secrets, le workflow s'arrête sans erreur.
+name: Préproduction OVH
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  repository_dispatch:
+    types: [sanity]
+  schedule:
+    - cron: '10 6,7 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: preprod-ovh
+  cancel-in-progress: false
+
+jobs:
+  deployer:
+    runs-on: ubuntu-latest
+    env:
+      HOTE: ${{ secrets.OVH_FTP_HOTE }}
+      UTILISATEUR: ${{ secrets.OVH_FTP_UTILISATEUR }}
+      MOT_DE_PASSE: ${{ secrets.OVH_FTP_MOT_DE_PASSE }}
+    steps:
+      - name: Vérifier les accès
+        id: acces
+        run: |
+          if [ -z "$HOTE" ] || [ -z "$UTILISATEUR" ] || [ -z "$MOT_DE_PASSE" ]; then
+            echo "::notice::Secrets OVH absents : préproduction non déployée."
+            echo "pret=non" >> "$GITHUB_OUTPUT"
+          else
+            echo "pret=oui" >> "$GITHUB_OUTPUT"
+          fi
+      - if: steps.acces.outputs.pret == 'oui'
+        uses: actions/checkout@v4
+      - if: steps.acces.outputs.pret == 'oui'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - if: steps.acces.outputs.pret == 'oui'
+        run: npm ci
+      - name: Construire la préproduction
+        if: steps.acces.outputs.pret == 'oui'
+        env:
+          SANITY_PROJECT_ID: ${{ vars.SANITY_PROJECT_ID || 'vqyjjech' }}
+          SITE: https://sacrecoeurzola.fr
+          BASE_PATH: /nouveau-site/
+          PUBLIC_FORMULAIRE: php
+        run: npm run build:sanity
+      - name: Envoyer sur OVH
+        if: steps.acces.outputs.pret == 'oui'
+        run: |
+          sudo apt-get -qq install -y lftp > /dev/null
+          lftp -u "$UTILISATEUR","$MOT_DE_PASSE" "$HOTE" -e "
+            set ftp:ssl-allow true; set net:max-retries 3;
+            mkdir -p www/nouveau-site;
+            mirror --reverse --delete --parallel=4 --verbose=1 dist/ www/nouveau-site/;
+            bye"
+      - name: Vérifier la préproduction
+        if: steps.acces.outputs.pret == 'oui'
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' https://sacrecoeurzola.fr/nouveau-site/inscriptions/)
+          echo "Page Inscriptions : $code"; [ "$code" = 200 ]
+          code=$(curl -s -o /dev/null -w '%{http_code}' https://sacrecoeurzola.fr/nouveau-site/envoi-demande.php)
+          echo "Script d'envoi (GET attendu 405) : $code"; [ "$code" = 405 ]

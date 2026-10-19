@@ -42,8 +42,15 @@ try {
   affirmer((await page.locator('[data-confirmation]').textContent()).includes('bien envoyée'), 'confirmation absente ou texte de la démo');
   const mail = existsSync(boite) ? readFileSync(boite, 'utf8') : '';
   affirmer(/^To: .+@.+/m.test(mail), "aucun e-mail parti vers les destinataires");
-  affirmer(mail.includes('Reply-To: Marie Essai <marie.essai@example.fr>'), 'réponse non adressée à la famille');
-  affirmer(mail.includes('Classe : Moyenne section'), 'classe absente du courriel');
+  affirmer(/^Reply-To: .*<marie\.essai@example\.fr>/m.test(mail), 'réponse non adressée à la famille');
+  // Corps en deux versions (texte et mise en forme), encodées en base64.
+  const parties = [...mail.matchAll(/Content-Type: (text\/(?:plain|html)); charset=UTF-8\r?\nContent-Transfer-Encoding: base64\r?\n\r?\n([A-Za-z0-9+/=\r\n]+)/g)]
+    .map(([, type, b64]) => [type, Buffer.from(b64.replace(/\s/g, ''), 'base64').toString('utf8')]);
+  const texte = parties.find(([t]) => t === 'text/plain')?.[1] ?? '';
+  const html = parties.find(([t]) => t === 'text/html')?.[1] ?? '';
+  affirmer(texte.includes('Classe demandée : Moyenne section'), 'classe absente de la version texte');
+  affirmer(html.includes('Moyenne section') && html.includes('href="tel:0612345678"'), 'version mise en forme incomplète (classe ou lien d\'appel)');
+  if (process.env.APERCU_MAIL) writeFileSync(process.env.APERCU_MAIL, html);
 
   // Envoi refusé par le serveur : message d'erreur, formulaire conservé.
   const page2 = await navigateur.newPage({ viewport: { width: 390, height: 844 } });
