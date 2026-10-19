@@ -2,8 +2,8 @@
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Agenda from '../components/Agenda.astro';
-import MenuDuJour from '../components/MenuDuJour.astro';
-import p from '../contenus/parametres.json';
+import MenusCantine from '../components/MenusCantine.astro';
+import { parametres as p } from '../lib/donnees';
 import { lien, dateLongue } from '../lib/site';
 import { evenementsAVenir, actualites } from '../lib/contenu';
 import assemblee from '../assets/photos/assemblee.jpg';
@@ -82,7 +82,7 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
       </div>
       <ol class="etapes">
         <li><h3>Votre demande</h3><p>Quelques questions en ligne, ou un appel au <a href={tel}>{p.telephone}</a>. Réponse sous deux jours ouvrés.</p></li>
-        <li><h3>Rendez-vous et visite</h3><p>Avec Mme Lampérière, cheffe d'établissement : vous faites connaissance et visitez l'école.</p></li>
+        <li><h3>Rendez-vous et visite</h3><p>Avec {p.directionCourt}, {p.directionFonction} : vous faites connaissance et visitez l'école.</p></li>
         <li><h3>Le dossier</h3><p>Vous recevez le dossier ; l'inscription est confirmée à son retour.</p></li>
       </ol>
       <div class="actions">
@@ -107,8 +107,8 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
       </div>
       <div>
         <h2 class="titre-bloc">À la cantine</h2>
-        <MenuDuJour />
-        <p style="margin-top:1rem"><a class="lien-fleche" href={lien('cantine/')}>Tous les menus de la semaine</a></p>
+        <MenusCantine compact />
+        <p style="margin-top:1rem"><a class="lien-fleche" href={lien('cantine/')}>Les menus de la cantine</a></p>
       </div>
     </div>
   </section>
@@ -139,7 +139,7 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
       <h2 id="titre-mot" class="surtitre">Le mot de la cheffe d'établissement</h2>
       <blockquote>
         <p class="mot">« Ici, tout le monde se connaît et se reconnaît. Notre mission est claire : accueillir chaque élève tel qu'il est, avec bienveillance, en portant une attention toute particulière aux plus fragiles. »</p>
-        <footer class="mot-signature">Hélène Lampérière, cheffe d'établissement. <a href={lien('ecole/')}>Lire son mot en entier</a></footer>
+        <footer class="mot-signature">{p.directionNom}, {p.directionFonction}. <a href={lien('ecole/')}>Lire son mot en entier</a></footer>
       </blockquote>
     </div>
   </section>

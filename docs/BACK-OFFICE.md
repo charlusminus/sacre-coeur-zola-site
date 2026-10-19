@@ -1,0 +1,84 @@
+# Le back-office du site (Sanity)
+
+Décision de la direction du 19/10/2026 : la structure du site est validée telle quelle, le contenu
+s'édite dans un back-office Sanity. Anne publie des actualités, des événements et les menus de la
+cantine, et modifie les informations générales (coordonnées, accès, direction, équipe). Elle ne
+touche jamais à la mise en page ni à une adresse de page : le site s'en charge.
+
+## Ce qu'il y a dans le back-office
+
+| Rubrique | Contenu | Règles |
+|---|---|---|
+| Actualités | titre, date, rubrique (liste fermée), classes concernées (cases), résumé, photo, texte | adresse de la page tirée du titre ; deux titres identiques : l'année est ajoutée et Charles est prévenu |
+| Agenda | titre, date (ou premier et dernier jour), horaires, lieu, pour qui, description, « mettre en avant » | l'événement disparaît du site une fois passé |
+| Menus de la cantine | semaine (un lundi), PDF, date de mise en ligne facultative, petit mot facultatif | sans date, le menu apparaît le vendredi précédent à 8 h ; sans mot, « Voici le menu de la cantine pour la semaine du … » |
+| Informations générales (document unique) | téléphones, e-mails, horaires du secrétariat, accès, Instagram, direction, secrétariat, équipe, prochaine rentrée, destinataires des demandes d'inscription | ni création d'un second exemplaire, ni suppression |
+| Questions fréquentes (document unique) | questions et réponses, et la page où les afficher ; ordre par glisser-déposer | |
+
+Aucun champ technique : pas d'adresse de page, pas de balise, pas de référencement à remplir. Le
+tiret long est refusé dès la saisie (le site le refuse aussi). Les pages elles-mêmes (projet,
+pastorale, tarifs, etc.) restent dans le code : leur texte change par Charles.
+
+## Comment le site lit le back-office
+
+1. `scripts/sanity-sync.mjs` lit les documents **publiés** et les écrit dans `contenu-sanity/`
+   (ignoré par git), dans la forme exacte de `src/contenus/` : photos et PDF téléchargés, texte
+   converti en Markdown.
+2. `PUBLIC_CONTENU=sanity` fait lire `contenu-sanity/` au site (`npm run build:sanity` enchaîne les
+   deux). Sans cette variable, le site lit les fichiers de démonstration de `src/contenus/`.
+3. Une saisie incomplète est **écartée**, jamais bloquante ; un conflit est résolu par un suffixe.
+   Les deux cas sont écrits dans `contenu-sanity/rapport.txt`, et la GitHub Action ouvre (ou
+   complète) le ticket « Contenus du back-office : points à regarder », assigné à Charles.
+4. Le site est reconstruit à chaque publication (webhook Sanity), chaque nuit, et chaque matin vers
+   8 h 10 pour les menus programmés. Un menu n'existe en ligne, PDF compris, qu'à partir de sa date
+   de mise en ligne.
+
+## Les demandes d'inscription
+
+En ligne (`PUBLIC_FORMULAIRE=php`), le formulaire envoie la demande à `envoi-demande.php`, généré au
+build sur l'hébergement OVH de l'école : un e-mail part aux adresses choisies dans « Informations
+générales > Inscriptions » (direction et secrétariat), avec la famille en adresse de réponse. Rien
+n'est stocké sur le serveur. Protections : champ piège et délai minimal contre les robots, même site
+seulement, 5 demandes par heure et par adresse IP, champs validés. Expéditeur
+`ne-pas-repondre@sacrecoeurzola.fr` (domaine de l'école, couvert par le SPF OVH). La démo sur
+GitHub Pages, sans PHP, garde une confirmation simulée.
+
+Recette : `PUBLIC_FORMULAIRE=php npx astro build --outDir /tmp/dist-php && npm run recette:formulaire -- /tmp/dist-php`
+(PHP local, faux sendmail : parcours complet, e-mail vérifié, échec géré).
+
+## Mise en route (une fois)
+
+1. **Créer le projet** sur https://www.sanity.io/manage (compte de Charles) : nom « École Sacré-Cœur
+   La Salle », jeu de données `production`, **public** (le site le lit sans jeton). Noter l'identifiant
+   du projet (8 caractères).
+2. **Jeton d'amorce** : projet > API > Tokens > « Add API token », nom « Amorce », droits **Editor**.
+   Il sert une fois, puis se supprime.
+3. **Amorcer** avec les contenus de la démo (aucun document existant n'est écrasé) :
+   `SANITY_PROJECT_ID=… SANITY_TOKEN=… node scripts/sanity-amorcer.mjs --simulation`, puis sans
+   `--simulation`.
+4. **Publier le back-office** : dans `studio/`, `.env` avec `SANITY_STUDIO_PROJECT_ID=…`, puis
+   `npx sanity deploy` → https://sacrecoeurzola.sanity.studio
+5. **GitHub** : variable de dépôt `SANITY_PROJECT_ID` (Settings > Secrets and variables > Actions >
+   Variables). La démo se construit alors depuis Sanity.
+6. **Webhook** : projet > API > Webhooks > « Create webhook » : URL
+   `https://api.github.com/repos/charlusminus/sacre-coeur-zola-site/dispatches`, méthode POST,
+   jeu `production`, déclencheur création, mise à jour et suppression, filtre
+   `_type in ["actualite","evenement","menu","parametres","questionsFrequentes"]`, projection
+   `{"event_type": "sanity"}`, en-têtes `Authorization: Bearer <jeton GitHub>` (jeton à grain fin,
+   ce seul dépôt, droit « Contents: read and write ») et `Accept: application/vnd.github+json`.
+7. **Inviter** Anne (Éditrice) et Hélène Lampérière (Éditrice ou Lectrice) : projet > Members.
+
+Jamais de `sanity dataset import --replace` une fois Anne au travail : une correction passe par le
+back-office, ou par l'API en `patch` document par document.
+
+## Mode d'emploi pour Anne (à lui remettre à l'atelier)
+
+- **Publier une actualité** : Actualités > « + » ; titre, date, rubrique, classes, résumé, photo,
+  texte ; bouton **Publier** en bas. Le site est à jour en deux minutes environ.
+- **Photos** : jamais de visage d'enfant (de dos, des mains, des lieux). Remplir « Que montre la photo ? ».
+- **Menus** : Menus de la cantine > « + » ; choisir le lundi, déposer le PDF, **Publier**. Le menu
+  apparaît tout seul le vendredi précédent à 8 h. On peut déposer tous les menus d'une période d'un coup.
+- **Modifier un numéro, un horaire, la direction ou l'équipe** : Informations générales, puis Publier.
+- **Retirer un contenu du site** : menu « … » en haut du document > « Dépublier (retirer du site) ».
+  « Supprimer définitivement » efface aussi l'historique.
+- Un message en rouge sous un champ indique ce qu'il faut corriger avant de pouvoir publier.

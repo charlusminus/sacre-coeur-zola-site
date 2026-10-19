@@ -1,4 +1,5 @@
 ---
+import { parametres as p } from '../lib/donnees';
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import { lien } from '../lib/site';
@@ -20,7 +21,7 @@ import tableau from '../assets/photos/tableau.jpg';
       <p>Notre communauté éducative, composée de 17 membres (enseignants, ASEM et personnel administratif), est pleinement investie dans l'accompagnement des enfants qui nous sont confiés. Chacun joue un rôle essentiel pour les aider à grandir, à apprendre et à s'épanouir.</p>
       <p>Fidèles à l'héritage de saint Jean-Baptiste de La Salle (1651-1719), notre fondateur, nous nous inscrivons dans une démarche éducative inspirée par la foi, la fraternité et le service. Notre mission est claire : accueillir chaque élève tel qu'il est, avec bienveillance, en portant une attention toute particulière aux plus fragiles.</p>
       <p>Notre ambition est de proposer à chaque enfant une instruction de qualité, alliée à une éducation ancrée dans le respect de l'autre, l'ouverture et le vivre ensemble. Nous souhaitons offrir un cadre sécurisant et épanouissant, où chacun peut trouver sa place et se construire, à son rythme, dans un esprit de confiance et d'espérance.</p>
-      <p class="mot-signature">Hélène Lampérière, cheffe d'établissement</p>
+      <p class="mot-signature">{p.directionNom}, {p.directionFonction}</p>
     </div>
   </section>
 
@@ -43,18 +44,9 @@ import tableau from '../assets/photos/tableau.jpg';
         <h2 id="titre-classes">Huit classes, une équipe de dix-sept adultes</h2>
         <p style="margin-top:1rem">Enseignants, ASEM, surveillants et secrétariat travaillent ensemble, et avec les parents via une application.</p>
         <table class="tableau" style="margin-top:1.25rem">
-          <caption class="discret" style="text-align:left;caption-side:bottom;padding-top:.75rem">Équipe 2025-2026, à mettre à jour pour 2026-2027. [À CONFIRMER]</caption>
+          <caption class="discret" style="text-align:left;caption-side:bottom;padding-top:.75rem">L'équipe {p.anneeEquipe}.</caption>
           <tbody>
-            <tr><th scope="row">Petite section</th><td>Mme Charlène Duret</td></tr>
-            <tr><th scope="row">Moyenne section</th><td>Mme Hélène Lampérière et Mme Marie-Alix Duvivier</td></tr>
-            <tr><th scope="row">Grande section</th><td>Mme Fleur Delobelle</td></tr>
-            <tr><th scope="row">CP</th><td>Mme Noémie Dubois de Mont-Marin</td></tr>
-            <tr><th scope="row">CP-CE1</th><td>M. Laurent Garcin</td></tr>
-            <tr><th scope="row">CE1-CE2</th><td>Mme Laura Bly</td></tr>
-            <tr><th scope="row">CM1</th><td>M. Joël Peault</td></tr>
-            <tr><th scope="row">CM2</th><td>Mme Elsa Cros</td></tr>
-            <tr><th scope="row">Enseignant spécialisé</th><td>M. Renan Thomare</td></tr>
-            <tr><th scope="row">Secrétariat</th><td>Mme Anne Calais</td></tr>
+            {p.equipe.map((l) => <tr><th scope="row">{l.role}</th><td>{l.noms}</td></tr>)}
           </tbody>
         </table>
       </div>

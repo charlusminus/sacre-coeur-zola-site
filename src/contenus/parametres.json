@@ -1,33 +1,35 @@
 {
   "nom": "École Sacré-Cœur La Salle",
   "ville": "Nantes",
-  "adresse": {
-    "rue": "24 rue de la Salle Verte",
-    "codePostal": "44100",
-    "ville": "Nantes",
-    "quartier": "Zola"
-  },
-  "geo": {
-    "latitude": 47.21224,
-    "longitude": -1.58598
-  },
+  "adresse": { "rue": "24 rue de la Salle Verte", "codePostal": "44100", "ville": "Nantes", "quartier": "Zola" },
+  "geo": { "latitude": 47.21224, "longitude": -1.58598 },
   "telephone": "02 40 46 27 13",
   "telephoneMobile": "07 82 31 11 10",
   "emailDirection": "ec.nantes.sacre-coeur@ec44.fr",
   "emailSecretariat": "secretariat.ecole@sacrecoeurzola.fr",
-  "direction": "Mme Hélène Lampérière, cheffe d'établissement",
-  "secretariat": "Mme Anne Calais",
   "horairesSecretariat": [
-    {
-      "jours": "Lundi et vendredi",
-      "heures": "7 h 45 à 12 h 30"
-    },
-    {
-      "jours": "Mardi",
-      "heures": "7 h 45 à 12 h 30 et 13 h 30 à 15 h 30"
-    }
+    { "jours": "Lundi et vendredi", "heures": "7 h 45 à 12 h 30" },
+    { "jours": "Mardi", "heures": "7 h 45 à 12 h 30 et 13 h 30 à 15 h 30" }
   ],
+  "accesTransports": "Bus : arrêt Zola, lignes 11 et 23.",
+  "accesStationnement": "[À CONFIRMER : stationnement et dépose minute]",
   "instagram": "https://www.instagram.com/sacrecoeurzola/",
+  "direction": { "civilite": "Mme", "prenom": "Hélène", "nom": "Lampérière", "fonction": "cheffe d'établissement" },
+  "secretariat": { "civilite": "Mme", "prenom": "Anne", "nom": "Calais" },
+  "anneeEquipe": "2025-2026 [À CONFIRMER : équipe 2026-2027]",
+  "equipe": [
+    { "role": "Petite section", "noms": "Mme Charlène Duret" },
+    { "role": "Moyenne section", "noms": "Mme Hélène Lampérière et Mme Marie-Alix Duvivier" },
+    { "role": "Grande section", "noms": "Mme Fleur Delobelle" },
+    { "role": "CP", "noms": "Mme Noémie Dubois de Mont-Marin" },
+    { "role": "CP-CE1", "noms": "M. Laurent Garcin" },
+    { "role": "CE1-CE2", "noms": "Mme Laura Bly" },
+    { "role": "CM1", "noms": "M. Joël Peault" },
+    { "role": "CM2", "noms": "Mme Elsa Cros" },
+    { "role": "Enseignant spécialisé", "noms": "M. Renan Thomare" },
+    { "role": "Secrétariat", "noms": "Mme Anne Calais" }
+  ],
+  "rentree": "2027-2028",
   "inscriptionsOuvertes": true,
-  "rentree": "2027-2028"
+  "destinatairesDemandes": ["ec.nantes.sacre-coeur@ec44.fr", "secretariat.ecole@sacrecoeurzola.fr"]
 }

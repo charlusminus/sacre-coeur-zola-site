@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Agenda from '../components/Agenda.astro';
 import Faq from '../components/Faq.astro';
-import p from '../contenus/parametres.json';
+import { parametres as p } from '../lib/donnees';
 import { evenementsAVenir } from '../lib/contenu';
 import { lien } from '../lib/site';
 
@@ -10,6 +10,7 @@ const visites = (await evenementsAVenir()).filter((e) => e.data.public === 'Futu
 const [debut] = p.rentree.split('-').map(Number);
 const classes = ['Petite section', 'Moyenne section', 'Grande section', 'CP', 'CE1', 'CE2', 'CM1', 'CM2'];
 const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
+const envoiReel = import.meta.env.PUBLIC_FORMULAIRE === 'php';
 ---
 <Base titre="Inscriptions et tarifs" courant="inscriptions/" fil={[{ nom: 'Inscriptions' }]}
   description="Inscrire votre enfant à l'école Sacré-Cœur La Salle de Nantes, de la petite section au CM2 : trois étapes, tarifs 2026-2027, portes ouvertes, demande en ligne.">
@@ -23,7 +24,7 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
       <h2 class="visuellement-cache">Les trois étapes</h2>
       <ol class="etapes etapes-verticales">
         <li><h3>Votre demande</h3><p>Le formulaire, ou un appel au <a href={tel}>{p.telephone}</a>. Nous vous répondons sous deux jours ouvrés.</p></li>
-        <li><h3>Rendez-vous et visite</h3><p>Avec Mme Lampérière, cheffe d'établissement, à l'école ou en visio si vous arrivez d'une autre ville : vous faites connaissance et visitez classes, cour et cantine.</p></li>
+        <li><h3>Rendez-vous et visite</h3><p>Avec {p.directionCourt}, {p.directionFonction}, à l'école ou en visio si vous arrivez d'une autre ville : vous faites connaissance et visitez classes, cour et cantine.</p></li>
         <li><h3>Le dossier</h3><p>Vous recevez le dossier d'inscription ; l'inscription est confirmée à son retour, avec un acompte de 50 € déduit de la première facture.</p></li>
       </ol>
       <div class="secretariat">
@@ -36,10 +37,21 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
       <h2 class="titre-petit">Demande d'inscription</h2>
       <p class="discret" style="margin-bottom:1.25rem">Tous les champs sont obligatoires, sauf le message.</p>
       <div class="confirmation" data-confirmation hidden tabindex="-1" role="status">
-        <p><strong>Merci, votre demande est prête.</strong></p>
-        <p>Dans cette démonstration, rien n'est encore envoyé : sur le site en ligne, votre demande arrivera au secrétariat, qui vous rappellera sous deux jours ouvrés pour fixer le rendez-vous.</p>
+        {envoiReel ? (
+          <>
+            <p><strong>Merci, votre demande est bien envoyée.</strong></p>
+            <p>Le secrétariat vous rappelle sous deux jours ouvrés pour fixer le rendez-vous avec {p.directionCourt}.</p>
+          </>
+        ) : (
+          <>
+            <p><strong>Merci, votre demande est prête.</strong></p>
+            <p>Dans cette démonstration, rien n'est encore envoyé : sur le site en ligne, votre demande arrivera au secrétariat, qui vous rappellera sous deux jours ouvrés pour fixer le rendez-vous.</p>
+          </>
+        )}
       </div>
       <form class="formulaire" data-demande novalidate>
+        <div class="piege" aria-hidden="true"><label for="site_web">Ne pas remplir</label><input id="site_web" name="site_web" tabindex="-1" autocomplete="off" /></div>
+        <input type="hidden" name="debut" value="" data-debut />
         <div class="champs-duo">
           <div class="champ"><label for="parent">Votre nom</label><input id="parent" name="parent" autocomplete="name" required /></div>
           <div class="champ"><label for="telephone">Téléphone</label><input id="telephone" name="telephone" type="tel" autocomplete="tel" required /></div>
@@ -67,8 +79,9 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
         </div>
         <p class="aide" id="aide-classe" data-aide-classe>La classe se remplit d'après la date de naissance ; vous pouvez la modifier.</p>
         <div class="champ"><label for="message">Un mot pour nous (facultatif)</label><textarea id="message" name="message" rows="3"></textarea></div>
-        <p class="reassurance">Le secrétariat vous rappelle sous deux jours ouvrés pour fixer le rendez-vous avec Mme Lampérière.</p>
-        <button class="btn btn-principal" type="submit">Envoyer ma demande</button>
+        <p class="reassurance">Le secrétariat vous rappelle sous deux jours ouvrés pour fixer le rendez-vous avec {p.directionCourt}.</p>
+        <p class="erreur-envoi" data-erreur-envoi role="alert" hidden></p>
+        <button class="btn btn-principal" type="submit" data-envoyer>Envoyer ma demande</button>
         <p class="note-rgpd">Vos réponses servent uniquement à vous recontacter pour l'inscription. Elles sont conservées un an au plus par l'école, puis supprimées. Pour y accéder ou les faire effacer : {p.emailSecretariat}.</p>
       </form>
     </div>
@@ -117,9 +130,10 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
     </div>
   </section>
 </Base>
-<script define:vars={{ debut }}>
+<script define:vars={{ debut, envoiReel, adresseEnvoi: lien('envoi-demande.php'), telephone: p.telephone }}>
   const classes = ['CM2', 'CM1', 'CE2', 'CE1', 'CP', 'Grande section', 'Moyenne section', 'Petite section'];
   const form = document.querySelector('[data-demande]');
+  form.querySelector('[data-debut]').value = String(Date.now());
   const naissance = form.querySelector('#naissance');
   const rentree = form.querySelector('#rentree');
   const classe = form.querySelector('#classe');
@@ -170,8 +184,15 @@ const tel = 'tel:+33' + p.telephone.replace(/\s/g, '').slice(1);
     const invalides = [...form.querySelectorAll('input, select')].filter((c) => !signaler(c));
     if (invalides.length) { invalides[0].focus(); return; }
     const confirmation = document.querySelector('[data-confirmation]');
-    form.hidden = true;
-    confirmation.hidden = false;
-    confirmation.focus();
+    const confirmer = () => { form.hidden = true; confirmation.hidden = false; confirmation.focus(); };
+    if (!envoiReel) { confirmer(); return; }
+    const bouton = form.querySelector('[data-envoyer]');
+    const erreur = form.querySelector('[data-erreur-envoi]');
+    const echec = (texte) => { erreur.textContent = texte; erreur.hidden = false; bouton.disabled = false; bouton.textContent = 'Envoyer ma demande'; };
+    bouton.disabled = true; bouton.textContent = 'Envoi en cours…'; erreur.hidden = true;
+    fetch(adresseEnvoi, { method: 'POST', body: new FormData(form) })
+      .then((r) => r.json().then((d) => ({ statut: r.status, d })))
+      .then(({ d }) => (d.ok ? confirmer() : echec(d.message ?? `La demande n'est pas partie. Vérifiez les champs, ou appelez-nous au ${telephone}.`)))
+      .catch(() => echec(`La demande n'est pas partie (connexion). Réessayez, ou appelez-nous au ${telephone}.`));
   });
 </script>

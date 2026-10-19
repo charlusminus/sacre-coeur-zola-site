@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import logo from '../assets/logo-ecole.png';
-import p from '../contenus/parametres.json';
+import { parametres as p } from '../lib/donnees';
 import { lien } from '../lib/site';
 const tel = (n: string) => 'tel:+33' + n.replace(/\s/g, '').slice(1);
 ---

@@ -1,0 +1,25 @@
+---
+// Le ou les menus du moment (PDF), avec le petit mot d'Anne ou le message par défaut.
+import { menusDuMoment } from '../lib/contenu';
+import { lien } from '../lib/site';
+interface Props { compact?: boolean }
+const { compact = false } = Astro.props;
+const { menus, passe } = await menusDuMoment();
+const jourMois = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', timeZone: 'Europe/Paris' });
+const semaine = (d: Date) => `semaine du ${jourMois.format(d)}`;
+---
+{menus.length ? (
+  <ul class="menus-pdf">
+    {menus.map((m) => (
+      <li class="menu-jour">
+        <p class="etiquette">{passe ? 'Dernier menu publié' : 'Au menu'}</p>
+        <p class="menu-plat">{semaine(m.data.semaine).replace(/^s/, 'S')}</p>
+        {!compact && <p>{m.data.message ?? `Voici le menu de la cantine pour la ${semaine(m.data.semaine)}.`}</p>}
+        {compact && m.data.message && <p>{m.data.message}</p>}
+        <p style="margin-top:.75rem"><a class="btn btn-secondaire" href={lien(`menus-cantine/${m.data.pdf}`)}>Voir le menu<span class="visuellement-cache">, {semaine(m.data.semaine)}</span>{' (PDF)'}</a></p>
+      </li>
+    ))}
+  </ul>
+) : (
+  <p>Le prochain menu sera publié ici.</p>
+)}

@@ -4,8 +4,12 @@
 import { defineCollection, z } from 'astro:content';
 import { glob, file } from 'astro/loaders';
 
+// PUBLIC_CONTENU=sanity : contenus écrits par scripts/sanity-sync.mjs (site en ligne) ; sinon les
+// fichiers de démonstration de src/contenus/.
+export const racineContenus = process.env.PUBLIC_CONTENU === 'sanity' ? './contenu-sanity' : './src/contenus';
+
 const actualites = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/contenus/actualites' }),
+  loader: glob({ pattern: '**/*.md', base: `${racineContenus}/actualites` }),
   schema: ({ image }) => z.object({
     titre: z.string().max(90),
     date: z.coerce.date(),
@@ -19,7 +23,7 @@ const actualites = defineCollection({
 });
 
 const evenements = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/contenus/evenements' }),
+  loader: glob({ pattern: '**/*.md', base: `${racineContenus}/evenements` }),
   schema: z.object({
     titre: z.string().max(80),
     debut: z.coerce.date(),
@@ -32,15 +36,15 @@ const evenements = defineCollection({
   }),
 });
 
-const plat = z.object({
-  entree: z.string().optional(), plat: z.string(), accompagnement: z.string().optional(),
-  laitage: z.string().optional(), dessert: z.string().optional(), vegetarien: z.boolean().default(false),
-});
+// Menus de la cantine : le PDF de la semaine, mis en ligne à la date choisie par Anne (par défaut
+// le vendredi précédent à 8 h, voir src/lib/contenu.ts).
 const menus = defineCollection({
-  loader: file('./src/contenus/menus/menus.json'),
+  loader: file(`${racineContenus}/menus/menus.json`),
   schema: z.object({
     semaine: z.coerce.date(),
-    lundi: plat.optional(), mardi: plat.optional(), jeudi: plat.optional(), vendredi: plat.optional(),
+    pdf: z.string().regex(/^[a-z0-9-]+\.pdf$/),
+    publierLe: z.coerce.date().optional(),
+    message: z.string().max(200).optional(),
   }),
 });
 

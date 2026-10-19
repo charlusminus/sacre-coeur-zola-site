@@ -7,3 +7,4 @@ captures/
 .env.*
 !.env.example
 .DS_Store
+contenu-sanity/

@@ -3,7 +3,7 @@
 // sources que les pages (paramètres, FAQ, agenda) : il ne peut pas s'écarter du site.
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
-import p from '../contenus/parametres.json';
+import { parametres as p } from '../lib/donnees';
 import { faqs } from '../lib/schema';
 import { evenementsAVenir } from '../lib/contenu';
 
@@ -22,8 +22,8 @@ export const GET: APIRoute = async ({ site }) => {
     '## Entités',
     '',
     `- **École Sacré-Cœur La Salle** (aussi appelée « Sacré-Cœur Zola ») : école maternelle et élémentaire privée, UAI 0441413X. Site : ${abs()}. Téléphone : ${p.telephone}. Courriel du secrétariat : ${p.emailSecretariat}.`,
-    `- **Hélène Lampérière** : cheffe d'établissement, qui reçoit les familles pour les inscriptions.`,
-    `- **Anne Calais** : secrétariat de l'école (${p.horairesSecretariat.map((h) => `${h.jours.toLowerCase()} ${h.heures}`).join(' ; ')}).`,
+    `- **${p.directionNom}** : ${p.directionFonction}, qui reçoit les familles pour les inscriptions.`,
+    `- **${p.secretariatNom}** : secrétariat de l'école (${p.horairesSecretariat.map((h) => `${h.jours.toLowerCase()} ${h.heures}`).join(' ; ')}).`,
     `- **APEL du Sacré-Cœur** : association des parents d'élèves (contact-apel@sacrecoeurzola.fr), organisatrice du vide-grenier de la place Zola.`,
     '- **La Salle France** : réseau des établissements lasalliens, fondé sur l’œuvre de saint Jean-Baptiste de La Salle.',
     '- **Paktiz** : agence nantaise (https://paktiz.fr) qui a conçu et réalisé ce site pour l\u2019APEL de l\u2019école.',

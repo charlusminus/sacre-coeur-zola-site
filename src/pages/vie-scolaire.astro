@@ -1,4 +1,5 @@
 ---
+import { parametres as p } from '../lib/donnees';
 import Base from '../layouts/Base.astro';
 import { lien } from '../lib/site';
 ---
@@ -55,7 +56,7 @@ import { lien } from '../lib/site';
       <div class="accordeon">
         <details><summary><span>Fournitures de la rentrée</span></summary><div><p>La liste de chaque classe est publiée en juin. [À CONFIRMER : lien vers les listes 2026-2027]</p></div></details>
         <details><summary><span>Calendrier des vacances</span></summary><div><p>Toussaint : du samedi 17 octobre au lundi 2 novembre au matin. Noël : du samedi 19 décembre au lundi 4 janvier au matin. Hiver : du samedi 20 février au lundi 8 mars au matin. Printemps : du samedi 17 avril au lundi 3 mai au matin. [À CONFIRMER : le document de rentrée indique « lundi 7 mars » et « lundi 2 mai », qui tombent un dimanche] Pas de classe le vendredi 7 mai (pont de l'Ascension). Fin de l'année : jeudi 1er juillet après la classe. Deux samedis matin d'école : le 5 décembre (fête de Noël) et le 20 mars (enduro).</p></div></details>
-        <details><summary><span>Absences et retards</span></summary><div><p>En cas de maladie ou d'absence imprévue, envoyez un SMS au 07 82 31 11 10 avec le nom de votre enfant et le motif de l'absence. En dehors des horaires d'ouverture du portail, les allées et venues ne sont pas autorisées, sauf dérogation pour un suivi régulier (orthophonie par exemple), à demander par e-mail à la directrice quelques jours avant.</p></div></details>
+        <details><summary><span>Absences et retards</span></summary><div><p>En cas de maladie ou d'absence imprévue, envoyez un SMS au {p.telephoneMobile} avec le nom de votre enfant et le motif de l'absence. En dehors des horaires d'ouverture du portail, les allées et venues ne sont pas autorisées, sauf dérogation pour un suivi régulier (orthophonie par exemple), à demander par e-mail à la directrice quelques jours avant.</p></div></details>
         <details><summary><span>L'application des familles</span></summary><div><p>L'équipe échange avec les parents via une application : cahier de liaison, photos de classe, informations.</p></div></details>
       </div>
     </div>

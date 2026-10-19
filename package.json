@@ -10,7 +10,10 @@
     "preview": "astro preview",
     "captures": "node scripts/captures.mjs",
     "astro": "astro",
-    "recette": "node scripts/recette.mjs"
+    "recette": "node scripts/recette.mjs",
+    "sanity:sync": "node scripts/sanity-sync.mjs",
+    "build:sanity": "node scripts/sanity-sync.mjs && PUBLIC_CONTENU=sanity npm run build",
+    "recette:formulaire": "node scripts/recette-formulaire.mjs"
   },
   "dependencies": {
     "@fontsource-variable/nunito": "^5.3.0",
@@ -18,6 +21,7 @@
     "astro": "5.18.2"
   },
   "devDependencies": {
-    "axe-core": "^4.14.0"
+    "axe-core": "^4.14.0",
+    "js-yaml": "^4.1.0"
   }
 }

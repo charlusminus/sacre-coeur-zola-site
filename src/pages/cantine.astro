@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import Menu from '../components/Menu.astro';
+import MenusCantine from '../components/MenusCantine.astro';
 import { lien } from '../lib/site';
 ---
 <Base titre="Menus de la cantine" courant="cantine/" fil={[{ nom: 'Vie scolaire', href: 'vie-scolaire/' }, { nom: 'Menus de la cantine' }]}
@@ -13,8 +13,8 @@ import { lien } from '../lib/site';
 
   <section class="section" aria-labelledby="titre-semaine">
     <div class="conteneur">
-      <h2 id="titre-semaine" style="margin-bottom:.5rem">Le menu de la semaine</h2>
-      <Menu />
+      <h2 id="titre-semaine" style="margin-bottom:1rem">Le menu de la semaine</h2>
+      <MenusCantine />
       <p class="discret" style="margin-top:1rem">Tous les menus sont aussi sur <a href="https://www.clicetmiam.fr">clicetmiam.fr</a> (code BA8NE3).</p>
     </div>
   </section>

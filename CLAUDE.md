@@ -14,6 +14,14 @@ décisions, routine d'itération) est dans le dépôt privé `charlusminus/sacre
   un visage, même petit ou au second plan. Recadrer ou écarter la photo. Vérifier chaque image à l'œil avant de l'ajouter.
 - `src/styles/tokens.css` est la source unique du design (charte La Salle France, contrastes notés) ;
   aucune couleur en dur ailleurs. Une seule action principale, le rose.
+- **Back-office Sanity (validé par la direction le 19/10/2026)**, code dans `studio/`, mode d'emploi et mise en route
+  dans `docs/BACK-OFFICE.md`. Le site lit Sanity au build (`npm run build:sanity`, contenus écrits dans `contenu-sanity/`,
+  ignoré) ou, sans `PUBLIC_CONTENU=sanity`, les fichiers de démonstration de `src/contenus/`. Pour Anne : aucun champ
+  technique (adresses de pages générées par le site), listes fermées, saisie incomplète écartée et signalée à Charles
+  (ticket GitHub), jamais bloquante. Menus de la cantine = PDF, mis en ligne le vendredi précédent à 8 h par défaut.
+  Une fois Anne au travail, Sanity fait foi : jamais de `dataset import --replace`.
+- **Demandes d'inscription** : e-mail aux destinataires choisis dans Sanity, par `envoi-demande.php` généré au build
+  (`PUBLIC_FORMULAIRE=php`, hébergement OVH). Recette : `npm run recette:formulaire`.
 - Les contenus (`src/contenus/`) préfigurent les documents du futur CMS (Sanity) : garder les
   schémas de `src/content.config.ts` stricts, une saisie invalide ne doit jamais casser la mise en ligne.
 - Avant chaque push : `npm run build && npm run recette` (0 échec exigé), et les captures pour tout changement visuel.

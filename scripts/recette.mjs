@@ -82,7 +82,7 @@ for (const [nom, options] of Object.entries(formats)) {
         if (f.naturalWidth && besoin > f.naturalWidth * 1.25) r.imagesFloues.push(`${i.currentSrc.split('/').pop()} (${f.naturalWidth}px pour ${besoin})`);
       }
       const petits = [...document.querySelectorAll('a.btn, button, summary, .menu-bouton, input, select, textarea')]
-        .filter((e) => e.offsetParent && (e.getBoundingClientRect().height < 44 || e.getBoundingClientRect().width < 44))
+        .filter((e) => e.offsetParent && !e.closest('[aria-hidden="true"]') && (e.getBoundingClientRect().height < 44 || e.getBoundingClientRect().width < 44))
         .map((e) => `${e.tagName.toLowerCase()} « ${(e.textContent || e.getAttribute('aria-label') || e.name || '').trim().slice(0, 30)} » ${Math.round(e.getBoundingClientRect().width)}×${Math.round(e.getBoundingClientRect().height)}`);
       r.ciblesPetites = petits;
       r.ldErreurs = [...document.querySelectorAll('script[type="application/ld+json"]')].flatMap((s) => { try { JSON.parse(s.textContent); return []; } catch (e) { return [e.message]; } });

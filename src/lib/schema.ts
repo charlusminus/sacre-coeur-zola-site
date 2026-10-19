@@ -1,7 +1,7 @@
 // Données structurées schema.org (SEO local et GEO). Un graphe par page : le site, l'école (même @id
 // partout), le fil d'Ariane, puis les nœuds propres à la page (FAQ, événements, article).
-import p from '../contenus/parametres.json';
-import faq from '../contenus/faq.json';
+import { parametres as p } from './donnees';
+import { faq } from './donnees';
 
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 export const absolu = (site: URL | undefined, chemin = '') => new URL(base + chemin.replace(/^\//, ''), site).href;
