@@ -13,6 +13,8 @@ const actualites = defineCollection({
   schema: ({ image }) => z.object({
     titre: z.string().max(90),
     date: z.coerce.date(),
+    // Dernière modification dans le back-office (données structurées et plan du site).
+    modifie: z.coerce.date().optional(),
     resume: z.string().max(220),
     rubrique: z.enum(["Vie de l'école", 'Vie des classes', 'Pastorale', 'Éco-École', 'APEL', 'Sorties', 'Inscriptions']),
     // Niveaux concernés (et non le nom de la classe, qui change d'une année à l'autre).

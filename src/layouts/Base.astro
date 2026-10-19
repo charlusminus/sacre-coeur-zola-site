@@ -12,7 +12,10 @@ const { titre, description, courant = '', image, schema = [], fil } = Astro.prop
 const graphe = { '@context': 'https://schema.org', '@graph': [website(Astro.site), ecole(Astro.site), ...(fil ? [filAriane(Astro.site, fil)] : []), ...schema] };
 const enLigne = import.meta.env.PUBLIC_EN_LIGNE === 'oui';
 const canonique = new URL(Astro.url.pathname, Astro.site).href;
-const titreComplet = titre.includes('Sacré-Cœur') ? titre : `${titre} · Sacré-Cœur La Salle Nantes`;
+// Titre de l'onglet et de Google : le nom de l'école toujours, en version courte si la page a un
+// long titre (Google coupe au-delà de 60 à 65 caractères).
+const titreComplet = titre.includes('Sacré-Cœur') ? titre
+  : [`${titre} · Sacré-Cœur La Salle Nantes`, `${titre} · Sacré-Cœur Nantes`].find((t) => t.length <= 65) ?? `${titre} · Sacré-Cœur Nantes`;
 const ogImage = new URL(image ?? lien('partage.jpg'), Astro.site).href;
 ---
 <!doctype html>

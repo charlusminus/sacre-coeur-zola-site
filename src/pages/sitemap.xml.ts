@@ -9,7 +9,7 @@ export const GET: APIRoute = async ({ site }) => {
   const pages: [string, Date?][] = [
     ['', derniere], ['inscriptions/'], ...pagesDuMenu.map((n): [string, Date?] => [n.href, n.href === 'agenda/' ? derniere : undefined]),
     ['questions-frequentes/'], ['mentions-legales/'], ['plan-du-site/'],
-    ...actus.map((a): [string, Date] => [`actualites/${a.id}/`, a.data.date]),
+    ...actus.map((a): [string, Date] => [`actualites/${a.id}/`, a.data.modifie ?? a.data.date]),
   ];
   const urls = pages.map(([c, d]) => `<url><loc>${new URL(base + c, site).href}</loc>${d ? `<lastmod>${jour(d)}</lastmod>` : ''}</url>`).join('');
   return new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls}</urlset>`, { headers: { 'content-type': 'application/xml' } });

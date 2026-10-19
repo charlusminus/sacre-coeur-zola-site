@@ -4,11 +4,13 @@ import Agenda from '../components/Agenda.astro';
 import Actus from '../components/Actus.astro';
 import { evenementsAVenir, actualites } from '../lib/contenu';
 
-import { idEcole } from '../lib/schema';
+import { idEcole, absolu } from '../lib/schema';
 const evenements = await evenementsAVenir();
 const actus = await actualites();
 const schema = evenements.map((e) => ({
-    '@type': 'Event', name: e.data.titre, startDate: e.data.debut.toISOString(), endDate: (e.data.fin ?? e.data.debut).toISOString(),
+    // Sans dernier jour saisi, pas de date de fin plutôt qu'une fin égale au début.
+    '@type': 'Event', name: e.data.titre, startDate: e.data.debut.toISOString(), ...(e.data.fin && { endDate: e.data.fin.toISOString() }),
+    url: absolu(Astro.site, 'agenda/'), image: absolu(Astro.site, 'partage.jpg'),
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode', eventStatus: 'https://schema.org/EventScheduled', description: e.data.resume,
     location: { '@type': 'Place', name: e.data.lieu, address: e.data.lieu.includes('Zola') ? 'Place Émile Zola, 44100 Nantes' : '24 rue de la Salle Verte, 44100 Nantes' },
     organizer: { '@id': idEcole(Astro.site) },

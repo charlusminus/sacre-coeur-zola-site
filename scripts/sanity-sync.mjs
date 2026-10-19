@@ -98,7 +98,7 @@ async function main() {
     for (let n = 2; prises.has(id); n++) id = `${voulu}-${a.date.slice(0, 4)}-${n}`;
     if (id !== voulu) signaler(`deux actualités s'appellent ${nom} : la plus récente est publiée à l'adresse /actualites/${id}/.`);
     prises.add(id);
-    const champs = { titre: a.titre, date: a.date, resume: a.resume, rubrique: a.rubrique, niveaux: (a.niveaux ?? []).filter((n) => NIVEAUX.includes(n)) };
+    const champs = { titre: a.titre, date: a.date, modifie: a._updatedAt, resume: a.resume, rubrique: a.rubrique, niveaux: (a.niveaux ?? []).filter((n) => NIVEAUX.includes(n)) };
     if (a.photoUrl) {
       const fichier = `${id}.${a.photoUrl.startsWith('file://') ? a.photoUrl.split('.').pop() : 'jpg'}`;
       try {
