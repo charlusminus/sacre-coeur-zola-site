@@ -43,7 +43,12 @@ seulement, 5 demandes par heure et par adresse IP, champs validés. Expéditeur
 `ne-pas-repondre@sacrecoeurzola.fr` (domaine de l'école, couvert par le SPF OVH). La démo sur
 GitHub Pages, sans PHP, garde une confirmation simulée.
 
-Recette : `PUBLIC_FORMULAIRE=php npx astro build --outDir /tmp/dist-php && npm run recette:formulaire -- /tmp/dist-php`
+Anti-robot : Cloudflare Turnstile (widget discret, il ne demande une action qu'en cas de doute).
+Clé publique dans `src/lib/site.ts`, clé secrète dans le secret GitHub `TURNSTILE_SECRET`, inscrite
+au build dans le seul script PHP. Sans ce secret, pas de vérification ; si Cloudflare ne répond pas,
+la demande passe plutôt que d'être perdue.
+
+Recette : `PUBLIC_FORMULAIRE=php TURNSTILE_SECRET=essai npx astro build --outDir /tmp/dist-php && npm run recette:formulaire -- /tmp/dist-php`
 (PHP local, faux sendmail : parcours complet, e-mail vérifié, échec géré).
 
 ## Mise en route

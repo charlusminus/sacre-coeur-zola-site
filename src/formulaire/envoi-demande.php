@@ -13,6 +13,10 @@ const COPIE_CACHEE = __COPIE_CACHEE__;
 const EXPEDITEUR = 'ne-pas-repondre@sacrecoeurzola.fr';
 const NOM_EXPEDITEUR = "Site de l'école Sacré-Cœur La Salle";
 const TELEPHONE = __TELEPHONE__;
+// Clé secrète Cloudflare Turnstile, inscrite au build depuis le secret GitHub TURNSTILE_SECRET ;
+// vide : pas de vérification (la démo et les builds locaux).
+const TURNSTILE_SECRET = __TURNSTILE_SECRET__;
+const TURNSTILE_VERIFICATION = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 
 function repondre(int $code, array $donnees): void
 {
@@ -32,6 +36,32 @@ if ($origine !== '' && $hote !== ($_SERVER['HTTP_HOST'] ?? '')) repondre(403, ['
 // page. On répond « envoyé » sans rien envoyer.
 $debut = (int) ($_POST['debut'] ?? 0);
 if (!empty($_POST['site_web']) || ($debut > 0 && (int) (microtime(true) * 1000) - $debut < 3000)) repondre(200, ['ok' => true]);
+
+// Vérification anti-robot Cloudflare Turnstile. Seul un refus de Cloudflare bloque la demande :
+// si Cloudflare ne répond pas, la demande passe (les autres protections restent), plutôt que de
+// perdre celle d'une famille.
+function turnstileRefuse(string $jeton): bool
+{
+    $donnees = http_build_query(['secret' => TURNSTILE_SECRET, 'response' => $jeton, 'remoteip' => $_SERVER['REMOTE_ADDR'] ?? '']);
+    if (function_exists('curl_init')) {
+        $c = curl_init(TURNSTILE_VERIFICATION);
+        curl_setopt_array($c, [CURLOPT_POST => true, CURLOPT_POSTFIELDS => $donnees, CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 10]);
+        $brut = curl_exec($c);
+        curl_close($c);
+    } else {
+        $brut = @file_get_contents(TURNSTILE_VERIFICATION, false, stream_context_create(['http' => [
+            'method' => 'POST', 'header' => 'Content-Type: application/x-www-form-urlencoded', 'content' => $donnees, 'timeout' => 10,
+        ]]));
+    }
+    $r = is_string($brut) ? json_decode($brut, true) : null;
+    return is_array($r) && ($r['success'] ?? null) === false;
+}
+if (TURNSTILE_SECRET !== '') {
+    $jeton = (string) ($_POST['cf-turnstile-response'] ?? '');
+    if ($jeton === '' || turnstileRefuse($jeton)) {
+        repondre(403, ['ok' => false, 'message' => "La vérification anti-robot n'a pas abouti. Réessayez, ou appelez-nous au " . TELEPHONE . '.']);
+    }
+}
 
 // Au plus 5 demandes par heure et par adresse IP.
 $trace = sys_get_temp_dir() . '/demandes-' . hash('sha256', ($_SERVER['REMOTE_ADDR'] ?? '') . __FILE__);

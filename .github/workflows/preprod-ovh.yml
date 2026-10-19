@@ -59,6 +59,7 @@ jobs:
           SITE: https://sacrecoeurzola.fr
           BASE_PATH: /nouveau-site/
           PUBLIC_FORMULAIRE: php
+          TURNSTILE_SECRET: ${{ secrets.TURNSTILE_SECRET }}
         run: npm run build:sanity
       - name: Envoyer sur OVH
         if: steps.acces.outputs.pret == 'oui'
