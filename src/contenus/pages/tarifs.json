@@ -1,0 +1,16 @@
+{
+  "titre": "Tarifs 2026-2027",
+  "note": "Grille de l'année en cours, révisée au printemps pour la rentrée suivante.",
+  "intro": "L'école est sous contrat d'association avec l'État : les enseignants sont rémunérés par l'Éducation nationale. La contribution des familles finance l'immobilier, l'entretien et le caractère propre de l'école.",
+  "lignes": [
+    { "libelle": "Contribution des familles", "montant": "53 € par mois pour le 1er enfant, 50 € pour le 2e, 46 € à partir du 3e" },
+    { "libelle": "Contribution de solidarité", "montant": "9 € de plus par mois, au choix des familles qui le souhaitent" },
+    { "libelle": "Adhésion à l'APEL", "montant": "27 € par famille et par an" },
+    { "libelle": "Repas", "montant": "5,95 €, maternelle et élémentaire ; aide possible de la mairie, selon les revenus du foyer fiscal" },
+    { "libelle": "Garderie du matin", "montant": "1,50 € par matin" },
+    { "libelle": "Étude et garderie du soir", "montant": "3 € par heure, la 2e heure comptée à partir de 17 h 30" }
+  ],
+  "legende": "Contribution facturée sur 10 mois, d'octobre à juillet. Pour les nouvelles familles, l'acompte de 50 € versé à l'inscription est déduit de la facture de septembre.",
+  "exemple": "Un enfant qui déjeune à la cantine quatre jours par semaine, soit environ 16 repas par mois, revient à 53 € + 95 € de repas, environ 148 € par mois, hors garderie.",
+  "solidarite": "La contribution de solidarité permet à l'école de rester ouverte à tous les élèves, sans distinction de conditions et de ressources."
+}

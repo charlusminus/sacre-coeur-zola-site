@@ -1,0 +1,14 @@
+{
+  "surtitre": "Label Éco-École niveau Or, juin 2026",
+  "titre": "Une école qui prend soin de la planète, à hauteur d'enfant",
+  "chapo": "Éco-École est un programme international d'éducation au développement durable. Chaque année, un thème, des actions menées par les élèves, et un label remis en jeu.",
+  "anneesTitre": "Une année, un thème",
+  "annees": [
+    { "annee": "2023-2024", "theme": "Les déchets", "texte": "Enquêtes dans les classes et à la cantine, poubelles de tri, déchets alimentaires valorisés chaque semaine par les Alchimistes, goûters zéro déchet. Label niveau Argent en juin 2024." },
+    { "annee": "2024-2025", "theme": "La biodiversité", "texte": "Recensement des espèces de l'école, jardinières, potager, hôtel à insectes, fresque des quatre saisons sur la cour élémentaire." },
+    { "annee": "2025-2026", "theme": "L'eau", "texte": "Toutes les classes, de la petite section au CM2, sensibilisées à la préservation de l'eau. Label niveau Or le 10 juin 2026." },
+    { "annee": "2026-2027", "theme": "L'alimentation", "texte": "Équilibre nutritionnel, origine des aliments, lutte contre le gaspillage." }
+  ],
+  "elevesTitre": "Ce sont les élèves qui font le projet",
+  "elevesTexte": "Les élèves enquêtent, proposent des actions au comité Éco-École, les fabriquent et les mettent en place. Puis ils passent dans les autres classes pour expliquer et convaincre. Ils mesurent aussi les résultats : en 2024, les déchets de l'école (hors cantine) sont passés de 24 kg par semaine en février à 17,8 kg à la mi-avril.\n\nChaque année, une journée Éco-École réunit toutes les classes autour d'ateliers multi-âges, de la maternelle aux CM."
+}

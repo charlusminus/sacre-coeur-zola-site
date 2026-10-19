@@ -73,7 +73,7 @@ async function lireDocuments() {
   const projet = process.env.SANITY_PROJECT_ID;
   if (!projet) throw new Error('SANITY_PROJECT_ID manquant (identifiant du projet Sanity de l\'école).');
   const jeu = process.env.SANITY_DATASET ?? 'production';
-  const requete = `*[_type in ["actualite","evenement","menu","parametres","questionsFrequentes"] && !(_id in path("drafts.**"))]{
+  const requete = `*[_type in ["actualite","evenement","menu","parametres","questionsFrequentes","pageEcoEcole","pagePastorale","pageTarifs"] && !(_id in path("drafts.**"))]{
     ..., "photoUrl": photo.asset->url, "pdfUrl": pdf.asset->url,
     "fournituresUrls": listesFournitures[]{classe, "url": pdf.asset->url} }`;
   const url = `https://${projet}.api.sanity.io/v2025-02-19/data/query/${jeu}?perspective=published&query=${encodeURIComponent(requete)}`;
@@ -161,6 +161,35 @@ async function main() {
   const q = de('questionsFrequentes')[0]?.questions ?? [];
   const faq = q.filter((x) => x.question && x.reponse && x.theme).map((x, i) => ({ id: adresse(x.question) || `q${i}`, theme: x.theme, q: x.question, r: x.reponse }));
   if (faq.length) await writeFile(join(SORTIE, 'faq.json'), JSON.stringify(faq, null, 2));
+
+  // Textes des pages : seuls les champs remplis remplacent le texte d'origine (src/lib/pages.ts).
+  // Le tiret long, refusé par le build, ne peut pas passer le back-office ; on le retire par sûreté.
+  const propre = (v) => (typeof v === 'string' ? v.replace(/\s*\u2014\s*/g, ', ').trim() : Array.isArray(v) ? v.map(propre) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).filter(([k]) => !k.startsWith('_')).map(([k, x]) => [k, propre(x)])) : v);
+  const PAGES = { pageEcoEcole: 'eco-ecole', pagePastorale: 'pastorale', pageTarifs: 'tarifs' };
+  const LISTES = { annees: ['annee', 'theme', 'texte'], tempsForts: ['nom', 'texte'], lignes: ['libelle', 'montant'] };
+  await mkdir(join(SORTIE, 'pages'), { recursive: true });
+  for (const [type, nom] of Object.entries(PAGES)) {
+    const doc = de(type)[0];
+    if (!doc) continue;
+    const champs = {};
+    for (const [k, v] of Object.entries(propre(doc))) {
+      if (['photo', 'photoUrl', 'pdfUrl', 'fournituresUrls'].includes(k) || v == null || v === '') continue;
+      if (LISTES[k]) {
+        const complets = (v ?? []).filter((x) => LISTES[k].every((c) => typeof x?.[c] === 'string' && x[c]));
+        if (complets.length < v.length) signaler(`page ${nom} : ${v.length - complets.length} ligne(s) incomplète(s) écartée(s) dans « ${k} ».`);
+        if (complets.length) champs[k] = complets;
+      } else if (typeof v === 'string') champs[k] = v;
+    }
+    if (doc.photoUrl) {
+      const fichier = `page-${nom}.jpg`;
+      if (!doc.photo?.alt) signaler(`page ${nom} : photo sans description, photo d'origine gardée.`);
+      else {
+        try { await recuperer(allegee(doc.photoUrl), join(SORTIE, 'images', fichier)); Object.assign(champs, { photo: fichier, alt: doc.photo.alt }); }
+        catch (e) { signaler(`page ${nom} : photo non récupérée (${e.message}), photo d'origine gardée.`); }
+      }
+    }
+    await writeFile(join(SORTIE, 'pages', `${nom}.json`), JSON.stringify(champs, null, 2));
+  }
 
   await writeFile(join(SORTIE, 'rapport.txt'), rapport.join('\n') + (rapport.length ? '\n' : ''));
   console.log(`sanity-sync : ${nbA} actualités, ${nbE} événements, ${menus.length} menus, ${faq.length} questions${rapport.length ? `, ${rapport.length} point(s) à regarder (contenu-sanity/rapport.txt)` : ''}.`);

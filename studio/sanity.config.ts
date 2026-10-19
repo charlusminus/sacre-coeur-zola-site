@@ -10,7 +10,13 @@ declare const process: {env: Record<string, string | undefined>}
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'vqyjjech'
 
 // Documents uniques : on les ouvre directement, sans liste ; ni création d'un second, ni suppression.
-const UNIQUES = new Set(['parametres', 'questionsFrequentes'])
+const UNIQUES = new Set(['parametres', 'questionsFrequentes', 'pageEcoEcole', 'pagePastorale', 'pageTarifs'])
+// Pages dont le texte s'édite ici (la mise en page reste dans le code du site).
+const PAGES = [
+  {id: 'pageEcoEcole', titre: 'Éco-École'},
+  {id: 'pagePastorale', titre: 'Pastorale'},
+  {id: 'pageTarifs', titre: 'Tarifs (page Inscriptions)'},
+]
 
 export default defineConfig({
   name: 'default',
@@ -47,6 +53,14 @@ export default defineConfig({
               .title('Questions fréquentes')
               .id('questionsFrequentes')
               .child(S.document().schemaType('questionsFrequentes').documentId('questionsFrequentes').title('Questions fréquentes')),
+            S.listItem()
+              .title('Textes des pages')
+              .id('pages')
+              .child(
+                S.list()
+                  .title('Textes des pages')
+                  .items(PAGES.map((p) => S.listItem().title(p.titre).id(p.id).child(S.document().schemaType(p.id).documentId(p.id).title(p.titre)))),
+              ),
           ]),
     }),
     ...(isDev ? [visionTool()] : []),

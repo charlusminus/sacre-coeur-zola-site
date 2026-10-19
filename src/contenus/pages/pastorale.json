@@ -1,0 +1,18 @@
+{
+  "surtitre": "Croire, s'engager, s'épanouir",
+  "titre": "La pastorale à l'école Sacré-Cœur La Salle",
+  "chapo": "Une pastorale pour s'approprier les valeurs de l'humanisme chrétien, proposée à tous les enfants, dans le respect des convictions de chaque famille.",
+  "tempsFortsTitre": "Les temps forts de l'année",
+  "tempsForts": [
+    { "nom": "Avent et Noël", "texte": "Célébration de toute l'école à l'église Saint-Clair, chorale de Noël." },
+    { "nom": "Jeudi saint", "texte": "Le partage du pain au forum, pour les maternelles et les CP." },
+    { "nom": "Pâques", "texte": "Célébration à l'église Saint-Clair ; les classes fleurissent la Vierge de la cour élémentaire." }
+  ],
+  "tempsFortsTexte": "L'école vit ces temps avec la paroisse Sainte-Anne Saint-Clair, dont le prêtre vient régulièrement à la rencontre des élèves.",
+  "eveilTitre": "Éveil à la foi et culture chrétienne",
+  "eveilTexte": "Dans le respect des convictions et du libre choix de chaque famille, l'éveil à la foi est proposé aux enfants en maternelle, et la culture chrétienne en élémentaire.",
+  "lasallienneTitre": "Une école lasallienne",
+  "lasallienneTexte": "Saint Jean-Baptiste de La Salle (1651-1719), prêtre de Reims, a fondé l'Institut des Frères des Écoles Chrétiennes. Attentif à la détresse des enfants des artisans et des pauvres, il a formé des maîtres d'école, les a réunis en communauté et a introduit des méthodes éducatives novatrices. Canonisé en 1900, il est fêté le 7 avril.\n\nFidèle à cet héritage, l'école accueille chaque élève tel qu'il est, avec une attention particulière aux plus fragiles.",
+  "solidariteTitre": "La solidarité",
+  "solidariteTexte": "Au fil de l'année, et notamment pendant l'Avent, l'école organise des collectes au profit d'associations, comme les Bébés du Cœur ou le Secours populaire : une manière concrète, pour les enfants, de penser aux autres.\n\nLe conseil d'établissement, qui réunit deux fois par an enseignants, personnels, élèves délégués, OGEC, APEL, déléguée de tutelle et paroisse, accompagne ces projets."
+}
