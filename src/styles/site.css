@@ -250,6 +250,7 @@ a[href^='tel:'] { white-space: nowrap; }
 }
 
 .menu-jour { padding: 1.5rem; border-radius: 1rem; background: var(--creme); }
+.section-creme .menu-jour, .section-creme .secretariat { background: var(--fond); }
 .menus-pdf { display: grid; gap: 1rem; list-style: none; padding: 0; }
 @media (min-width: 48rem) { .menus-pdf:has(> li + li) { grid-template-columns: 1fr 1fr; } }
 .menu-plat { font: 850 1.5rem/1.2 var(--titre); margin-block: 0.25rem 0.4rem; }

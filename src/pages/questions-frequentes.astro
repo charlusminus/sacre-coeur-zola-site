@@ -15,8 +15,8 @@ const themes = [
     <h1>Questions fréquentes sur l'école Sacré-Cœur La Salle</h1>
     <p class="chapo">Les réponses aux questions que les familles nous posent le plus souvent. Une autre question ? Le secrétariat vous répond au <a href="tel:+33240462713">02 40 46 27 13</a>.</p>
   </section>
-  {themes.map((t) => (
-    <section class="section section-creme" style="padding-block:2.5rem" aria-label={t.titre}>
+  {themes.map((t, i) => (
+    <section class={`section${i % 2 === 0 ? ' section-creme' : ''}`} style="padding-block:2.5rem" aria-label={t.titre}>
       <div class="conteneur etroit">
         <h2 style="margin-bottom:1.25rem;font-size:1.625rem">{t.titre}</h2>
         <Faq theme={t.cle} />
