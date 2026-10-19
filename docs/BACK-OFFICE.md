@@ -19,7 +19,7 @@ touche jamais à la mise en page ni à une adresse de page : le site s'en charge
 Aucun champ technique : pas d'adresse de page, pas de balise, pas de référencement à remplir. Le
 tiret long est refusé dès la saisie (le site le refuse aussi). Restent dans le code, leur texte
 change par Charles : l'accueil (ouverture validée, synthèse des autres pages), les étapes
-d'inscription, les questions de la page Contact et les mentions légales (texte juridique, la
+d'inscription, la page Contact (tout y vient des Informations générales) et les mentions légales (texte juridique, la
 directrice de la publication y est tirée des Informations générales). Pour rendre une page
 éditable : un document dans `studio/schemaTypes/pages.ts`, ses textes d'origine dans
 `src/contenus/pages/`, la fusion dans `src/lib/pages.ts`, le type dans `scripts/sanity-sync.mjs` et dans
