@@ -16,7 +16,9 @@ const existe = (chemin) => chemin === '' || existsSync(join(dist, chemin, 'index
 const echapper = (s) => s.replace(/[.+?()[\]{}|\\^$*]/g, '\\$&');
 const regles = [];
 const ecartees = [];
-const rediriger = (motif, cible) => (existe(cible) ? regles.push(`RewriteRule ${motif} ${base}${cible} [R=301,L]`) : ecartees.push(`${motif} -> ${cible}`));
+// Cible absolue sur le domaine de l'école : sinon Apache, derrière le relais HTTPS d'OVH, ajoute « :443 ».
+const origine = (process.env.SITE ?? '').startsWith('https://sacrecoeurzola.fr') ? 'https://sacrecoeurzola.fr' : '';
+const rediriger = (motif, cible) => (existe(cible) ? regles.push(`RewriteRule ${motif} ${origine}${base}${cible} [R=301,L]`) : ecartees.push(`${motif} -> ${cible}`));
 
 for (const [ancien, cible] of Object.entries(carte.pages)) rediriger(`^${echapper(ancien)}/?$`, cible);
 // Les adresses des actualités viennent des titres saisis dans Sanity : sans Sanity (démo locale), on les saute.

@@ -1,5 +1,5 @@
 {
- "_note": "Anciennes adresses du WordPress (avant la bascule du site) et leur nouvelle page. Utilisé par scripts/htaccess.mjs. Les articles repris sont appariés par date et titre (19/10/2026).",
+ "_note": "Anciennes adresses du WordPress (avant la bascule du site) et leur nouvelle page. Utilisé par scripts/htaccess.mjs. Les articles repris sont appariés par date et titre (19/10/2026). Dans les motifs, une lettre accentuée compte pour deux octets (« .{1,2} »).",
  "pages": {
   "accueil": "",
   "ou-sommes-nous": "contact/",
@@ -27,7 +27,7 @@
  },
  "motifs": {
   "^newsletter-.*$": "agenda/",
-  "^.v.nement/.*$": "agenda/",
+  "^.{1,2}v.{1,2}nement/.*$": "agenda/",
   "^events_categories/.*$": "agenda/",
   "^category/.*$": "vie-des-classes/"
  },
