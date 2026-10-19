@@ -244,7 +244,7 @@ await parcours('agenda : événements à venir, triés, sans date passée', bure
   const debuts = ld.map((e) => +new Date(e.startDate));
   affirmer(debuts.every((d, i) => i === 0 || d >= debuts[i - 1]), 'événements non triés');
   const hier = Date.now() - 864e5;
-  affirmer(ld.every((e) => +new Date(e.endDate) >= hier), 'un événement passé est encore affiché');
+  affirmer(ld.every((e) => +new Date(e.endDate ?? e.startDate) >= hier), 'un événement passé est encore affiché');
 });
 
 await navigateur.close();
