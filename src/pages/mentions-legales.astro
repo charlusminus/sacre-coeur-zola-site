@@ -18,6 +18,7 @@ const chezOvh = import.meta.env.PUBLIC_FORMULAIRE === 'php';
     <p>Les contenus sont gérés dans Sanity (Sanity AS, Oslo, Norvège), qui ne reçoit aucune donnée des familles.</p>
     <h2>Données personnelles</h2>
     <p>Les informations envoyées par le formulaire d'inscription servent uniquement à recontacter la famille. Elles ne sont pas enregistrées sur le site : elles sont transmises par e-mail à la direction et au secrétariat de l'école, qui les conservent un an au plus, puis les suppriment. Pour y accéder, les rectifier ou les faire effacer : {p.emailSecretariat}. Vous pouvez aussi saisir la CNIL.</p>
+    {chezOvh && <p>Pour écarter les envois automatiques, le formulaire utilise Cloudflare Turnstile (Cloudflare, Inc.), qui vérifie que la demande vient d'une personne sans déposer de cookie publicitaire ; il traite pour cela des données techniques de connexion (adresse IP, navigateur).</p>}
     <p>Le site ne dépose aucun cookie publicitaire. La mesure d'audience, si elle est activée, est anonyme et exemptée de consentement.</p>
     <h2>Droit à l'image</h2>
     <p>Les photos d'élèves ne sont publiées qu'avec l'autorisation écrite de leurs parents. Pour demander le retrait d'une photo : {p.emailSecretariat}.</p>

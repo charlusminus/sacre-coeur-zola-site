@@ -4,7 +4,7 @@ import Agenda from '../components/Agenda.astro';
 import Faq from '../components/Faq.astro';
 import { parametres as p } from '../lib/donnees';
 import { evenementsAVenir } from '../lib/contenu';
-import { lien } from '../lib/site';
+import { lien, turnstileCle } from '../lib/site';
 
 const visites = (await evenementsAVenir()).filter((e) => e.data.public === 'Futures familles');
 const [debut] = p.rentree.split('-').map(Number);
@@ -80,6 +80,7 @@ const envoiReel = import.meta.env.PUBLIC_FORMULAIRE === 'php';
         <p class="aide" id="aide-classe" data-aide-classe>La classe se remplit d'après la date de naissance ; vous pouvez la modifier.</p>
         <div class="champ"><label for="message">Un mot pour nous (facultatif)</label><textarea id="message" name="message" rows="3"></textarea></div>
         <p class="reassurance">Le secrétariat vous rappelle sous deux jours ouvrés pour fixer le rendez-vous avec {p.directionCourt}.</p>
+        {envoiReel && <div class="cf-turnstile" data-sitekey={turnstileCle} data-language="fr" data-size="flexible" data-appearance="interaction-only"></div>}
         <p class="erreur-envoi" data-erreur-envoi role="alert" hidden></p>
         <button class="btn btn-principal" type="submit" data-envoyer>Envoyer ma demande</button>
         <p class="note-rgpd">Vos réponses servent uniquement à vous recontacter pour l'inscription. Elles sont conservées un an au plus par l'école, puis supprimées. Pour y accéder ou les faire effacer : {p.emailSecretariat}.</p>
@@ -130,6 +131,7 @@ const envoiReel = import.meta.env.PUBLIC_FORMULAIRE === 'php';
     </div>
   </section>
 </Base>
+{envoiReel && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
 <script define:vars={{ debut, envoiReel, adresseEnvoi: lien('envoi-demande.php'), telephone: p.telephone }}>
   const classes = ['CM2', 'CM1', 'CE2', 'CE1', 'CP', 'Grande section', 'Moyenne section', 'Petite section'];
   const form = document.querySelector('[data-demande]');
@@ -188,7 +190,11 @@ const envoiReel = import.meta.env.PUBLIC_FORMULAIRE === 'php';
     if (!envoiReel) { confirmer(); return; }
     const bouton = form.querySelector('[data-envoyer]');
     const erreur = form.querySelector('[data-erreur-envoi]');
-    const echec = (texte) => { erreur.textContent = texte; erreur.hidden = false; bouton.disabled = false; bouton.textContent = 'Envoyer ma demande'; };
+    // Un jeton Turnstile ne sert qu'une fois : après un échec, on en redemande un.
+    const afficher = (texte) => { erreur.textContent = texte; erreur.hidden = false; bouton.disabled = false; bouton.textContent = 'Envoyer ma demande'; };
+    const echec = (texte) => { afficher(texte); window.turnstile?.reset(); };
+    const jeton = form.querySelector('[name="cf-turnstile-response"]');
+    if (form.querySelector('.cf-turnstile') && !jeton?.value) { afficher(`La vérification anti-robot est en cours. Patientez un instant puis renvoyez la demande, ou appelez-nous au ${telephone}.`); return; }
     bouton.disabled = true; bouton.textContent = 'Envoi en cours…'; erreur.hidden = true;
     fetch(adresseEnvoi, { method: 'POST', body: new FormData(form) })
       .then((r) => r.json().then((d) => ({ statut: r.status, d })))

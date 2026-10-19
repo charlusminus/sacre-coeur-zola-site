@@ -8,7 +8,8 @@
 # matin vers 8 h 10 (menus programmés). Tant que la première mise en ligne n'est pas faite, ces
 # déclenchements n'envoient rien. Détail : scripts/production-ovh.sh.
 #
-# Secrets : OVH_FTP_HOTE, OVH_FTP_UTILISATEUR, OVH_FTP_MOT_DE_PASSE (ceux de la préproduction).
+# Secrets : OVH_FTP_HOTE, OVH_FTP_UTILISATEUR, OVH_FTP_MOT_DE_PASSE (ceux de la préproduction) ;
+# TURNSTILE_SECRET, clé secrète Cloudflare Turnstile du formulaire (sans elle, pas de vérification).
 name: Production OVH
 
 on:
@@ -68,6 +69,7 @@ jobs:
           BASE_PATH: /
           PUBLIC_EN_LIGNE: oui
           PUBLIC_FORMULAIRE: php
+          TURNSTILE_SECRET: ${{ secrets.TURNSTILE_SECRET }}
         run: npm run build:sanity
       - name: Envoyer sur OVH
         id: envoi

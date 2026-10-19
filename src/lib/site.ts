@@ -1,6 +1,9 @@
 // Chemins et URL du site, en tenant compte de la base GitHub Pages.
 export const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 export const lien = (chemin = '') => base + chemin.replace(/^\//, '');
+// Clé publique Cloudflare Turnstile (anti-robot du formulaire d'inscription), propre au domaine de
+// l'école. La clé secrète, elle, ne vit que dans le secret GitHub TURNSTILE_SECRET.
+export const turnstileCle = import.meta.env.PUBLIC_TURNSTILE_CLE ?? '0x4AAAAAAFba0020afgxTBbD';
 
 type Lien = { titre: string; href: string };
 type Rubrique = Lien & { enfants?: Lien[] };

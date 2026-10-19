@@ -1,6 +1,7 @@
 // Envoi des demandes d'inscription par e-mail (PHP sur l'hébergement OVH de l'école). Le code est
 // dans src/formulaire/envoi-demande.php ; ici, on y inscrit les destinataires choisis dans le
-// back-office (Informations générales > Inscriptions) et le téléphone de l'école. Généré seulement
+// back-office (Informations générales > Inscriptions), le téléphone de l'école et la clé secrète
+// Cloudflare Turnstile. Généré seulement
 // quand PUBLIC_FORMULAIRE=php : la démo sur GitHub Pages, sans PHP, garde une confirmation simulée.
 import type { APIRoute } from 'astro';
 import modele from '../formulaire/envoi-demande.php?raw';
@@ -19,6 +20,8 @@ export const GET: APIRoute = () => {
   const code = modele
     .replace('__DESTINATAIRES__', `[${destinataires.map(chaine).join(', ')}]`)
     .replace('__COPIE_CACHEE__', `[${copieCachee.map(chaine).join(', ')}]`)
-    .replace('__TELEPHONE__', chaine(p.telephone));
+    .replace('__TELEPHONE__', chaine(p.telephone))
+    // Secret GitHub, jamais dans le dépôt : il n'existe que dans le fichier PHP déposé sur OVH.
+    .replace('__TURNSTILE_SECRET__', chaine(process.env.TURNSTILE_SECRET ?? ''));
   return new Response(code, { headers: { 'content-type': 'text/plain; charset=utf-8' } });
 };
