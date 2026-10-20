@@ -14,9 +14,16 @@
 name: Préproduction OVH
 
 # Depuis la mise en ligne (19/10/2026), lancée à la main seulement : le site en ligne suit seul
-# (workflow Production OVH).
+# (workflow Production OVH). Préproduction retirée du serveur le 20/10/2026 (action « supprimer ») ;
+# « deployer » la remet en place si besoin.
 on:
   workflow_dispatch:
+    inputs:
+      action:
+        description: deployer (remettre la préproduction en ligne) ou supprimer (retirer www/nouveau-site du serveur)
+        type: choice
+        options: [deployer, supprimer]
+        default: deployer
 
 permissions:
   contents: read
@@ -26,7 +33,28 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  supprimer:
+    if: inputs.action == 'supprimer'
+    runs-on: ubuntu-latest
+    env:
+      HOTE: ${{ secrets.OVH_FTP_HOTE }}
+      UTILISATEUR: ${{ secrets.OVH_FTP_UTILISATEUR }}
+      MOT_DE_PASSE: ${{ secrets.OVH_FTP_MOT_DE_PASSE }}
+    steps:
+      - name: Retirer www/nouveau-site du serveur
+        # Chemin écrit en dur : jamais tiré d'une variable, pour ne pas viser la racine du site.
+        run: |
+          sudo apt-get -qq install -y lftp > /dev/null
+          lftp -u "$UTILISATEUR","$MOT_DE_PASSE" "$HOTE" -e "set ftp:ssl-allow true; set net:max-retries 3; rm -r -f www/nouveau-site; bye" > /dev/null 2>&1 || true
+      - name: Vérifier
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' https://sacrecoeurzola.fr/nouveau-site/envoi-demande.php)
+          echo "Ancien script de la préproduction : $code (404 ou redirection attendus)"; [ "$code" != 405 ]
+          code=$(curl -s -o /dev/null -w '%{http_code}' https://sacrecoeurzola.fr/)
+          echo "Site en ligne : $code"; [ "$code" = 200 ]
+
   deployer:
+    if: inputs.action != 'supprimer'
     runs-on: ubuntu-latest
     env:
       HOTE: ${{ secrets.OVH_FTP_HOTE }}
