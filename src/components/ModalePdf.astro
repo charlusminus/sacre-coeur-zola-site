@@ -10,7 +10,6 @@
 <dialog class="modale-pdf" aria-labelledby="modale-pdf-titre">
   <div class="mp-barre">
     <p class="mp-titre" id="modale-pdf-titre"></p>
-    <a class="mp-telecharger" download>Télécharger</a>
     <button class="mp-fermer" type="button">Fermer<span aria-hidden="true"> ×</span></button>
   </div>
   <iframe title="Document PDF"></iframe>
@@ -20,7 +19,12 @@
   const modale = document.querySelector<HTMLDialogElement>('.modale-pdf');
   const cadre = modale?.querySelector('iframe');
   const titre = modale?.querySelector('.mp-titre');
-  const telecharger = modale?.querySelector<HTMLAnchorElement>('.mp-telecharger');
+  // Lien « Télécharger » ajouté à la première ouverture, avec son adresse : un lien sans adresse dans la
+  // page serait signalé comme non explorable par les moteurs.
+  const telecharger = document.createElement('a');
+  telecharger.className = 'mp-telecharger';
+  telecharger.textContent = 'Télécharger';
+  telecharger.setAttribute('download', '');
   const possible = () => navigator.pdfViewerEnabled !== false && matchMedia('(min-width: 48rem)').matches;
   if (modale && cadre && titre && telecharger) {
     let declencheur: HTMLElement | null = null;
@@ -37,6 +41,7 @@
       cadre.title = libelle || 'Document PDF';
       cadre.src = `${adresse.href}#navpanes=0&view=FitH`;
       telecharger.href = adresse.href;
+      if (!telecharger.isConnected) modale.querySelector('.mp-fermer')?.before(telecharger);
       declencheur = a;
       modale.showModal();
     });
@@ -60,7 +65,7 @@
   .modale-pdf::backdrop { background: rgb(19 16 13 / 0.6); }
   .mp-barre { display: flex; align-items: center; gap: 1rem; padding: 0.75rem 0.75rem 0.75rem 1.25rem; border-bottom: 1px solid #e7e3dc; }
   .mp-titre { flex: 1; margin: 0; font: 700 1.0625rem/1.3 var(--titre); color: var(--encre); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .mp-telecharger { font: 600 var(--t-petit)/1.2 var(--texte); color: var(--bleu); }
+  .mp-barre :global(.mp-telecharger) { font: 600 var(--t-petit)/1.2 var(--texte); color: var(--bleu); }
   .mp-fermer {
     min-height: 2.75rem; padding: 0.5rem 1.1rem; border: 2px solid var(--bleu); border-radius: var(--rayon-bouton);
     background: transparent; color: var(--bleu); font: 600 1rem/1.2 var(--texte); cursor: pointer;
