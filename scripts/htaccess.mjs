@@ -46,6 +46,9 @@ RewriteRule ^ https://sacrecoeurzola.fr%{REQUEST_URI} [R=301,L]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^(.*[^/])$ https://sacrecoeurzola.fr/$1/ [R=301,L]
 
+# Anciens liens de la préproduction (« /nouveau-site/… », envoyés par e-mail à l'école) : vers le site.
+RewriteRule ^nouveau-site(?:/(.*))?$ https://sacrecoeurzola.fr/$1 [R=301,L]
+
 # L'ancien WordPress reste sur le serveur (retour arrière possible) mais n'est plus joignable.
 # Ses médias restent servis : documents imprimés et QR codes qui y mènent.
 RewriteRule ^wp-(admin|includes)(/|$) - [R=404,L]
