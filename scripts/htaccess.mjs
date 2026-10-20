@@ -41,6 +41,10 @@ ${enLigne ? `# Une seule adresse : https://sacrecoeurzola.fr. Derrière le relai
 RewriteCond %{SERVER_PORT} ^80$ [OR]
 RewriteCond %{HTTP_HOST} ^www\\. [NC]
 RewriteRule ^ https://sacrecoeurzola.fr%{REQUEST_URI} [R=301,L]
+# Dossier demandé sans barre finale (« /ecole ») : on l'ajoute nous-mêmes, sinon Apache redirige vers
+# « https://sacrecoeurzola.fr:443/ecole/ » (le relais HTTPS d'OVH lui fait croire à du http sur 443).
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^(.*[^/])$ https://sacrecoeurzola.fr/$1/ [R=301,L]
 
 # L'ancien WordPress reste sur le serveur (retour arrière possible) mais n'est plus joignable.
 # Ses médias restent servis : documents imprimés et QR codes qui y mènent.
