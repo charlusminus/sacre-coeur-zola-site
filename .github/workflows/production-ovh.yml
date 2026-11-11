@@ -60,7 +60,7 @@ jobs:
           node-version: 22
           cache: npm
       - if: steps.acces.outputs.pret == 'oui'
-        run: npm ci && sudo apt-get -qq install -y lftp > /dev/null
+        run: npm ci && scripts/installer-lftp.sh
       - name: Construire la version en ligne
         if: steps.acces.outputs.pret == 'oui'
         env:

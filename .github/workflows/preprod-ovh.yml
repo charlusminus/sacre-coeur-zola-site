@@ -44,7 +44,7 @@ jobs:
       - name: Retirer www/nouveau-site du serveur
         # Chemin écrit en dur : jamais tiré d'une variable, pour ne pas viser la racine du site.
         run: |
-          sudo apt-get -qq install -y lftp > /dev/null
+          sudo apt-get -qq update > /dev/null 2>&1; sudo apt-get -qq install -y --fix-missing lftp > /dev/null
           lftp -u "$UTILISATEUR","$MOT_DE_PASSE" "$HOTE" -e "set ftp:ssl-allow true; set net:max-retries 3; rm -r -f www/nouveau-site; bye" > /dev/null 2>&1 || true
       - name: Vérifier
         run: |
@@ -92,7 +92,7 @@ jobs:
       - name: Envoyer sur OVH
         if: steps.acces.outputs.pret == 'oui'
         run: |
-          sudo apt-get -qq install -y lftp > /dev/null
+          scripts/installer-lftp.sh
           lftp -u "$UTILISATEUR","$MOT_DE_PASSE" "$HOTE" -e "
             set ftp:ssl-allow true; set net:max-retries 3;
             mkdir -p -f $DOSSIER;
