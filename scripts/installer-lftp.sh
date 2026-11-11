@@ -1,25 +1,22 @@
 #!/usr/bin/env bash
 # Installe lftp sur le runner GitHub.
-# Le 11/11/2026, security.ubuntu.com ne répondait plus depuis les runners (« Temporary failure resolving »),
-# et l'index apt de l'image n'y trouvait lftp que là : trois mises à jour de suite ont échoué avant tout envoi.
-# D'abord l'installation normale, bornée à 2 minutes ; sinon, une liste de sources temporaire sans le miroir de
-# sécurité (archive principale, release et updates), qui ne touche pas à la configuration du runner.
+# Le 11/11/2026, les miroirs Ubuntu ne répondaient plus depuis les runners (« Temporary failure resolving
+# security.ubuntu.com », puis aucune liste de paquets lisible) : quatre mises à jour de suite se sont arrêtées
+# avant tout envoi. D'abord apt, borné à 2 minutes ; sinon lftp tourne dans un conteneur Alpine (Docker Hub et
+# miroir Alpine, indépendants d'Ubuntu), derrière une commande `lftp` qui voit les mêmes fichiers que le runner.
+# FORCER_REPLI=docker saute apt (vérification du repli, workflow « Outil d'envoi »).
 set -uo pipefail
 command -v lftp > /dev/null && exit 0
 
-if timeout 120 sudo apt-get -qq install -y lftp > /dev/null 2>&1; then exit 0; fi
-echo "Installation normale de lftp impossible : nouvel essai sans le miroir de sécurité."
+if [ "${FORCER_REPLI:-}" != docker ] && timeout 120 sudo apt-get -qq install -y lftp > /dev/null 2>&1; then exit 0; fi
+echo "lftp introuvable par apt : repli sur un conteneur Alpine."
 
-. /etc/os-release
-T=$(mktemp -d)
-mkdir -p "$T/listes/partial"
-for miroir in http://azure.archive.ubuntu.com/ubuntu http://archive.ubuntu.com/ubuntu; do
-  echo "deb $miroir $VERSION_CODENAME main universe" >> "$T/sources.list"
-  echo "deb $miroir $VERSION_CODENAME-updates main universe" >> "$T/sources.list"
-done
-O=(-o "Dir::Etc::SourceList=$T/sources.list" -o "Dir::Etc::SourceParts=$T/vide" -o "Dir::State::Lists=$T/listes" -o Acquire::Retries=3)
-mkdir -p "$T/vide"
-sudo apt-get -qq "${O[@]}" update > /dev/null 2>&1
-if sudo apt-get -qq "${O[@]}" install -y lftp > /dev/null; then exit 0; fi
-echo "::error::lftp n'a pas pu être installé (miroirs Ubuntu injoignables)."
-exit 1
+printf 'FROM alpine:3.20\nRUN apk add --no-cache lftp\n' | docker build -q -t lftp-alpine - > /dev/null || {
+  echo "::error::lftp n'a pas pu être installé, ni par apt ni en conteneur."; exit 1; }
+TEMP=${TMPDIR:-/tmp}
+sudo tee /usr/local/bin/lftp > /dev/null <<SHIM
+#!/usr/bin/env bash
+exec docker run --rm -i --network host -u "\$(id -u):\$(id -g)" -e HOME=/tmp -v "\$PWD:\$PWD" -v "$TEMP:$TEMP" -w "\$PWD" lftp-alpine lftp "\$@"
+SHIM
+sudo chmod +x /usr/local/bin/lftp
+lftp --version | head -1

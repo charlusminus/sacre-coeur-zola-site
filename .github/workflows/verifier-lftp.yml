@@ -1,0 +1,19 @@
+# Vérifie, à chaque modification de l'installation de lftp, que le repli en conteneur fonctionne sur un vrai
+# runner : lftp lit un script de commandes dans le dossier temporaire et un fichier du dépôt, comme à l'envoi.
+name: Outil d'envoi (lftp)
+on:
+  pull_request:
+    paths: [scripts/installer-lftp.sh, .github/workflows/verifier-lftp.yml]
+jobs:
+  repli:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: FORCER_REPLI=docker scripts/installer-lftp.sh
+      - run: |
+          T=$(mktemp -d)
+          mkdir -p dist && echo contenu-dist > dist/essai.txt
+          echo '!cat dist/essai.txt' > "$T/essai.lftp"
+          sortie=$(lftp -e "source $T/essai.lftp; bye")
+          echo "$sortie"
+          [ "$sortie" = contenu-dist ]
