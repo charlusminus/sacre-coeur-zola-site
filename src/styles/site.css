@@ -346,3 +346,72 @@ main:focus { outline: none; }
 /* Titre de section seul (le lien vers la suite est un bouton en fin de section) */
 .titre-section { margin-bottom: 1.5rem; }
 .liste-fournitures { columns: 2; padding-left: 1.2rem; margin-top: 0.5rem; }
+
+/* Mouvement (25/11/2026)
+   Tout le mouvement du site est ici, sous prefers-reduced-motion: no-preference : une personne qui
+   a demandé moins de mouvement ne voit rien bouger. Seuls transform et opacity sont animés (plus
+   l'ombre de l'en-tête et la hauteur des réponses, là où le navigateur sait le faire). Aucune
+   bibliothèque. Les apparitions au défilement sont posées par le script de Base.astro : sans lui,
+   rien n'est masqué. */
+:root { --m1: 0.16s; --m2: 0.3s; --m3: 0.65s; --m-dy: 14px; --m-courbe: cubic-bezier(0.2, 0.7, 0.2, 1); }
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes m-monte { from { opacity: 0; transform: translateY(var(--m-dy)); } }
+  @keyframes m-descend { from { opacity: 0; transform: translateY(calc(var(--m-dy) * -0.5)); } }
+  @keyframes m-ombre { to { box-shadow: 0 10px 28px -18px rgb(19 16 13 / 0.4); border-bottom-color: transparent; } }
+
+  /* 1. D'une page à l'autre : fondu court, l'en-tête ne bouge pas */
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.22s; }
+  .entete { view-transition-name: entete; }
+
+  /* 2. Arrivée sur une page : le haut de page monte en cascade (la photo d'ouverture ne bouge pas) */
+  :is(.une-texte, .tete-page, .zone-tete) > * { animation: m-monte var(--m3) var(--m-courbe) backwards; }
+  :is(.une-texte, .tete-page, .zone-tete) > :nth-child(2) { animation-delay: 0.07s; }
+  :is(.une-texte, .tete-page, .zone-tete) > :nth-child(3) { animation-delay: 0.14s; }
+  :is(.une-texte, .tete-page, .zone-tete) > :nth-child(4) { animation-delay: 0.21s; }
+  :is(.une-texte, .tete-page, .zone-tete) > :nth-child(n+5) { animation-delay: 0.28s; }
+
+  /* 3. Survols et appuis */
+  .btn { transition: background-color 0.15s, color 0.15s, transform var(--m1) var(--m-courbe), box-shadow var(--m1); }
+  .btn:active { transform: scale(0.97); }
+  .actus img { transition: transform var(--m2) var(--m-courbe); }
+  .actus h3, .actus-liste a, .portes h3, .navigation a, .nav-ouvrir { transition: color 0.15s; }
+  .portes a, .actu-texte > a { transition: transform var(--m2) var(--m-courbe), box-shadow var(--m2); }
+  .niveaux-nav a { transition: background-color 0.15s, color 0.15s, transform var(--m1) var(--m-courbe); }
+  .niveaux-nav a:active { transform: scale(0.97); }
+  @media (hover: hover) {
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px -8px rgb(19 16 13 / 0.45); }
+    .btn:active { transform: scale(0.97); box-shadow: none; }
+    .actus a:hover img { transform: translateY(-4px); }
+    .portes a:hover, .actu-texte > a:hover { transform: translateY(-3px); box-shadow: 0 18px 32px -22px rgb(19 16 13 / 0.45); }
+    .niveaux-nav a:hover { transform: translateY(-1px); }
+  }
+
+  /* Questions : la réponse se déplie */
+  .accordeon summary::after { transition: transform var(--m2) var(--m-courbe); }
+  .accordeon details[open] summary::after { transform: rotate(180deg); }
+  .accordeon details[open] > div { animation: m-descend var(--m2) var(--m-courbe); }
+  @supports (interpolate-size: allow-keywords) {
+    .accordeon { interpolate-size: allow-keywords; }
+    .accordeon details::details-content { block-size: 0; overflow: clip; transition: block-size var(--m2) var(--m-courbe), content-visibility var(--m2) allow-discrete; }
+    .accordeon details[open]::details-content { block-size: auto; }
+  }
+
+  /* Menu : il descend à l'ouverture (téléphone), comme les sous-menus */
+  .sous-menu:not([hidden]) { animation: m-descend var(--m2) var(--m-courbe); }
+  @media (max-width: 63.99rem) {
+    .entete[data-ouvert] .navigation { animation: m-descend var(--m2) var(--m-courbe); }
+  }
+
+  /* En-tête : une ombre légère remplace le filet dès que la page défile */
+  @supports (animation-timeline: scroll()) {
+    .entete:not([data-ouvert]) { animation: m-ombre linear both; animation-timeline: scroll(root); animation-range: 0 120px; }
+  }
+}
+
+/* 4. Apparitions au défilement : classes posées par le script de Base.astro, à l'écran seulement */
+@media screen and (prefers-reduced-motion: no-preference) {
+  .m-rev { opacity: 0; transform: translateY(var(--m-dy)); transition: opacity var(--m3) var(--m-courbe), transform var(--m3) var(--m-courbe); transition-delay: calc(var(--m-i, 0) * 80ms); }
+  .m-rev.m-vu { opacity: 1; transform: none; }
+}
