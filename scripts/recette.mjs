@@ -62,7 +62,10 @@ for (const [nom, options] of Object.entries(formats)) {
     page.on('response', (r) => r.status() >= 400 && r.url().startsWith(ORIGINE) && problemes.push(`ressource ${r.status()} : ${r.url().slice(ORIGINE.length)}`));
     const rep = await page.goto(url(chemin), { waitUntil: 'networkidle' });
     if (rep.status() !== 200) problemes.push(`HTTP ${rep.status()}`);
-    await page.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 700) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 30)); } window.scrollTo(0, 0); });
+    await page.evaluate(async () => { const pas = Math.min(700, innerHeight * 0.8); for (let y = 0; y < document.body.scrollHeight; y += pas) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 30)); } window.scrollTo(0, 0); });
+    // Les apparitions au défilement doivent toutes être terminées : la page se mesure dans son état final,
+    // et aucun bloc ne doit rester masqué après un défilement complet.
+    await page.waitForFunction(() => !document.querySelector('.m-rev'), null, { timeout: 5000 }).catch(() => problemes.push('blocs restés masqués après défilement (.m-rev)'));
     await page.waitForLoadState('networkidle');
     const m = await page.evaluate(async () => {
       const r = {};
@@ -211,7 +214,8 @@ await parcours('FAQ : ouverture au clavier, réponse lisible', bureau, async (pa
   await resume.focus();
   await page.keyboard.press('Enter');
   affirmer(await page.locator('details').first().evaluate((d) => d.open), "Entrée n'ouvre pas la question");
-  affirmer(await page.locator('details').first().locator('p').isVisible(), 'réponse invisible');
+  // La réponse se déplie en 0,3 s : on attend qu'elle soit visible au lieu de la mesurer à l'instant de l'appui.
+  affirmer(await page.locator('details').first().locator('p').waitFor({ state: 'visible', timeout: 2000 }).then(() => true, () => false), 'réponse invisible');
   const ld = await page.locator('script[type="application/ld+json"]').textContent();
   const n = JSON.parse(ld)['@graph'].find((x) => x['@type'] === 'FAQPage')?.mainEntity.length;
   const visibles = await page.locator('details').count();

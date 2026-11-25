@@ -70,6 +70,33 @@ const ogImage = new URL(image ?? lien('partage.jpg'), Astro.site).href;
       // Le lien d'évitement place vraiment le focus clavier dans le contenu (le saut d'ancre seul ne
       // le déplace pas dans Chromium).
       document.querySelector('.evitement')?.addEventListener('click', () => document.getElementById('contenu')?.focus());
+
+      // Apparitions au défilement (règles dans site.css, bloc Mouvement). Rien n'est masqué sans ce
+      // script, ni si la personne a demandé moins de mouvement. Seuls les blocs sous la ligne de
+      // flottaison sont préparés : ce qui est visible à l'arrivée ne clignote pas.
+      if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const blocs = '.titre-section, .titre-bloc, .entete-section, .vecu > li, .etapes > li, .axes > li, .fiches > li, ' +
+          '.portes > li, .actus > li, .actus-liste > li, .agenda > li, .journee > li, .menu-jour, .menus-pdf > li, ' +
+          'main blockquote, .niveau > h2, .accordeon details, .section .photo-ronde, .secretariat';
+        const seuil = innerHeight * 0.92;
+        const fini = (el: HTMLElement) => { el.classList.remove('m-rev', 'm-vu'); el.style.removeProperty('--m-i'); };
+        const veille = new IntersectionObserver((entrees) => {
+          let n = 0;
+          for (const e of entrees) {
+            const el = e.target as HTMLElement;
+            // Bloc déjà dépassé (arrivée sur une ancre, retour arrière) : affiché sans effet.
+            if (!e.isIntersecting) { if (e.boundingClientRect.top < 0) { veille.unobserve(el); fini(el); } continue; }
+            veille.unobserve(el);
+            // Les blocs qui arrivent ensemble se suivent en cascade.
+            el.style.setProperty('--m-i', String(Math.min(n++, 5)));
+            el.classList.add('m-vu');
+            setTimeout(() => fini(el), 1100);
+          }
+        }, { rootMargin: '0px 0px -8% 0px' });
+        for (const el of document.querySelectorAll<HTMLElement>(blocs)) {
+          if (el.getBoundingClientRect().top > seuil) { el.classList.add('m-rev'); veille.observe(el); }
+        }
+      }
     </script>
   </body>
 </html>
